@@ -1,0 +1,14 @@
+<div *ngIf="notify.notimsg | async as msg">
+  <div *ngFor="let m of msg">
+    <mat-card class="alert"
+      [ngClass]="{ 
+        'is-danger': m.style == 'error',
+        'is-success': m.style == 'success',
+        'is-info': m.style == 'info'
+      }">
+      <!--span class="closebtn" (click)="notify.clearnotifcation()">&times;</span-->  
+      <div [innerHTML]="fomrat(m.content)"></div>
+     
+    </mat-card>
+  </div>
+</div>

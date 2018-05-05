@@ -1,0 +1,268 @@
+<form [formGroup]="pfForm">
+        
+        <mat-card [ngClass]="{'shadow':onEdit}" style="margin-top:15px; border-radius:10px" >
+            <mat-card-header>
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 1 100%">
+    
+                    <mat-card-title [fxHide]="onEdit">
+                        <h1>{{Mypfdetailcpy.pfportfolioname}}</h1>
+                    </mat-card-title>
+    
+                    <mat-form-field [fxHide]="!onEdit" fxFlex>
+                        <input matInput placeholder="Portfolioname" formControlName="pfPortfolioname" [(ngModel)]="Mypfdetailcpy.pfportfolioname"
+                            (keyup)="chtoupper()">
+                        <mat-error *ngIf="!pfForm.controls['pfPortfolioname'].valid">
+                            Portfolioname is
+                            <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <label style="color:green">{{myindex + 1}}</label>
+
+            </mat-card-header>
+            <mat-card-content>
+                <!--  This is for NONEDIT START-->
+
+                <div [fxHide]="onEdit" fxLayout="row wrap">
+                    <div fxFlex="1 0 120px" fxFlex="1 0 100%" style="line-height: 0.5em;">
+
+                        <p>
+                            <label matInput fxFlex="100%">Pupose of portfolio:</label>
+                        </p>
+                        <p>
+                            <label>
+                                <h3>{{Mypfdetailcpy.pfpurpose}}</h3>
+                            </label>
+                        </p>
+    
+                    </div>
+                </div>
+
+                <div [fxHide]="onEdit" fxLayout="row wrap">
+    
+    
+    
+                    <div [fxHide]="true">
+                        <input matInput fxFlex="100%" formControlName="pfPortfolioid" [(ngModel)]="Mypfdetailcpy.pfportfolioid" [fxHide]="true">
+                        <input matInput fxFlex="100%" formControlName="pfuserid" [(ngModel)]="Mypfdetailcpy.pfuserid" [fxHide]="true">
+                        <input matInput fxFlex="100%" formControlName="pfScreen" [(ngModel)]="Mypfdetailcpy.pfscreen" [fxHide]="true">
+                        <input matInput fxFlex="100%" formControlName="pfBeneUsers" [(ngModel)]="Mypfdetailcpy.pfbeneUsers" [fxHide]="true">
+                    </div>
+    
+
+    
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+    
+                        <p>Start date </p>
+                        <p>
+                            <label>
+                                <h3>{{Mypfdetailcpy.pfstartdt|date:"dd-MM-yyyy"}}</h3>
+                            </label>
+                        </p>
+    
+    
+                    </div>
+    
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+    
+                        <p>Target End date </p>
+                        <p>
+                            <label>
+                                <h3>{{Mypfdetailcpy.pftargetdt|date:"dd-MM-yyyy"}}</h3>
+                            </label>
+                        </p>
+    
+    
+    
+                    </div>
+    
+    
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+    
+                        <p>Montly Investment </p>
+                        <p>
+                            <label>
+                                <h3>{{Mypfdetailcpy.pfplannedinvamt}}</h3>
+                            </label>
+                        </p>
+    
+                    </div>
+    
+                        <!--
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+                        <p>Investment Freq </p>
+                        <p>
+                            <label>
+                                <h3>{{Mypfdetailcpy.pfinvamtfeq}}</h3>
+                            </label>
+                        </p>
+    
+    
+                    </div>
+                -->
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+    
+                        <p>Target Percent </p>
+                        <p>
+                            <label>
+                                <h3>{{Mypfdetailcpy.pftargetintrate}}</h3>
+                            </label>
+                        </p>
+    
+                    </div>
+    
+    
+    
+                </div>
+    
+                <!--  This is for NONEDIT END-->
+    
+    
+                <!--  This is for edit START-->
+    
+                <div [fxHide]="!onEdit" fxLayout="row wrap" fxLayoutGap="10px">    
+                    <div fxFlex="1 0 120px" fxFlex="1 0 100%" style="line-height: 0.5em;">    
+                        <mat-form-field fxFlex="100%">
+                            <textarea matInput placeholder="Pupose of PF" formControlName="pfPurpose" [(ngModel)]="Mypfdetailcpy.pfpurpose"></textarea>    
+                        </mat-form-field>    
+                    </div>
+    
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+    
+                        <mat-form-field fxFlex="1 0 120px">
+                            <input matInput [min]="today" [matDatepicker]="picker1" placeholder="Start date" formControlName="pfStartDt" [value]="today"
+                                [(ngModel)]="Mypfdetailcpy.pfstartdt">
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+    
+    
+    
+                    </div>
+    
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+    
+                        <mat-form-field fxFlex="1 0 120px">
+                            <input matInput [min]="today" [matDatepicker]="picker2" placeholder="Target End date" formControlName="pfTargetDt" [(ngModel)]="Mypfdetailcpy.pftargetdt">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+    
+    
+    
+                    </div>
+    
+    
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+    
+                        <mat-form-field fxFlex="1 0 120px">
+    
+                            <input type="number" matInput placeholder="Montly Investment" formControlName="pfPlannedInvAmt" [(ngModel)]="Mypfdetailcpy.pfplannedinvamt">
+    
+                        </mat-form-field>
+    
+                    </div>
+    
+       <!--
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+                        <mat-form-field fxFlex="1 0 120px">
+                            <input type="text" placeholder="Investment Freq" matInput formControlName="pfInvAmtFeq" [matAutocomplete]="auto1" [(ngModel)]="Mypfdetailcpy.pfinvamtfeq">
+                            <mat-autocomplete #auto1="matAutocomplete">
+                                <mat-option *ngFor="let freq of freqs" [value]="freq">
+                                    {{ freq }}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+    
+    
+                    </div>
+                -->
+                    <div fxFlex="1 0 120px" style="line-height: 0.5em;">
+    
+                        <mat-form-field fxFlex="1 0 120px">
+    
+                            <input type="number" matInput placeholder="Percent" formControlName="pfTargetIntRate" [(ngModel)]="Mypfdetailcpy.pftargetintrate">
+                            <span matSuffix>&nbsp;%</span>
+    
+                        </mat-form-field>
+    
+                    </div>
+    
+    
+    
+                </div>
+                <!--  This is for edit END-->
+    
+                <!-- This is for any new row >
+    
+                <div fxFlexLayout="row" fxLayoutAlign="center center">
+                </div-->
+                <div fxLayout="row" fxLayoutAlign="center center"  >
+                    <mat-expansion-panel fxFlex="1 1 auto">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title fxFlexAlign="center" style="color:rgb(74, 23, 190)">
+                                <h3>Mutual Fund List</h3>
+                            </mat-panel-title>
+                            <mat-panel-description fxFlexAlign="center">
+                                Funds Planned
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+
+                        <mffundlist [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
+                                        [mypfdet]="Mypfdetailcpy"
+                                        [onEdit]="onEdit"
+                                        [rbsstr]="'NEW'"
+                                        ></mffundlist>   
+                                        <!--https://gist.github.com/dherges/e1ecdd03a319fbd2a5495f54fbc1ea87#file-nested-form-component-ts -->      
+                                        
+                    </mat-expansion-panel>
+    
+                </div>
+
+    
+
+            </mat-card-content>
+    
+            <mat-card-actions>
+                <div fxLayout="row wrap" fxLayoutAlign="center center">
+    
+                    <button mat-raised-button (click)="cancel_cardedit(index)" color="warn" [fxHide]="!onEdit"><strong>Cancel</strong></button>
+    
+                    <button mat-raised-button (click)="UserEdit($event)" color="accent" [fxHide]="onEdit" [disabled]="EAMode"><strong>Edit</strong></button>
+                    <span fxFlex="30" [fxHide]="!onEdit"></span>
+                    
+                    <button mat-raised-button  (click)="pfexecute($event)" [fxHide]="onEdit || !showex()" style="background-color:lightgreen;"><strong>Add To Cart</strong></button>
+
+                    <button mat-raised-button (click)="save_cardedit(pfForm)" color="accent" [fxHide]="!onEdit"><strong> Save</strong></button>
+    
+    
+                </div>
+            </mat-card-actions>
+    
+        </mat-card>
+       
+    </form>
+  <!--  
+    <pre>{{pfmfdathold | json}}</pre>
+  
+        ##### DON NOT DELETED.  THIS IS FOR DEBUGGING ##### 
+
+
+    <div fxLayout="column">
+            <pre>{{pfForm.value | json}}</pre>
+    </div>
+    <div style="display: flex; justify-content: right;">
+            <div style="padding: 1em; border: 1px solid lightgray;">
+              <h5>pfForm Controls:</h5>
+              <pre>{{ pfForm.value | json }}</pre>
+            </div>
+            <div style="padding: 1em; border: 1px solid lightgray;">
+              <h5>Mypfdetailcpy</h5>
+              <pre>{{ Mypfdetailcpy | json }}</pre>
+            </div>
+            <div style="padding: 1em; border: 1px solid lightgray;">
+                    <h5>Mypfdetail</h5>
+                    <pre>{{ Mypfdetail | json }}</pre>
+                  </div>
+          </div>
+    <!--##### DON NOT DELETED.  THIS IS FOR DEBUGGING #####-->

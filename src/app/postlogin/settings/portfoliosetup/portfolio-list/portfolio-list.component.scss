@@ -1,0 +1,25 @@
+.shnormal{
+    width: 100%;
+  }
+
+
+  .shadow, .shadow:hover{
+    // border:3px solid lightgrey;
+     box-shadow: 10px 10px 5px #888888;
+     border:groove 1px green;
+     width: 97%;
+     
+   }
+
+
+   .circle {
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100px;
+    height: 100px;
+   /* background-color: blue;*/
+}
