@@ -29,9 +29,11 @@ export class OrderservService {
   validatefail = false;
   bsevalidationfail= false;
   paymentlink = false;
+  paylnk = '';
   // ordchanged= new BehaviorSubject("YES");
   sipamtacrosspf= new BehaviorSubject(0);
   onetimeamtacrosspf = new BehaviorSubject(0);
+  mynoti = new BehaviorSubject('');
   
 
   /*
@@ -208,6 +210,8 @@ order_payment(orderrec) {
     record => {
                 console.log('payment link');
                 console.log(record['body']);
+                this.paylnk = record['body'].html;
+                this.mynoti.next('success');
               },
     error =>  {
                 this.notify.update(error.message, 'error', 'alert');

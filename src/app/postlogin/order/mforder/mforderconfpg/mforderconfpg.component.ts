@@ -8,10 +8,18 @@ import { OrderservService } from '../../../../natservices/orderserv.service';
 })
 export class MforderconfpgComponent implements OnInit {
 
-  constructor(private orderservice: OrderservService, ) { }
+  constructor(private orderservice: OrderservService, ) {
+    this.orderservice.mynoti.subscribe {
+        this.popu();
+    }
+   }
 
   ngOnInit() {
   }
+
+popu() {
+  const myWindow = window.open(this.orderservice.paylnk, 'paymentlink', 'width=200,height=100');
+}
 
 
 }
