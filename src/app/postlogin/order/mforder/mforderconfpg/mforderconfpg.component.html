@@ -36,3 +36,9 @@
     waiting for payment link
   </p>
 </div>
+
+<button mat-raised-button (click)="popu()"> popup </button>
+
+<div *ngIf = "paymentpopshown">
+  Please check order payment status from Order history page after making your payment.
+</div>

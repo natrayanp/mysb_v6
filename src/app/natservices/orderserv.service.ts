@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DbservicesService } from '../natservices/dbservices.service';
 import { NotifyService } from '../natservices/notify.service';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import {Router} from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
@@ -33,8 +33,7 @@ export class OrderservService {
   // ordchanged= new BehaviorSubject("YES");
   sipamtacrosspf= new BehaviorSubject(0);
   onetimeamtacrosspf = new BehaviorSubject(0);
-  mynoti = new BehaviorSubject('');
-  
+  mynoti = new Subject();
 
   /*
   private _sipamt = new Subject<any | null>();
@@ -184,9 +183,10 @@ submitorder(succrecs) {
                 console.log('submitorder');
                 console.log(record['body']);
                 if (record['body'].failure_recs === null && (record['body'].success_recs.length > 0) ) {
-                  this.bsevalidationfail = true;
-                }else {
+                  this.bsevalidationfail = false;
                   this.order_payment(record['body'].success_recs);
+                }else {
+                  
                 }
                 this.orderplacment = false;
               },
@@ -212,6 +212,8 @@ order_payment(orderrec) {
                 console.log(record['body']);
                 this.paylnk = record['body'].html;
                 this.mynoti.next('success');
+                this.paymentlink = false;
+
               },
     error =>  {
                 this.notify.update(error.message, 'error', 'alert');

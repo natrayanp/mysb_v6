@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrderservService } from '../../../../natservices/orderserv.service';
 
 @Component({
@@ -9,17 +9,22 @@ import { OrderservService } from '../../../../natservices/orderserv.service';
 export class MforderconfpgComponent implements OnInit {
 
   constructor(private orderservice: OrderservService, ) {
-    this.orderservice.mynoti.subscribe {
-        this.popu();
-    }
+    this.orderservice.mynoti.subscribe(rrr => {
+        this.popu(this.orderservice.paylnk);
+    });
    }
-
+   paymentpopshown = false;
   ngOnInit() {
   }
 
-popu() {
-  const myWindow = window.open(this.orderservice.paylnk, 'paymentlink', 'width=200,height=100');
+popu(paylnk) {
+  // paylnk = 'http://bsestarmfdemo.bseindia.com/ClientOrderPayment.aspx?INtPvGmyOzdvVLRCAlRSyLep2wKQls+dik8REh8D/5RxmamsVZHD/ZCxz1O9mlWJWW2gsRaoYO5LPbCHI9HSrw==';
+  const myWindow = window.open(paylnk, 'paymentlink', 'toolbar=yes,scrollbars=yes,resizable=yes,top=0,left=0,width=4000,height=4000');
+  this.paymentpopshown = true;
 }
 
+ngOnDestroy() {
+  this.paymentpopshown = false;
+}
 
 }

@@ -45,7 +45,6 @@ export const ROUTES: Routes = [
          {path: 'mfreg',  component: BsestarmfregistrationComponent},
          {path: 'mfregsu',  component: BseregsuccComponent},
          {path: 'mfregupload',  component: BsereguploadComponent}  
-                   
     ]},     
   ]},  
   {path: 'authchk', component: LogincheckComponent},

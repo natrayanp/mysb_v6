@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map';
-import { FirebaseApp } from 'angularfire2';
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase';
-
-import { SetjwtService } from '../natservices/setjwtservice.service';
+import { DOCUMENT } from '@angular/platform-browser';
+// import { FirebaseApp } from 'angularfire2';
+// import { AngularFireAuth } from 'angularfire2/auth';
+// import * as firebase from 'firebase';
+import { OrderservService } from '../natservices/orderserv.service';
+// import { SetjwtService } from '../natservices/setjwtservice.service';
 
 @Component({
   selector: 'app-logincheck',
@@ -18,12 +17,16 @@ export class LogincheckComponent implements OnInit {
   data:any;
   natkey:any;
   
-  constructor(private router: Router, private route: ActivatedRoute,public app: AngularFireAuth, private setjwtservice: SetjwtService) {
-    
+  constructor(private router: Router, 
+              private route: ActivatedRoute,
+              // public app: AngularFireAuth, 
+              // private setjwtservice: SetjwtService, 
+              @Inject(DOCUMENT) private document: any,
+              private orderservice: OrderservService,) {
    }
 
   ngOnInit() {
-    this.natkey=this.route.snapshot.queryParamMap.get("natkey");
+   /* this.natkey=this.route.snapshot.queryParamMap.get("natkey");
     console.log("iam inside auth");
     if(localStorage.getItem("natjwt") === null){
         this.getUsers(this.natkey);       
@@ -31,9 +34,12 @@ export class LogincheckComponent implements OnInit {
         window.opener.location="/securedpg/dashboard";  
         window.close(); 
       }
-    
+    */
+   //this.goToUrl(this.orderservice.paylnk);
+   var link = 'http://bsestarmfdemo.bseindia.com/ClientOrderPayment.aspx?INtPvGmyOzdvVLRCAlRSyLep2wKQls+dik8REh8D/5RxmamsVZHD/ZCxz1O9mlWJWW2gsRaoYO5LPbCHI9HSrw==';
+   this.goToUrl(link);
   }
-
+/*
   getUsers(natkey) {
     this.setjwtservice
     .login(natkey)
@@ -49,5 +55,14 @@ export class LogincheckComponent implements OnInit {
         console.log('error ' + error);
       });
     }
+*/
+
+    goToUrl(link): void {
+      console.log(link);
+      window.location.href = link;
+      window.opener.location="/securedpg/dashboard";
+  }
+
+
 
 }
