@@ -15,19 +15,211 @@
 </div>
 
 
-<div *ngIf="orderservice.validatefail">
-  <mat-spinner></mat-spinner>
-  <p>
-    table with order details with failure validation
-  </p>
-</div>
+<div *ngIf="orderservice.bsevalidationfail" fxLayout = "column">
 
 
-<div *ngIf="orderservice.bsevalidationfail">
-  <mat-spinner></mat-spinner>
+    <div *ngIf="dataSourceval.data.length < 1">
+        <p>
+            You don't have any orders pending creation
+          </p>
+    </div>
+
+
+    <mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="dataSourceval.data.length>0">Orders Pending creation</mat-toolbar>
+    <div class="example-container mat-elevation-z8" *ngIf="dataSourceval.data.length>0">
+        <mat-table #table2 [dataSource]="dataSourceval" matSort>
+    
+      
+          
+          <ng-container matColumnDef="portfolio name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> portfolio name </mat-header-cell>
+            <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.orpfportfolioname}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+
+          </ng-container>
+      
+          
+          <ng-container matColumnDef="Fund name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fund name </mat-header-cell>
+            <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.orormffundname}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef><h4>{{Total}}</h4></mat-footer-cell>
+          </ng-container>
+          
+          
+          <ng-container matColumnDef="Amount">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
+            <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.mfor_amount}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef><h4>{{getTotalCost_suc()}}</h4></mat-footer-cell>
+          </ng-container>
+      
+          
+          <ng-container matColumnDef="errors">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> errors </mat-header-cell>
+            <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.mfor_valierrors}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+
+          </ng-container>
+      
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+        </mat-table>
+        <mat-paginator #paginator2
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20, 30, 50, 80, 100]"
+          [showFirstLastButtons]="true">
+        </mat-paginator>
+      </div>
+
+
+      <br>
+      <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div *ngIf="dataSourcesuc.data.length < 1">
+        <p>
+            You don't have any orders pending action
+          </p>
+    </div>
+
+    <!--div *ngIf="dataSourcesuc.data.length > 0">
+  
+        <p>
+          Table with order for pending payment
+        </p>
+      </div-->
+      <mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="dataSourcesuc.data.length>0">Orders Pending Payment</mat-toolbar>
+      <div class="example-container mat-elevation-z8" *ngIf="dataSourcesuc.data.length>0">
+          <mat-table #table [dataSource]="dataSourcesuc" matSort>
+      
+        
+            
+            <ng-container matColumnDef="portfolio name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> portfolio name </mat-header-cell>
+              <mat-cell *matCellDef="let elements" [style.color]="'green'"> {{elements.orpfportfolioname}} </mat-cell>
+              <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+
+            </ng-container>
+        
+            
+            <ng-container matColumnDef="Fund name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Fund name </mat-header-cell>
+              <mat-cell *matCellDef="let elements" [style.color]="'green'"> {{elements.orormffundname}} </mat-cell>
+              <mat-footer-cell *matFooterCellDef><h4>{{Total}}</h4></mat-footer-cell>
+            </ng-container>
+            
+            
+            <ng-container matColumnDef="Amount">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
+              <mat-cell *matCellDef="let elements" [style.color]="'green'"> {{elements.mfor_amount}} </mat-cell>
+              <mat-footer-cell *matFooterCellDef><h4>{{getTotalCost_suc()}}</h4></mat-footer-cell>
+            </ng-container>
+        
+            
+            <ng-container matColumnDef="errors">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> errors </mat-header-cell>
+              <mat-cell *matCellDef="let elements" [style.color]="'green'"> {{elements.mfor_valierrors}} </mat-cell>
+              <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+
+            </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+          </mat-table>
+          <mat-paginator #paginator
+            [pageSize]="5"
+            [pageSizeOptions]="[5, 10, 20, 30, 50, 80, 100]"
+            [showFirstLastButtons]="true">
+          </mat-paginator>
+        </div>
+
+
+        <br>
+        <br>
+        <div  *ngIf="dataSourcesuc.data.length>0">
+          <div fxLayout = "row" fxLayoutGap = "5px">
+            <!--  Cancel button not required as orders auto canceled by T+1 9:30 AM
+            <button mat-raised-button color="primary" (click) = "cancel_order()">Cancel</button>
+            -->
+            <button mat-raised-button color="primary" (click) = "getpaylnk()"  class="mat-elevation-z6">Proceed</button>
+          </div>
+          <h6 >*Orders not payed will be auto cancelled by exchange by T+1 (~9-9:30AM)</h6>
+      </div>
+  <!--div>
+  
   <p>
-    table with order details with failures at bse
+    Table with order details with failures at bse and internal
   </p>
+</div-->
+
+<mat-toolbar  class="mat-elevation-z8" *ngIf="dataSourcefai.data.length>0" style = "background: silver">Orders Failed validation</mat-toolbar>
+  <div class="example-container mat-elevation-z8" *ngIf="dataSourcefai.data.length>0">
+    <mat-table #table1 [dataSource]="dataSourcefai">
+
+  
+      
+      <ng-container matColumnDef="portfolio name">
+        <mat-header-cell *matHeaderCellDef> portfolio name </mat-header-cell>
+        <mat-cell *matCellDef="let elementf" [style.color]="'red'"> {{elementf.orpfportfolioname}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      </ng-container>
+  
+      
+      <ng-container matColumnDef="Fund name">
+        <mat-header-cell *matHeaderCellDef> Fund name </mat-header-cell>
+        <mat-cell *matCellDef="let elementf" [style.color]="'red'"> {{elementf.orormffundname}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef><h4>{{Total}}</h4></mat-footer-cell>
+      </ng-container>
+      
+      
+      <ng-container matColumnDef="Amount">
+        <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+        <mat-cell *matCellDef="let elementf" [style.color]="'red'"> {{elementf.mfor_amount}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef><h4>{{getTotalCost_fai()}}</h4></mat-footer-cell>
+      </ng-container>
+  
+      
+      <ng-container matColumnDef="errors">
+        <mat-header-cell *matHeaderCellDef> errors </mat-header-cell>
+        <mat-cell *matCellDef="let elementf" [style.color]="'red'"> {{elementf.mfor_valierrors}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      </ng-container>
+  
+      <!--tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr-->
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+    </mat-table>
+    <mat-paginator #paginator1      
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20, 30, 50, 80, 100]"
+      [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div>
+
+
+
+
 </div>
 
 <div *ngIf="orderservice.paymentlink">
@@ -37,8 +229,8 @@
   </p>
 </div>
 
-<button mat-raised-button (click)="popu()"> popup </button>
+<!--button mat-raised-button (click)="testscreens()"> popup </button-->
 
-<div *ngIf = "paymentpopshown">
-  Please check order payment status from Order history page after making your payment.
+<div *ngIf = "orderservice.paymentpopshown">
+  Please check order payment status from Order history page.
 </div>

@@ -5,8 +5,9 @@
          <!-- sidenav content -->
          <span>&nbsp;</span>
          <a type ="button" mat-icon-button routerLink="/securedpg/dashboard" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">poll</mat-icon> &nbsp; Dashboard</a>
-
+         
          <a type ="button" mat-icon-button routerLink="/securedpg/orders" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">shopping_basket</mat-icon> &nbsp; Orders</a>
+         <a type ="button" mat-icon-button [routerLink]="['/securedpg/mfordcof','full']" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">card_travel</mat-icon> &nbsp; Pending payment</a>
          <a type ="button" mat-icon-button routerLink="/securedpg/dashboard" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">history</mat-icon> &nbsp; Order History</a>
          <a type ="button" mat-icon-button routerLink="/securedpg/dashboard" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">account_balance</mat-icon> &nbsp; Holdings</a>
          <a type ="button" mat-icon-button routerLink="/securedpg/fundalloc" fxFlexAlign ="center" style="padding-left:10px; font-size:20px"> <mat-icon fxFlexAlign ="center">tune</mat-icon> &nbsp; Fund Allocation</a>
@@ -20,6 +21,7 @@
          
          <!--a *ngIf = "userstate.userstatus == 'U'" type ="button" mat-icon-button routerLink="/securedpg/settings/mfregupload" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">file_upload</mat-icon> &nbsp; Docupload</a-->
          <a mat-icon-button routerLink="/securedpg/settings/mfregupload" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">file_upload</mat-icon> &nbsp; Docupload</a>
+         <a mat-icon-button routerLink="/securedpg/settings/mandate" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">file_upload</mat-icon> &nbsp; Mandates</a>
          
          <a type ="button" mat-icon-button fxFlexAlign ="center" style="padding-left:10px; font-size:20px" (click)=navss.close()> <mat-icon fxFlexAlign ="center">folder_open</mat-icon> &nbsp; close NAV</a>
 

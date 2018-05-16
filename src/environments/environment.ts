@@ -67,4 +67,5 @@ export const environment = {
   mfsubmitmorder: 'mfordersubmit',
   mfvalidatemorder: 'mfordervalidate',
   mforderpayment: 'mforderpayment',
+  mforderdetails: 'mforderdetails',
 };

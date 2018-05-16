@@ -1,15 +1,15 @@
-<mat-toolbar color ="primary" >
+<mat-toolbar class="mat-elevation-z8" color ="primary" >
     <label>&nbsp; <strong>Portfolio Maintenance</strong> &nbsp;</label>
   </mat-toolbar>
 
 <mat-toolbar color ="primary" >
     
-    <button mat-raised-button color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon"><strong>Add</strong></button>
+    <button mat-raised-button color="warn" class="mat-elevation-z8" (click)="addNewPortfolio()" [disabled] = "isEAModeon"><strong>Add</strong></button>
     <span>&nbsp;</span>
     <span fxFlex></span>
-    <label>&nbsp; Total Portfolios: &nbsp;</label>
+    <label >&nbsp; Total Portfolios: &nbsp;</label>
     <mat-chip-list>
-    <mat-chip selected="true" style="background-color:white; color:black; font:30px"><strong>{{totalpf || 0}}</strong></mat-chip>
+    <mat-chip class="mat-elevation-z8" selected="true" style="background-color:white; color:black; font:30px"><strong>{{totalpf || 0}}</strong></mat-chip>
   </mat-chip-list>
     
     

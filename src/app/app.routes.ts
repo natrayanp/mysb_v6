@@ -26,12 +26,18 @@ import { BseregsuccComponent } from './postlogin/settings/bseregsucc/bseregsucc.
 import { BsereguploadComponent } from './postlogin/settings/bseregupload/bseregupload.component';
 import { MforderconfpgComponent } from './postlogin/order/mforder/mforderconfpg/mforderconfpg.component';
 
+import { MandateComponent } from './postlogin/settings/mandate/mandate.component';
+import { MandateregComponent } from './postlogin/settings/mandate/mandatereg/mandatereg.component';
+import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/mandateinq.component';
+import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
+
 export const ROUTES: Routes = [
 
   { path: 'home',  component: HomeComponent},
+  {path: 'paylnk', component: MfpaynaviComponent},
   { path: 'securedpg',  component: PostloginComponent, children: [
     { path: 'orders',  component: mfpfwiseorderlistComponent },
-    { path: 'mfordcof',  component: MforderconfpgComponent },
+    { path: 'mfordcof/:id',  component: MforderconfpgComponent },
   /*  {path: 'orders',  component: OrderComponent, children: [
       {path: 'pfwise',  component: PfwiseorderlistComponent},
       {path: 'stwise',  component: StkwiseorderComponent},
@@ -40,20 +46,22 @@ export const ROUTES: Routes = [
     {path: 'dashboard',  component: DashboardComponent},
     {path: 'fundalloc',  component: FundallocatComponent},
     {path: 'settings',  component: SettingsComponent, children: [
-         {path: 'usersetup',  component: UserListComponent},
-         {path: 'portfoliosetup',  component: PortfolioListComponent},
-         {path: 'mfreg',  component: BsestarmfregistrationComponent},
-         {path: 'mfregsu',  component: BseregsuccComponent},
-         {path: 'mfregupload',  component: BsereguploadComponent}  
-    ]},     
-  ]},  
-  {path: 'authchk', component: LogincheckComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'forgot', component: ForgotpassComponent},
-  {path: 'signup', component: SignupComponent},
-  {path: 'chart', component: ChartComponent},
-  {path: 'data', component: PfserviceService},
-  
-  { path: '',  component: HomeComponent}
-];
+          {path: 'usersetup',  component: UserListComponent},
+          {path: 'portfoliosetup',  component: PortfolioListComponent},
+          {path: 'mfreg',  component: BsestarmfregistrationComponent},
+          {path: 'mfregsu',  component: BseregsuccComponent},
+          {path: 'mfregupload',  component: BsereguploadComponent},
+          {path: 'mandate',  component: MandateinqComponent, children: [
+              {path: 'mandatereg',  component: MandateregComponent}
+          ]},
+    ]},
+  ]},
+    // {path: 'authchk', component: LogincheckComponent},
+    {path: 'login', component: LoginComponent},
+    {path: 'forgot', component: ForgotpassComponent},
+    {path: 'signup', component: SignupComponent},
+    {path: 'chart', component: ChartComponent},
+    {path: 'data', component: PfserviceService},
+    { path: '',  component: HomeComponent}
 
+  ];

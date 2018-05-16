@@ -1,6 +1,6 @@
 <form [formGroup]="pfForm">
         
-        <mat-card [ngClass]="{'shadow':onEdit}" style="margin-top:15px; border-radius:10px" >
+        <mat-card [ngClass]="{'shadow':onEdit}" style="margin-top:15px; border-radius:10px" class="mat-elevation-z8">
             <mat-card-header>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 1 100%">
     
@@ -226,14 +226,14 @@
             <mat-card-actions>
                 <div fxLayout="row wrap" fxLayoutAlign="center center">
     
-                    <button mat-raised-button (click)="cancel_cardedit(index)" color="warn" [fxHide]="!onEdit"><strong>Cancel</strong></button>
+                    <button mat-raised-button  (click)="cancel_cardedit(index)" color="warn" [fxHide]="!onEdit" class="mat-elevation-z8"><strong>Cancel</strong></button>
     
-                    <button mat-raised-button (click)="UserEdit($event)" color="accent" [fxHide]="onEdit" [disabled]="EAMode"><strong>Edit</strong></button>
+                    <button mat-raised-button (click)="UserEdit($event)" color="accent" [fxHide]="onEdit" [disabled]="EAMode" class="mat-elevation-z4"><strong>Edit</strong></button>
                     <span fxFlex="30" [fxHide]="!onEdit"></span>
                     
-                    <button mat-raised-button  (click)="pfexecute($event)" [fxHide]="onEdit || !showex()" style="background-color:lightgreen;"><strong>Add To Cart</strong></button>
+                    <button mat-raised-button  (click)="pfexecute($event)" [fxHide]="onEdit || !showex()" style="background-color:lightgreen;" class="mat-elevation-z8"><strong>Add To Cart</strong></button>
 
-                    <button mat-raised-button (click)="save_cardedit(pfForm)" color="accent" [fxHide]="!onEdit"><strong> Save</strong></button>
+                    <button mat-raised-button (click)="save_cardedit(pfForm)" color="accent" [fxHide]="!onEdit" class="mat-elevation-z8"><strong> Save</strong></button>
     
     
                 </div>

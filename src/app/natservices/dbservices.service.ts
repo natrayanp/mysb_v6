@@ -160,6 +160,14 @@ dbaction(screen,functionality,data){
             var apiurl = environment.mforderUrl + '/' + environment.mforderpayment;
             return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
       }
+      case 'mforderdetails':
+      {
+            console.log('inside mf order details');
+            console.log(JSON.stringify(data));
+            var apiurl = environment.mforderUrl + '/' + environment.mforderdetails;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
+
   }
 }
 

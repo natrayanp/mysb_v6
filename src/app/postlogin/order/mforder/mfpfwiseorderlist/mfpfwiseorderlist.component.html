@@ -1,12 +1,12 @@
 
 
-<mat-toolbar color ="primary" >
+<mat-toolbar class="mat-elevation-z8" color ="primary" >
         <label>&nbsp; <strong>Order Placement</strong> &nbsp;</label>
         <span>&nbsp;</span>  
         <p style="font-size:8px"> *Changes will be lost if it is not saved before navigating away from this page</p>    
       </mat-toolbar>
-      <mat-toolbar color ="primary" *ngIf="fundnames !='allused'">
-      <button mat-raised-button color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon || !editmode" ><strong>Add portfolio for order addition</strong></button>
+      <mat-toolbar class="mat-elevation-z8" color ="primary" *ngIf="fundnames !='allused'">
+      <button mat-raised-button class="mat-elevation-z8" color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon || !editmode" ><strong>Add portfolio for order addition</strong></button>
     </mat-toolbar>
 
     <br>
@@ -31,19 +31,24 @@
         </mfpfwiseordercard>
     
     
+
+    </div>
+
     <div *ngIf="orderservice.mforderdetails?.length <1" [fxShow]="!orderservice.onfetch">
         <h3>You don't have any pending Orders</h3>
         <p>Check Order History for orders already placed</p>
-        <p>Click on Add to Place New Orders</p>
+        <p>Click on "Add portfolio for order addition" to Place New Orders</p>
     </div>
     
     <div *ngIf="orderservice.onfetch" class="circle">
         <br>
         <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
     </div>
-    </div>
+
+
+
 </div> 
-    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" >
+    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" *ngIf="orderservice.mforderdetails?.length >0">
         <br>
         
         <mat-card>
@@ -53,7 +58,7 @@
                 <br>
                 <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
             </div>
-            <div fxLayout="row">                
+            <div fxLayout="row" [fxHide]="pfdetail?.pfmflist.length < 0">                
                 <!--span fxFlex></span>
                 <button mat-raised-button color="accent" *ngIf="!showit">Place order</button>
                 <button mat-raised-button color="accent" *ngIf="showit" (click)="refshclk()">Refresh</button-->

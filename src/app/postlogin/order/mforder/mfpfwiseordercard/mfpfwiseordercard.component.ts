@@ -24,6 +24,7 @@ export class mfpfwiseordercardComponent implements OnInit {
   // fundnames: string[];
   mfsummed = 0;
   stksummed = 0;
+  
   today = new Date();
   @Input() Mypfdetail;
   @Input() OnAdd;
@@ -161,7 +162,7 @@ pfconfirm(Mypfdetailcpy) {
   // this.EAMode = false;
   console.log(Mypfdetailcpy);
   console.log(this.myindex);
-  this.orderservice.formref=this.pfForm;
+  this.orderservice.formref = this.pfForm;
   this.cardsave.emit(this.myindex);
 }
 

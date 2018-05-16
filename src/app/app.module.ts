@@ -35,6 +35,7 @@ import { MatButtonToggleModule } from '@angular/material';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTreeModule } from '@angular/material/tree';
 
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -97,6 +98,10 @@ import { BseregsuccComponent } from './postlogin/settings/bseregsucc/bseregsucc.
 import { BsereguploadComponent } from './postlogin/settings/bseregupload/bseregupload.component';
 import { NoticommComponent } from './commonmodule/notificationmodule/noticomm/noticomm.component';
 import { MforderconfpgComponent } from './postlogin/order/mforder/mforderconfpg/mforderconfpg.component';
+import { MandateregComponent } from './postlogin/settings/mandate/mandatereg/mandatereg.component';
+import { MandateComponent } from './postlogin/settings/mandate/mandate.component';
+import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/mandateinq.component';
+import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
 
 
 
@@ -138,7 +143,11 @@ import { MforderconfpgComponent } from './postlogin/order/mforder/mforderconfpg/
     BseregsuccComponent,
     BsereguploadComponent,
     NoticommComponent,
-    MforderconfpgComponent
+    MforderconfpgComponent,
+    MandateregComponent,
+    MandateComponent,
+    MandateinqComponent,
+    MfpaynaviComponent
   ],
   imports: [
       BrowserModule,
@@ -172,6 +181,7 @@ import { MforderconfpgComponent } from './postlogin/order/mforder/mforderconfpg/
       MatCheckboxModule,
       MatProgressBarModule,
       MatDividerModule,
+      MatTreeModule,
     RouterModule.forRoot(ROUTES ,{enableTracing: true }),
    // NotifymoduleModule,
     AngularFireModule.initializeApp(environment.firebase),

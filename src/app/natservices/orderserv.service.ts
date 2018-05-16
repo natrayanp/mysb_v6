@@ -30,10 +30,18 @@ export class OrderservService {
   bsevalidationfail= false;
   paymentlink = false;
   paylnk = '';
+  allsubmitrecs: any;
+  show = false; // this is used to display 
+  urltyp = '';
   // ordchanged= new BehaviorSubject("YES");
   sipamtacrosspf= new BehaviorSubject(0);
   onetimeamtacrosspf = new BehaviorSubject(0);
-  mynoti = new Subject();
+  mynoti = new BehaviorSubject('nofull');
+  error_recs = [];
+  success_recs = [];
+  vali_comp_recs = [];
+  paymentpopshown = false;
+  has_ontime_rec = false;
 
   /*
   private _sipamt = new Subject<any | null>();
@@ -145,32 +153,42 @@ getfundnames() {
 
 }
 
-
 placeorder() {
     this.validateprogress = true;
-    this.router.navigate(['securedpg/mfordcof']);
+    this.router.navigate(['securedpg/mfordcof', '']);
     this.dbserivce.dbaction('mforder', 'validate', this.mforderdetails )
   .subscribe(
     record => {
-                console.log('fetchfetch');
                 console.log(record['body']);
-                if ((record['body'].failure_recs === null || record['body'].failure_recs.length < 1)
-                      && (record['body'].success_recs.length > 0) ) {
+                this.has_ontime_rec = record['body'].has_ontime_rec;
+                if(this.has_ontime_rec) {
+
+                if (record['body'].success_recs !== null && record['body'].success_recs.length > 0) {
                   this.submitorder(record['body'].success_recs);
                   this.validateprogress = false;
                   this.orderplacment = true;
-                }
-                if (record['body'].success_recs.length > 0) {
+                } else if (record['body'].failure_recs.length > 0 ) {
+                  this.orderplacment = false;
+                  this.bsevalidationfail = true;
                   console.log('data error');
+                  this.error_recs = record['body'].failure_recs;
+                } else if ((record['body'].success_recs === null || record['body'].success_recs.length < 1 ) &&
+                          (record['body'].failure_recs === null || record['body'].failure_recs.length < 1)) {
+                  this.notify.update('Internal error occured, please contact assetscube', 'error', 'alert');
+                  this.validateprogress = false;
                 }
+
+
+              } else {
+                  console.log('no one time records');
+                  this.paymentpopshown = true;
+              }
               },
     error =>  {
                 this.notify.update(error.message, 'error', 'alert');
                 this.validateprogress = false;
-                this.validatefail = true;
               }
           ) ;
-
 }
 
 submitorder(succrecs) {
@@ -182,43 +200,123 @@ submitorder(succrecs) {
     record => {
                 console.log('submitorder');
                 console.log(record['body']);
-                if (record['body'].failure_recs === null && (record['body'].success_recs.length > 0) ) {
-                  this.bsevalidationfail = false;
-                  this.order_payment(record['body'].success_recs);
-                }else {
-                  
+                this.allsubmitrecs = record['body'];
+                console.log(this.allsubmitrecs);
+                this.subsub(record['body']);
+                if (this.error_recs.length < 1 && this.success_recs.length > 0) {
+                  this.order_payment_link(this.success_recs);
+                } else {
+
                 }
-                this.orderplacment = false;
               },
     error =>  {
-                this.orderplacment = false;
-                this.bsevalidationfail = true;
+
+                this.validatefail = false;
 
                 this.notify.update(error.message, 'error', 'alert');
               }
           ) ;
-
 }
 
-order_payment(orderrec) {
+order_payment_link(orderrec) {
   this.bsevalidationfail = false;
   this.paymentlink = true;
-  console.log("insider order payment");
+  console.log('insider order payment');
   console.log(orderrec);
   this.dbserivce.dbaction('mforder', 'payment', orderrec )
   .subscribe(
     record => {
                 console.log('payment link');
                 console.log(record['body']);
-                this.paylnk = record['body'].html;
+                this.urltyp = record['body'].url_type;
+                this.paylnk = record['body'].payment_url;
+                console.log(this.paylnk);
                 this.mynoti.next('success');
                 this.paymentlink = false;
 
               },
     error =>  {
                 this.notify.update(error.message, 'error', 'alert');
+                this.paymentlink = true;
               }
           ) ;
+}
+
+
+get_order_detailss() {
+
+  const orderrec = {'fromdate': null, 'todate' : null, 'order_type': 'One Time', 'record_type': 'ALL' };
+
+  this.dbserivce.dbaction('mforder', 'details', orderrec )
+  .subscribe(
+    record => {
+      console.log(record['body']);
+      this.subsub(record['body']);
+    }
+  ) ;
+}
+
+
+ordercancel(recs) {
+  console.log(recs);
+  console.log(this.allsubmitrecs);
+}
+
+
+subsub(rec) {
+  console.log(rec);
+  rec = rec.one_time;
+  console.log(rec);
+
+if ((rec.failure_recs === null || rec.bse_failure_recs === null)
+      && (rec.success_recs.length > 0) ) {
+        this.bsevalidationfail = false;
+        this.order_payment_link(rec.success_recs);
+} else {
+      console.log('data error');
+      this.orderplacment = false;
+      this.bsevalidationfail = true;
+      this.error_recs = [];
+      console.log(this.error_recs );
+      console.log(rec.failure_recs);
+      // if (rec.failure_recs !== null && rec.failure_recs !== '') {
+      if (rec.failure_recs.length > 0) {
+            rec.failure_recs.forEach(element => {
+              this.error_recs.push(element);
+            });
+      }
+      console.log(this.error_recs );
+
+      // if (rec.bse_failure_recs !== null && rec.bse_failure_recs !== '') {
+        if (rec.bse_failure_recs.length > 0) {
+            rec.bse_failure_recs.forEach(element => {
+              this.error_recs.push(element);
+            });
+      }
+      console.log(this.error_recs );
+      // this.error_recs = this.error_recs[0];
+      this.success_recs = rec.paypending_recs;
+      console.log(this.success_recs);
+      
+
+      this.vali_comp_recs = rec.success_recs;
+      console.log(this.vali_comp_recs );
+
+}
+this.orderplacment = false;
+this.mynoti.next('ordersub');
+
+}
+
+
+reset() {
+  this.validateprogress = false;
+  this.orderplacment = false;
+  this.validatefail = false;
+  this.bsevalidationfail= false;
+  this.paymentlink = false;
+  this.success_recs = [];
+  this.error_recs = [];
 }
 
 }
