@@ -48,17 +48,53 @@
 
 
 </div> 
-    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" *ngIf="orderservice.mforderdetails?.length >0">
+    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" *ngIf="orderservice.mforderdetails?.length >0" [fxHide]="(orderservice.sipamtacrosspf.value < 1) && (orderservice.onetimeamtacrosspf.value < 1)">
         <br>
         
         <mat-card>
-            <p>Every Month you Invest : {{orderservice.sipamtacrosspf.value}} </p>
-            <p>Amount you pay now : {{orderservice.onetimeamtacrosspf.value}} </p>
+            <div fxLayout="column" [fxHide]="orderservice.sipamtacrosspf.value < 1">
+                    <p>Every Month you Invest : {{orderservice.sipamtacrosspf.value}} </p>            
+                    <mat-form-field>
+                            <mat-select placeholder="Mandate id"[(value)] = "orderservice.selected_mandate" >
+                              <mat-option *ngFor="let mandateid of mandateids" [value]="mandateid" (onSelectionChange) = "sipmanselchg($event)">
+                                {{ mandateid.mandate_id }}
+                              </mat-option>
+                            </mat-select>
+                            <mat-hint *ngIf="orderservice.selected_mandate != ''" style = "color : green">{{orderservice.selected_mandate?.bank}} , {{orderservice.selected_mandate?.branch}}</mat-hint>
+                        </mat-form-field>
+                        <!--   -->
+                        
+                    <br>
+            </div>
+
+            <mat-divider [fxHide]="(orderservice.sipamtacrosspf.value < 1) || (orderservice.onetimeamtacrosspf.value < 1)"></mat-divider>
+            <br>
+            <div fxLayout="column" [fxHide]="orderservice.onetimeamtacrosspf.value < 1">
+                    <p>Amount you pay now : {{orderservice.onetimeamtacrosspf.value}} </p>
+
+
+                      <mat-form-field>
+                            <mat-select placeholder="Account to pay from" [(value)] = "orderservice.selected_accnum" >
+                              <mat-option *ngFor="let regisacct of regisaccts" [value]="regisacct" (onSelectionChange) = "sipmanselchg($event)">
+                                {{ regisacct.acnum }}
+                              </mat-option>
+                            </mat-select>
+                            <mat-hint *ngIf="orderservice.selected_accnum != ''" style = "color : green">{{orderservice.selected_accnum?.bank}}, {{orderservice.selected_accnum?.branch}}</mat-hint>
+                        </mat-form-field>
+
+                          <!-- -->
+                        
+                </div>
+
+            <br>
+            <mat-divider [fxHide]="(orderservice.sipamtacrosspf.value < 1) && (orderservice.onetimeamtacrosspf.value < 1)"></mat-divider>
+            
+            <br>
             <div *ngIf="orderservice.onsavelater" class="circle">
                 <br>
                 <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
             </div>
-            <div fxLayout="row" [fxHide]="pfdetail?.pfmflist.length < 0">                
+            <div fxLayout="row"  fxLayoutGap = "5px" [fxHide]="(orderservice.sipamtacrosspf.value < 1) && (orderservice.onetimeamtacrosspf.value < 1)">                
                 <!--span fxFlex></span>
                 <button mat-raised-button color="accent" *ngIf="!showit">Place order</button>
                 <button mat-raised-button color="accent" *ngIf="showit" (click)="refshclk()">Refresh</button-->
@@ -71,6 +107,11 @@
                 </div>
                 
             </div>
+
+
+
+
+ 
             
         </mat-card>   
 

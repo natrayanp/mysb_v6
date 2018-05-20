@@ -102,6 +102,7 @@ import { MandateregComponent } from './postlogin/settings/mandate/mandatereg/man
 import { MandateComponent } from './postlogin/settings/mandate/mandate.component';
 import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/mandateinq.component';
 import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
+import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.component';
 
 
 
@@ -147,7 +148,8 @@ import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynav
     MandateregComponent,
     MandateComponent,
     MandateinqComponent,
-    MfpaynaviComponent
+    MfpaynaviComponent,
+    MforderhistComponent
   ],
   imports: [
       BrowserModule,

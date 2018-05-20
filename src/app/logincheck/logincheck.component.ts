@@ -45,8 +45,6 @@ export class LogincheckComponent implements OnInit {
     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
    console.log(this.orderservice.paylnk);
    this.longDesc = this.domSanitizer.bypassSecurityTrustHtml(this.orderservice.paylnk);
-
-   
   }
 /*
   getUsers(natkey) {

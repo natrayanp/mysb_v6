@@ -78,12 +78,48 @@ export class mfpfwiseorderlistComponent implements OnInit {
     ]
   };
 
+  selected_mandate = '';
+  selected_accnum = '';
+
+  mandateids = [{
+    'mandate_id':'BSE000000016247',
+    'bank' : 'ICICI BANK LIMITED',
+    'branch': 'CHENNAI - CENOTAPH ROAD',
+    'bank_id' : 'IC01',
+    'mandate_type' : 'I'  // ISIP OR XSIP
+  },
+  {
+    'mandate_id':'BSE000000016248',
+    'bank' : 'ICICI BANK LIMITED',
+    'branch': 'CHENNAI - CENOTAPH ROAD',
+    'bank_id' : 'IC01',
+    'mandate_type' : 'I'  // ISIP OR XSIP
+  }];
+// 1114 in mforder.py
+  regisaccts = [{
+    'acnum': '123456789123',
+    'bank' : 'ICICI BANK',
+    'branch': 'Egmore',
+    'bank_id' : 'ICI',
+    'ifsc': 'ICIC0000001',
+    'mode' : 'DIRECT'
+  },
+  {
+    'acnum': '12345671',
+    'bank' : 'ALLAHABAT BANK',
+    'branch': 'Guindy',
+    'bank_id' : 'AL02',
+    'ifsc': 'ALALAL00001',
+    'mode' : 'Modal'
+  },
+
+];
 
   addonestklst(){
     this.onAddpfmode=!this.onAddpfmode;
   }
 
-  public orForm : FormGroup;
+public orForm : FormGroup;
 
 constructor(private orfb: FormBuilder,
             private notify: NotifyService,
@@ -189,6 +225,8 @@ cardasave(ind) {
 getordchanged(){  
   if (this.orderservice.ordchanged =="YES"){
     console.log("inside getorderchanged true");
+
+
     this.showit = true;
     
   }else{
@@ -221,8 +259,19 @@ backbtn(){
   this.editmode = true;
 }
 
+showbtn(){
+  if (this.pfdetails.pfmflist.length < 0) {
+    return false;
+  } else {
+    return true;
+  }
+
+  }
 
 
-
+sipmanselchg(evn) {
+  console.log("selection change triggered");
+  console.log(evn);
+}
 
 }

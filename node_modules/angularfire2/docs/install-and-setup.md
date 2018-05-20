@@ -38,7 +38,7 @@ Now that you have a new project setup, install AngularFire and Firebase from npm
 
 ### 4. Add Firebase config to environments variable
 
-Open `/src/environments/environment.ts` and add your Firebase configuration:
+Open `/src/environments/environment.ts` and add your Firebase configuration. You can find your project configuration in [the Firebase Console](https://console.firebase.google.com). From the project overview page, click **Add Firebase to your web app**.
 
 ```ts
 export const environment = {
@@ -58,8 +58,6 @@ export const environment = {
 
 Open `/src/app/app.module.ts`, inject the Firebase providers, and specify your Firebase configuration.
 
-This can be found in your project at [the Firebase Console](https://console.firebase.google.com):
-
 ```ts
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -76,7 +74,6 @@ import { environment } from '../environments/environment';
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}
-
 ```
 
 #### Custom FirebaseApp Names
@@ -100,7 +97,7 @@ After adding the AngularFireModule you also need to add modules for the individu
  - AngularFirestoreModule
  - AngularFireAuthModule
  - AngularFireDatabaseModule
- - AngularFireStorageModule (Future release)
+ - AngularFireStorageModule
  - AngularFireMessagingModule (Future release)
 
 #### Adding the Firebase Database and Auth Modules
@@ -113,6 +110,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 
@@ -121,13 +119,13 @@ import { environment } from '../environments/environment';
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase, 'my-app-name'), // imports firebase/app needed for everything
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
-    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    AngularFireStorageModule // imports firebase/storage only needed for storage features
   ],
   declarations: [ AppComponent ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}
-
 ```
 
 ### 7. Inject AngularFirestore
@@ -148,7 +146,6 @@ export class AppComponent {
 
   }
 }
-
 ```
 
 ### 8. Bind to a list
@@ -158,7 +155,7 @@ In `/src/app/app.component.ts`:
 ```ts
 import { Component } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',

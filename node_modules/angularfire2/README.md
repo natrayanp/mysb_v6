@@ -35,7 +35,7 @@ npm install firebase angularfire2 --save
 ```ts
 import { Component } from '@angular/core';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -85,6 +85,9 @@ Firebase offers two cloud-based, client-accessible database solutions that suppo
 ### Authenticate users
 
 - [Getting started with Firebase Authentication](docs/auth/getting-started.md)
+
+## Upload files
+- [Getting started with Cloud Storage](docs/storage/storage.md)
 
 ### Deploy to Firebase Hosting
 

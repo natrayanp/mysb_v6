@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular
 import { OrderservService } from '../../../../natservices/orderserv.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-mforderconfpg',
@@ -11,9 +11,9 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 })
 export class MforderconfpgComponent implements OnInit {
 
-  displayedColumns = ['portfolio name', 'Fund name', 'Amount', 'errors'];
-  // dataSourcesuc = [];
-  dataSourcesuc = new MatTableDataSource();
+  displayedColumns = ['Unique Order#', 'portfolio name', 'Fund name', 'Amount', 'errors'];
+
+  dataSourcesppy = new MatTableDataSource();
   dataSourcefai = new MatTableDataSource();
   dataSourceval = new MatTableDataSource();
 
@@ -25,21 +25,17 @@ export class MforderconfpgComponent implements OnInit {
   // paymentpopshown = false;
   totalSizesuc = 0;
   totalSizefai = 0;
+  email = new FormControl([Validators.required]);
 
   @ViewChild(MatSort) set appBacon3(sort: MatSort) {
     this.sort = sort;
-    this.dataSourcesuc.sort = this.sort;
+    this.dataSourcesppy.sort = this.sort;
   }
-  
-  /*
-  this.dataSourcefai.sort = this.sort1;
-  
-  @ViewChild(MatSort) sort1: MatSort;
-*/
+
 
   @ViewChild( 'paginator') set appBacon(paginator: MatPaginator) {
     this.paginator = paginator;
-    this.dataSourcesuc.paginator = this.paginator;
+    this.dataSourcesppy.paginator = this.paginator;
   }
 
 
@@ -61,18 +57,16 @@ export class MforderconfpgComponent implements OnInit {
 
 
     this.orderservice.mynoti.subscribe(rrr => {
-      if( rrr === 'success'){
+      if ( rrr === 'success') {
       if (this.orderservice.urltyp === 'dirpayhtml') {
         this.popucomp();
       } else if (this.orderservice.urltyp === 'bsepayurl') {
         this.popu(this.orderservice.paylnk);
       }
       } else if ( rrr === 'ordersub'){
-        this.dataSourcesuc.data = this.orderservice.success_recs;
+        this.dataSourcesppy.data = this.orderservice.ppy_success_recs;
         this.dataSourcefai.data = this.orderservice.error_recs;
         this.dataSourceval.data = this.orderservice.vali_comp_recs;
-        // this.totalSizesuc = this.orderservice.success_recs.length;
-        // this.totalSizefai = this.orderservice.error_recs.length;
       }
 
     });
@@ -83,17 +77,9 @@ export class MforderconfpgComponent implements OnInit {
 
 
    ngOnInit() {
-    this.orderservice.reset();
-    // this.paginator = paginator;
-    // this.dataSourcesuc.paginator = this.paginator;
-    // this.dataSourcefai.paginator = this.paginator1;
-    this.route.params.subscribe( params => {
-      if ( params.id === 'full') {
-        this.testscreens();
-      }
-    } );
-
+    this.initpage();
   // this.dataSource = this.orderservice.error_recs;
+  
   }
 
 
@@ -107,19 +93,24 @@ popu(paylnk) {
   window.location.href = paylnk;
 }
 
-
-testscreens() {
-  this.orderservice.get_order_detailss();
-  this.orderservice.mynoti.subscribe(
-    rrr => {
-      this.dataSourcesuc.data = this.orderservice.success_recs;
-      this.dataSourcefai.data = this.orderservice.error_recs;
-      this.dataSourceval.data = this.orderservice.vali_comp_recs;
-
-      // this.totalSizesuc = this.orderservice.success_recs.length;
-      // this.totalSizefai = this.orderservice.error_recs.length;
+initpage() {
+  this.orderservice.reset();
+  this.route.params.subscribe( params => {
+    if ( params.id === 'full') {
+      this.orderservice.fullload = true;
+      this.orderservice.showtables = true;
+      this.get_fulldata();
+    } else {
+      this.orderservice.validateprogress = true;
+      this.orderservice.fullload = false;
     }
-    );
+  } );
+  console.log(this.orderservice.validateprogress);
+}
+
+
+get_fulldata() {
+  this.orderservice.get_order_detailss();
 }
 
 
@@ -130,17 +121,30 @@ ngonDestroy() {
 }
 
 getTotalCost_suc() {
-  return this.orderservice.success_recs.map(t => t.mfor_amount).reduce((acc, value) => acc + value, 0);
+  return this.orderservice.vali_comp_recs.map(t => t.mfor_amount).reduce((acc, value) => acc + value, 0);
 }
 
 getTotalCost_fai() {
   return this.orderservice.error_recs.map(t => t.mfor_amount).reduce((acc, value) => acc + value, 0);
 }
 
-getpaylnk() {
-  this.orderservice.order_payment_link(this.orderservice.success_recs);
+getTotalCost_penpay() {
+  return this.orderservice.ppy_success_recs.map(t => t.mfor_amount).reduce((acc, value) => acc + value, 0);
 }
 
+getpaylnk() {
+  const vali = this.orderservice.ppy_success_recs;
+  this.orderservice.reset();
+  this.orderservice.fullload = false;
+  this.orderservice.order_payment_link(vali);
+}
 
+send_submit() {
+  const vali = this.orderservice.vali_comp_recs;
+  this.orderservice.reset();
+  this.orderservice.fullload = false;
+  this.orderservice.orderplacment = true;
+  this.orderservice.submitorder(vali);
+}
 
 }

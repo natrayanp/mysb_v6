@@ -10,7 +10,7 @@ The `AngularFirestoreDocument` service is a wrapper around the native Firestore 
 ```ts
 import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +37,7 @@ export class AppComponent {
 
 With the exception of the `valueChanges()`, each streaming method returns an Observable of `DocumentChangeAction[]`.
 
-A `DocumentChangeAction` gives you the `type` and `payload` properties. The `type` tells when what `DocumentChangeType` operation occured (`added`, `modified`, `removed`). The `payload` property is a `DocumentChange` which provides you important metdata about the change and a `doc` property which is the `DocumentSnapshot`.
+A `DocumentChangeAction` gives you the `type` and `payload` properties. The `type` tells when what `DocumentChangeType` operation occured (`added`, `modified`, `removed`). The `payload` property is a `DocumentChange` which provides you important metadata about the change and a `doc` property which is the `DocumentSnapshot`.
 
 ```ts
 interface DocumentChangeAction {
@@ -68,7 +68,7 @@ interface DocumentSnapshot {
 There are multiple ways of streaming collection data from Firestore.
 
 ### `valueChanges()`
-**What is it?** - Returns an Observable of document data. All Snapshot metadata is stripped and just the method provides only the data.
+**What is it?** - Returns an Observable of document data. All Snapshot metadata is stripped. This method provides only the data.
 
 **Why would you use it?** - When you just need the object data. No document metadata is attached which makes it simple to render to a view.
 

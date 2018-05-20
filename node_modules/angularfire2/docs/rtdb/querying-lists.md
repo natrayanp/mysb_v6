@@ -51,12 +51,14 @@ To enable dynamic queries one should lean on RxJS Operators like `switchMap`.
 
 An RxJS Subject is imported below. A Subject is like an Observable, but can multicast to many Observers. Subjects are like EventEmitters: they maintain a registry of many listeners. See, [What is a Subject](http://reactivex.io/rxjs/manual/overview.html#subject) for more information.
 
-When we call [`switchMap` on the Subject](https://www.learnrxjs.io/operators/transformation/switchmap.html), we cap map each value to a new Observable; in this case a database query.
+When we call [`switchMap` on the Subject](https://www.learnrxjs.io/operators/transformation/switchmap.html), we can map each value to a new Observable; in this case a database query.
 
 ```ts
 const size$ = new Subject<string>();
-const queryObservable = size$.switchMap(size =>
-  db.list('/items', ref => ref.orderByChild('size').equalTo(size)).valueChanges()
+const queryObservable = size$.pipe(
+  switchMap(size => 
+    db.list('/items', ref => ref.orderByChild('size').equalTo(size)).valueChanges()
+  )
 );
 
 // subscribe to changes
@@ -78,10 +80,8 @@ size$.next('small');
 ```ts
 import { Component } from '@angular/core';
 import { AngularFireDatabase, AngularFireAction } from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Subscription } from 'rxjs/Subscription';
-import 'rxjs/add/operator/switchMap';
+import { Observable, Subscription, BehaviorSubject } from 'rxjs';
+import { switchMap } 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -115,10 +115,12 @@ export class AppComponent {
   
   constructor(db: AngularFireDatabase) {
     this.size$ = new BehaviorSubject(null);
-    this.items$ = this.size$.switchMap(size =>
-      db.list('/items', ref =>
-        size ? ref.orderByChild('size').equalTo(size) : ref
-      ).snapshotChanges()
+    this.items$ = this.size$.pipe(
+      switchMap(size => 
+        db.list('/items', ref =>
+          size ? ref.orderByChild('size').equalTo(size) : ref
+        ).snapshotChanges()
+      )
     );
   }
   filterBy(size: string|null) {
