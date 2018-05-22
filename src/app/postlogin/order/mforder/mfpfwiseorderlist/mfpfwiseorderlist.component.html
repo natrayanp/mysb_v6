@@ -7,6 +7,8 @@
       </mat-toolbar>
       <mat-toolbar class="mat-elevation-z8" color ="primary" *ngIf="fundnames !='allused'">
       <button mat-raised-button class="mat-elevation-z8" color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon || !editmode" ><strong>Add portfolio for order addition</strong></button>
+      <span fxFlex = "20px"></span>
+      <button mat-raised-button  color="warn" *ngIf="showit && editmode" (click)="savordforlater()"><strong>Save for Later</strong></button>
     </mat-toolbar>
 
     <br>
@@ -99,7 +101,7 @@
                 <button mat-raised-button color="accent" *ngIf="!showit">Place order</button>
                 <button mat-raised-button color="accent" *ngIf="showit" (click)="refshclk()">Refresh</button-->
                 <div *ngIf="!orderservice.onsavelater" class="circle">
-                    <button mat-raised-button color="accent" *ngIf="showit && editmode" (click)="savordforlater()">Save for Later</button>
+                    <!--button mat-raised-button color="accent" *ngIf="showit && editmode" (click)="savordforlater()">Save for Later</button-->
                     <button mat-raised-button color="accent" *ngIf="!editmode" (click)="backbtn()">back</button>
                     <span fxFlex></span>
                     <button mat-raised-button color="accent" *ngIf="editmode" (click)="placeorder()">Place order</button>

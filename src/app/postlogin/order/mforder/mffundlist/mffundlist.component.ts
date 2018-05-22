@@ -82,17 +82,24 @@ constructor(private orfb: FormBuilder,
   populateform() {
     console.log(this.rbsstr);
     console.log(this.mypfdet);
-    if(this.mypfdet.pfmflist != null) {
+    const screen_id = this.mypfdet.pfscreen;
+    console.log(screen_id);
+    if( this.mypfdet.pfmflist != null) {
       this.mypfdet.pfmflist.forEach((recor, index1) => {
         console.log(recor);
         this.addonemflist(recor);
+        if (screen_id === 'ord') {
+          recor.ormffndnameedit = 'noedit';
+        }
         if (recor.ormffundorderlists != null) {
           recor.ormffundorderlists.forEach((recor1, index2) => {
+            console.log(recor.pfscreen);
 
             this.addonefundordlist(
               (<FormArray>this.orForm.controls.orpflists).controls,
               recor1,
               index1);
+
            })
         }
     })
