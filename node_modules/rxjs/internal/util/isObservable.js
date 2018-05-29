@@ -6,7 +6,7 @@ var Observable_1 = require("../Observable");
  * @param obj the object to test
  */
 function isObservable(obj) {
-    return obj && obj instanceof Observable_1.Observable || (typeof obj.lift === 'function' && typeof obj.subscribe === 'function');
+    return !!obj && (obj instanceof Observable_1.Observable || (typeof obj.lift === 'function' && typeof obj.subscribe === 'function'));
 }
 exports.isObservable = isObservable;
 //# sourceMappingURL=isObservable.js.map

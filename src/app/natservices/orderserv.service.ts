@@ -335,6 +335,11 @@ order_payment_link(orderrec) {
 
 get_order_detailss() {
   this.fetchingdata = true;
+
+  this.ppy_success_recs = [];
+  this.error_recs = [];
+  this.vali_comp_recs = [];
+
   const orderrec = {'fromdate': null, 'todate' : null, 'order_type': 'One Time', 'record_type': 'ALL' };
   this.dbserivce.dbaction('mforder', 'details', orderrec )
   .subscribe(
@@ -342,6 +347,12 @@ get_order_detailss() {
       console.log(record['body']);
       this.prepare_data_for_tables(record['body']);
       this.fetchingdata = false;
+    },
+    error => {
+      console.log('error');
+      this.fetchingdata = false;
+      this.notify.update(error.message, 'error', 'alert');
+
     }
   ) ;
 }
@@ -405,6 +416,22 @@ reset() {
   this.paylnk = '';
   this.showtables = false;
   this.failpaylink = false;
+}
+
+get_order_status() {
+  this.dbserivce.dbaction('mfpay', 'status', '' )
+  .subscribe(
+    record => {
+      console.log('payment status');
+      console.log(record['body']);
+      this.router.navigate(['/securedpg/orderhistory']);
+    },
+    error => {
+      console.log('error');
+      this.notify.update(error.message, 'error', 'alert');
+
+    }
+  ) ;
 }
 
 }

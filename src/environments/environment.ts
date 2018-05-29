@@ -68,4 +68,5 @@ export const environment = {
   mfvalidatemorder: 'mfordervalidate',
   mforderpayment: 'mforderpayment',
   mforderdetails: 'mforderdetails',
+  mfordpaystaus: 'mfordpaystatus',
 };

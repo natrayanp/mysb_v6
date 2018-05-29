@@ -28,7 +28,6 @@ var WebSocketSubject = /*@__PURE__*/ (function (_super) {
         }
         else {
             var config = _this._config = tslib_1.__assign({}, DEFAULT_WEBSOCKET_CONFIG);
-            config.WebSocketCtor = WebSocket;
             _this._output = new Subject();
             if (typeof urlConfigOrSource === 'string') {
                 config.url = urlConfigOrSource;
@@ -40,7 +39,10 @@ var WebSocketSubject = /*@__PURE__*/ (function (_super) {
                     }
                 }
             }
-            if (!config.WebSocketCtor) {
+            if (!config.WebSocketCtor && WebSocket) {
+                config.WebSocketCtor = WebSocket;
+            }
+            else if (!config.WebSocketCtor) {
                 throw new Error('no WebSocket constructor can be found');
             }
             _this.destination = new ReplaySubject();
@@ -62,7 +64,7 @@ var WebSocketSubject = /*@__PURE__*/ (function (_super) {
     };
     /**
      * Creates an {@link Observable}, that when subscribed to, sends a message,
-     * defined be the `subMsg` function, to the server over the socket to begin a
+     * defined by the `subMsg` function, to the server over the socket to begin a
      * subscription to data over that socket. Once data arrives, the
      * `messageFilter` argument will be used to select the appropriate data for
      * the resulting Observable. When teardown occurs, either due to

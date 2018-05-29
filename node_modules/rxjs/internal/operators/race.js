@@ -10,6 +10,7 @@ var race_1 = require("../observable/race");
  * @return {Observable} An Observable that mirrors the output of the first Observable to emit an item.
  * @method race
  * @owner Observable
+ * @deprecated Deprecated in favor of static race.
  */
 function race() {
     var observables = [];

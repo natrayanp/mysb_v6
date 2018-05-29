@@ -3539,7 +3539,7 @@ function identity(x) {
  * @param obj the object to test
  */
 function isObservable(obj) {
-    return obj && obj instanceof Observable || (typeof obj.lift === 'function' && typeof obj.subscribe === 'function');
+    return !!obj && (obj instanceof Observable || (typeof obj.lift === 'function' && typeof obj.subscribe === 'function'));
 }
 
 /**
@@ -3595,6 +3595,7 @@ var TimeoutError = /** @class */ (function (_super) {
     __extends(TimeoutError, _super);
     function TimeoutError() {
         var _this = _super.call(this, 'Timeout has occurred') || this;
+        _this.name = 'TimeoutError';
         Object.setPrototypeOf(_this, TimeoutError.prototype);
         return _this;
     }
@@ -6039,6 +6040,7 @@ function range(start, count, scheduler) {
     if (count === void 0) { count = 0; }
     return new Observable(function (subscriber) {
         var index = 0;
+        var current = start;
         if (scheduler) {
             return scheduler.schedule(dispatch$6, 0, {
                 index: index, count: count, start: start, subscriber: subscriber
@@ -6050,7 +6052,7 @@ function range(start, count, scheduler) {
                     subscriber.complete();
                     break;
                 }
-                subscriber.next(start++);
+                subscriber.next(current++);
                 if (subscriber.closed) {
                     break;
                 }
@@ -7274,63 +7276,6 @@ var BufferWhenSubscriber = /** @class */ (function (_super) {
     return BufferWhenSubscriber;
 }(OuterSubscriber));
 
-/**
- * Catches errors on the observable to be handled by returning a new observable or throwing an error.
- *
- * <img src="./img/catch.png" width="100%">
- *
- * @example <caption>Continues with a different Observable when there's an error</caption>
- *
- * Observable.of(1, 2, 3, 4, 5)
- *   .map(n => {
- * 	   if (n == 4) {
- * 	     throw 'four!';
- *     }
- *	   return n;
- *   })
- *   .catch(err => Observable.of('I', 'II', 'III', 'IV', 'V'))
- *   .subscribe(x => console.log(x));
- *   // 1, 2, 3, I, II, III, IV, V
- *
- * @example <caption>Retries the caught source Observable again in case of error, similar to retry() operator</caption>
- *
- * Observable.of(1, 2, 3, 4, 5)
- *   .map(n => {
- * 	   if (n === 4) {
- * 	     throw 'four!';
- *     }
- * 	   return n;
- *   })
- *   .catch((err, caught) => caught)
- *   .take(30)
- *   .subscribe(x => console.log(x));
- *   // 1, 2, 3, 1, 2, 3, ...
- *
- * @example <caption>Throws a new error when the source Observable throws an error</caption>
- *
- * Observable.of(1, 2, 3, 4, 5)
- *   .map(n => {
- *     if (n == 4) {
- *       throw 'four!';
- *     }
- *     return n;
- *   })
- *   .catch(err => {
- *     throw 'error in source. Details: ' + err;
- *   })
- *   .subscribe(
- *     x => console.log(x),
- *     err => console.log(err)
- *   );
- *   // 1, 2, 3, error in source. Details: four!
- *
- * @param {function} selector a function that takes as arguments `err`, which is the error, and `caught`, which
- *  is the source observable, in case you'd like to "retry" that observable by returning it again. Whatever observable
- *  is returned by the `selector` will be used to continue the observable chain.
- * @return {Observable} An observable that originates from either the source or the observable returned by the
- *  catch `selector` function.
- * @name catchError
- */
 function catchError(selector) {
     return function catchErrorOperatorFunction(source) {
         var operator = new CatchOperator(selector);
@@ -8972,6 +8917,45 @@ function elementAt(index, defaultValue) {
     return function (source) { return source.pipe(filter(function (v, i) { return i === index; }), take(1), hasDefaultValue
         ? defaultIfEmpty(defaultValue)
         : throwIfEmpty(function () { return new ArgumentOutOfRangeError(); })); };
+}
+
+/* tslint:enable:max-line-length */
+/**
+ * Returns an Observable that emits the items you specify as arguments after it finishes emitting
+ * items emitted by the source Observable.
+ *
+ * @param {...T} values - Items you want the modified Observable to emit last.
+ * @param {Scheduler} [scheduler] - A {@link IScheduler} to use for scheduling
+ * the emissions of the `next` notifications.
+ * @return {Observable} An Observable that emits the items emitted by the source Observable
+ *  and then emits the items in the specified Iterable.
+ * @method endWith
+ * @owner Observable
+ */
+function endWith() {
+    var array = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        array[_i] = arguments[_i];
+    }
+    return function (source) {
+        var scheduler = array[array.length - 1];
+        if (isScheduler(scheduler)) {
+            array.pop();
+        }
+        else {
+            scheduler = null;
+        }
+        var len = array.length;
+        if (len === 1 && !scheduler) {
+            return concat(source, scalar(array[0]));
+        }
+        else if (len > 0) {
+            return concat(source, fromArray(array, scheduler));
+        }
+        else {
+            return concat(source, empty$1(scheduler));
+        }
+    };
 }
 
 /**
@@ -10749,6 +10733,7 @@ function publishReplay(bufferSize, windowTime, selectorOrScheduler, scheduler) {
  * @return {Observable} An Observable that mirrors the output of the first Observable to emit an item.
  * @method race
  * @owner Observable
+ * @deprecated Deprecated in favor of static race.
  */
 function race$1() {
     var observables = [];
@@ -11705,7 +11690,9 @@ var SkipUntilSubscriber = /** @class */ (function (_super) {
     };
     SkipUntilSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
         this.hasValue = true;
-        this.innerSubscription.unsubscribe();
+        if (this.innerSubscription) {
+            this.innerSubscription.unsubscribe();
+        }
     };
     SkipUntilSubscriber.prototype.notifyComplete = function () {
         /* do nothing */
@@ -13524,6 +13511,7 @@ var _operators = Object.freeze({
 	distinctUntilChanged: distinctUntilChanged,
 	distinctUntilKeyChanged: distinctUntilKeyChanged,
 	elementAt: elementAt,
+	endWith: endWith,
 	every: every,
 	exhaust: exhaust,
 	exhaustMap: exhaustMap,
@@ -14053,13 +14041,17 @@ var TestScheduler = /** @class */ (function (_super) {
             expectObservable: this.expectObservable.bind(this),
             expectSubscriptions: this.expectSubscriptions.bind(this),
         };
-        var ret = callback(helpers);
-        this.flush();
-        TestScheduler.frameTimeFactor = prevFrameTimeFactor;
-        this.maxFrames = prevMaxFrames;
-        this.runMode = false;
-        AsyncScheduler.delegate = undefined;
-        return ret;
+        try {
+            var ret = callback(helpers);
+            this.flush();
+            return ret;
+        }
+        finally {
+            TestScheduler.frameTimeFactor = prevFrameTimeFactor;
+            this.maxFrames = prevMaxFrames;
+            this.runMode = false;
+            AsyncScheduler.delegate = undefined;
+        }
     };
     return TestScheduler;
 }(VirtualTimeScheduler));
@@ -14375,7 +14367,14 @@ var AjaxSubscriber = /** @class */ (function (_super) {
             xhrError_1.progressSubscriber = progressSubscriber;
         }
         function xhrReadyStateChange(e) {
-            var _a = xhrReadyStateChange, subscriber = _a.subscriber, progressSubscriber = _a.progressSubscriber, request = _a.request;
+            return;
+        }
+        xhr.onreadystatechange = xhrReadyStateChange;
+        xhrReadyStateChange.subscriber = this;
+        xhrReadyStateChange.progressSubscriber = progressSubscriber;
+        xhrReadyStateChange.request = request;
+        function xhrLoad(e) {
+            var _a = xhrLoad, subscriber = _a.subscriber, progressSubscriber = _a.progressSubscriber, request = _a.request;
             if (this.readyState === 4) {
                 // normalize IE9 bug (http://bugs.jquery.com/ticket/1450)
                 var status_1 = this.status === 1223 ? 204 : this.status;
@@ -14402,10 +14401,10 @@ var AjaxSubscriber = /** @class */ (function (_super) {
                 }
             }
         }
-        xhr.onreadystatechange = xhrReadyStateChange;
-        xhrReadyStateChange.subscriber = this;
-        xhrReadyStateChange.progressSubscriber = progressSubscriber;
-        xhrReadyStateChange.request = request;
+        xhr.onload = xhrLoad;
+        xhrLoad.subscriber = this;
+        xhrLoad.progressSubscriber = progressSubscriber;
+        xhrLoad.request = request;
     };
     AjaxSubscriber.prototype.unsubscribe = function () {
         var _a = this, done = _a.done, xhr = _a.xhr;
@@ -14445,13 +14444,13 @@ var AjaxError = /** @class */ (function (_super) {
     __extends(AjaxError, _super);
     function AjaxError(message, xhr, request) {
         var _this = _super.call(this, message) || this;
+        _this.name = 'AjaxError';
         _this.message = message;
         _this.xhr = xhr;
         _this.request = request;
         _this.status = xhr.status;
         _this.responseType = xhr.responseType || request.responseType;
         _this.response = parseXhrResponse(_this.responseType, xhr);
-        _this.name = 'AjaxError';
         Object.setPrototypeOf(_this, AjaxError.prototype);
         return _this;
     }
@@ -14487,6 +14486,7 @@ var AjaxTimeoutError = /** @class */ (function (_super) {
     __extends(AjaxTimeoutError, _super);
     function AjaxTimeoutError(xhr, request) {
         var _this = _super.call(this, 'ajax timeout', xhr, request) || this;
+        _this.name = 'AjaxTimeoutError';
         Object.setPrototypeOf(_this, AjaxTimeoutError.prototype);
         return _this;
     }
@@ -14525,7 +14525,6 @@ var WebSocketSubject = /** @class */ (function (_super) {
         }
         else {
             var config = _this._config = __assign({}, DEFAULT_WEBSOCKET_CONFIG);
-            config.WebSocketCtor = WebSocket;
             _this._output = new Subject();
             if (typeof urlConfigOrSource === 'string') {
                 config.url = urlConfigOrSource;
@@ -14537,7 +14536,10 @@ var WebSocketSubject = /** @class */ (function (_super) {
                     }
                 }
             }
-            if (!config.WebSocketCtor) {
+            if (!config.WebSocketCtor && WebSocket) {
+                config.WebSocketCtor = WebSocket;
+            }
+            else if (!config.WebSocketCtor) {
                 throw new Error('no WebSocket constructor can be found');
             }
             _this.destination = new ReplaySubject();
@@ -14559,7 +14561,7 @@ var WebSocketSubject = /** @class */ (function (_super) {
     };
     /**
      * Creates an {@link Observable}, that when subscribed to, sends a message,
-     * defined be the `subMsg` function, to the server over the socket to begin a
+     * defined by the `subMsg` function, to the server over the socket to begin a
      * subscription to data over that socket. Once data arrives, the
      * `messageFilter` argument will be used to select the appropriate data for
      * the resulting Observable. When teardown occurs, either due to

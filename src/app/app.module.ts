@@ -103,6 +103,7 @@ import { MandateComponent } from './postlogin/settings/mandate/mandate.component
 import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/mandateinq.component';
 import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
 import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.component';
+import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/mfpayconfland.component';
 
 
 
@@ -149,7 +150,8 @@ import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.
     MandateComponent,
     MandateinqComponent,
     MfpaynaviComponent,
-    MforderhistComponent
+    MforderhistComponent,
+    MfpayconflandComponent
   ],
   imports: [
       BrowserModule,
@@ -184,7 +186,7 @@ import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.
       MatProgressBarModule,
       MatDividerModule,
       MatTreeModule,
-    RouterModule.forRoot(ROUTES ,{enableTracing: true }),
+    RouterModule.forRoot(ROUTES /*,{enableTracing: true }*/),
    // NotifymoduleModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,

@@ -41,7 +41,9 @@ class SkipUntilSubscriber extends OuterSubscriber {
     }
     notifyNext(outerValue, innerValue, outerIndex, innerIndex, innerSub) {
         this.hasValue = true;
-        this.innerSubscription.unsubscribe();
+        if (this.innerSubscription) {
+            this.innerSubscription.unsubscribe();
+        }
     }
     notifyComplete() {
         /* do nothing */

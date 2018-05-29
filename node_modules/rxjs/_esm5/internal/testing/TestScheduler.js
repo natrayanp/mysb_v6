@@ -353,13 +353,17 @@ var TestScheduler = /*@__PURE__*/ (function (_super) {
             expectObservable: this.expectObservable.bind(this),
             expectSubscriptions: this.expectSubscriptions.bind(this),
         };
-        var ret = callback(helpers);
-        this.flush();
-        TestScheduler.frameTimeFactor = prevFrameTimeFactor;
-        this.maxFrames = prevMaxFrames;
-        this.runMode = false;
-        AsyncScheduler.delegate = undefined;
-        return ret;
+        try {
+            var ret = callback(helpers);
+            this.flush();
+            return ret;
+        }
+        finally {
+            TestScheduler.frameTimeFactor = prevFrameTimeFactor;
+            this.maxFrames = prevMaxFrames;
+            this.runMode = false;
+            AsyncScheduler.delegate = undefined;
+        }
     };
     return TestScheduler;
 }(VirtualTimeScheduler));

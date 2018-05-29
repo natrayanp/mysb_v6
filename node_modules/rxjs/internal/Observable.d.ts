@@ -1,10 +1,9 @@
 import { Operator } from './Operator';
 import { Subscriber } from './Subscriber';
 import { Subscription } from './Subscription';
-import { TeardownLogic } from './types';
+import { TeardownLogic, OperatorFunction, PartialObserver, Subscribable } from './types';
 import { iif } from './observable/iif';
 import { throwError } from './observable/throwError';
-import { OperatorFunction, PartialObserver, Subscribable } from '../internal/types';
 /**
  * A representation of any set of values over any amount of time. This is the most basic building block
  * of RxJS.

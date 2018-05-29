@@ -36,6 +36,7 @@ function range(start, count, scheduler) {
     if (count === void 0) { count = 0; }
     return new Observable_1.Observable(function (subscriber) {
         var index = 0;
+        var current = start;
         if (scheduler) {
             return scheduler.schedule(dispatch, 0, {
                 index: index, count: count, start: start, subscriber: subscriber
@@ -47,7 +48,7 @@ function range(start, count, scheduler) {
                     subscriber.complete();
                     break;
                 }
-                subscriber.next(start++);
+                subscriber.next(current++);
                 if (subscriber.closed) {
                     break;
                 }

@@ -77,6 +77,7 @@ export class MforderconfpgComponent implements OnInit {
 
 
    ngOnInit() {
+    this.orderservice.paylnk = '';
     this.initpage();
   // this.dataSource = this.orderservice.error_recs;
   
@@ -84,6 +85,7 @@ export class MforderconfpgComponent implements OnInit {
 
 
 popucomp() {
+  console.log('inside popucomp');
   //<html> <META HTTP-EQUIV="Pragma" CONTENT="no-cache"> <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997, 08:21:57 GMT"> <script language = "javascript"> function hitBankURL() { errorPage.submit(); } </script> <body onload = "javascript:hitBankURL()"> <Form name='errorPage' method='post' action='http://localhost:8000/orpost'> <input type='hidden' name='msg' value='BSEDSTRBTR|NA|NA|NA|6589.00|NA|NA|NA|NA|NA|R|bsedstrbtr|NA|NA|0002|NA|NA|NA|NA|NA|NA|NA|NA|ERR122|Sorry. We were unable to process your transaction. We apologise for the inconvenience and request you to try again later.|64AE03066AF1021BAB837772C26A9A6FB5C762A55EBB5A5312797A8A49D148D3'> <input name='hidRequestId' type='hidden' value='PGIBL1000'> <input name='hidOperation' type='hidden' value='B101'> </Form> </Body> </html>";
   this.router.navigate(['/paylnk']);
 }

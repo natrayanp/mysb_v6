@@ -31,15 +31,19 @@ import { MandateregComponent } from './postlogin/settings/mandate/mandatereg/man
 import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/mandateinq.component';
 import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
 import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.component';
+import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/mfpayconfland.component';
+
 
 export const ROUTES: Routes = [
 
   { path: 'home',  component: HomeComponent},
   {path: 'paylnk', component: MfpaynaviComponent},
+  {path: 'paycomp/:id', component: MfpayconflandComponent},
   { path: 'securedpg',  component: PostloginComponent, children: [
     { path: 'orders',  component: mfpfwiseorderlistComponent },
     { path: 'mfordcof/:id',  component: MforderconfpgComponent },
     { path: 'orderhistory',  component: MforderhistComponent },
+    
   /*  {path: 'orders',  component: OrderComponent, children: [
       {path: 'pfwise',  component: PfwiseorderlistComponent},
       {path: 'stwise',  component: StkwiseorderComponent},

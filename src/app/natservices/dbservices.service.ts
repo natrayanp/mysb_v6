@@ -167,6 +167,13 @@ dbaction(screen,functionality,data){
             var apiurl = environment.mforderUrl + '/' + environment.mforderdetails;
             return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
       }
+      case 'mfpaystatus':
+      {
+            console.log('inside mf payment status');
+            console.log(JSON.stringify(data));
+            var apiurl = environment.mforderUrl + '/' + environment.mfordpaystaus;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
 
   }
 }

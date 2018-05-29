@@ -46,7 +46,9 @@ var SkipUntilSubscriber = /*@__PURE__*/ (function (_super) {
     };
     SkipUntilSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
         this.hasValue = true;
-        this.innerSubscription.unsubscribe();
+        if (this.innerSubscription) {
+            this.innerSubscription.unsubscribe();
+        }
     };
     SkipUntilSubscriber.prototype.notifyComplete = function () {
         /* do nothing */

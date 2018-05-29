@@ -59,7 +59,7 @@ emptyinitfundordlist= {
   // holding select SIP data
   ormfsipdthold: '',
   ormfselctedsip: '',
-  orormfprodtype: 'MF', // MF,EQ,IN
+  orormfprodtype: 'BSEMF', // MF,EQ,IN
   orormftrantype: '', // New(N),Mod(M),Cxl(C)
   orormfwhattran: '',  // Pur (PU),Redem (RE) ,SwiOut(SO) ,SwiIn (SI)
   ormffndstatus: this.rbsstr
