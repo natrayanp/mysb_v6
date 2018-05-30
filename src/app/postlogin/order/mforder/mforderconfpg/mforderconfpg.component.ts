@@ -16,18 +16,23 @@ export class MforderconfpgComponent implements OnInit {
   dataSourcesppy = new MatTableDataSource();
   dataSourcefai = new MatTableDataSource();
   dataSourceval = new MatTableDataSource();
+  dataSourcesppp = new MatTableDataSource();
+
 
   paginator: MatPaginator;
   paginator1: MatPaginator;
   paginator2: MatPaginator;
+  paginator3: MatPaginator;
+
   sort: MatSort;
+  
   Total = 'Total Amt';
   // paymentpopshown = false;
   totalSizesuc = 0;
   totalSizefai = 0;
   email = new FormControl([Validators.required]);
 
-  @ViewChild(MatSort) set appBacon3(sort: MatSort) {
+  @ViewChild(MatSort) set appBacon4(sort: MatSort) {
     this.sort = sort;
     this.dataSourcesppy.sort = this.sort;
   }
@@ -50,6 +55,10 @@ export class MforderconfpgComponent implements OnInit {
     this.dataSourceval.paginator = this.paginator2;
   }
 
+  @ViewChild('paginator3') set appBacon3(paginator3: MatPaginator) {
+    this.paginator3 = paginator3;
+    this.dataSourcesppp.paginator = this.paginator3;
+  }
 
   constructor(private orderservice: OrderservService,
               private router: Router,
@@ -67,6 +76,7 @@ export class MforderconfpgComponent implements OnInit {
         this.dataSourcesppy.data = this.orderservice.ppy_success_recs;
         this.dataSourcefai.data = this.orderservice.error_recs;
         this.dataSourceval.data = this.orderservice.vali_comp_recs;
+        this.dataSourcesppp.data = this.orderservice.pay_initiated_recs;
       }
 
     });

@@ -41,6 +41,7 @@ export class OrderservService {
   error_recs = [];
   ppy_success_recs = [];
   vali_comp_recs = [];
+  pay_initiated_recs = [];
   paymentpopshown = false;
   has_ontime_rec = false;
   selected_mandate = '';
@@ -339,6 +340,7 @@ get_order_detailss() {
   this.ppy_success_recs = [];
   this.error_recs = [];
   this.vali_comp_recs = [];
+  
 
   const orderrec = {'fromdate': null, 'todate' : null, 'order_type': 'One Time', 'record_type': 'ALL' };
   this.dbserivce.dbaction('mforder', 'details', orderrec )
@@ -396,6 +398,10 @@ prepare_data_for_tables(rec) {
     // VAS records
     this.vali_comp_recs = rec.val_success_recs;
     console.log(this.vali_comp_recs );
+
+    /// PPP records
+    this.pay_initiated_recs = rec.pay_initiated_recs;
+    console.log(this.pay_initiated_recs);
 
     // }
     // this.orderplacment = false;
