@@ -60,7 +60,7 @@ export class MforderconfpgComponent implements OnInit {
     this.dataSourcesppp.paginator = this.paginator3;
   }
 
-  constructor(private orderservice: OrderservService,
+  constructor(public orderservice: OrderservService,
               private router: Router,
               private route: ActivatedRoute){
 

@@ -14,7 +14,7 @@ export class StkwiseorderComponent implements OnInit {
   showadvanced = false;
   isallexpanded=true;
   exchangenames=["NSE","BSE"];
-  
+  onAddmode = false;
 
   ngOnInit() {
     this.fetchpfdata();

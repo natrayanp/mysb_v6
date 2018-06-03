@@ -116,6 +116,10 @@ getdata(){
           );
           
 }
+
+addNewAllocAmt(){
+  console.log('sindie addNewAllocAmt');
+}
 /*
 addNewAllocAmt(){
 

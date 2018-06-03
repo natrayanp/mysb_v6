@@ -5,7 +5,7 @@
         <span>&nbsp;</span>  
         <p style="font-size:8px"> *Changes will be lost if it is not saved before navigating away from this page</p>    
       </mat-toolbar>
-      <mat-toolbar class="mat-elevation-z8" color ="primary" *ngIf="fundnames !='allused'">
+      <mat-toolbar class="mat-elevation-z8" color ="primary" *ngIf="this.fundnames.length==0">
       <button mat-raised-button class="mat-elevation-z8" color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon || !editmode" ><strong>Add portfolio for order addition</strong></button>
       <span fxFlex = "20px"></span>
       <button mat-raised-button  color="warn" *ngIf="showit && editmode" (click)="savordforlater()"><strong>Save for Later</strong></button>

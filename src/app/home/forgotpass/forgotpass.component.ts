@@ -60,7 +60,13 @@ export class ForgotpassComponent implements OnInit {
       }
 
        
+      logout(){
+        console.log('logout');
+      }
 
+      print(){
+        console.log('logout');
+      }
 
 
   }

@@ -113,7 +113,7 @@ FormCardpopulate(){
   this.Mypfdetailcpy=JSON.parse(JSON.stringify(this.Mypfdetail));
 }
 
-cancel_cardedit(i){
+cancel_cardedit(){
   event.preventDefault();
   this.onEdit=!this.onEdit; 
   this.cardcancel.emit(this.myindex);

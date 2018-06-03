@@ -71,7 +71,7 @@
     private oAuthLogin(provider: firebase.auth.AuthProvider) {
       return this.afAuth.auth.signInWithPopup(provider)
         .then((credential) => {
-          this.credential=credential;
+          this.credential = credential;
           // this.idToken=this.afAuth.app.auth().currentUser.getIdToken();
           return("success");
           //return this.updateUserData(credential.user);

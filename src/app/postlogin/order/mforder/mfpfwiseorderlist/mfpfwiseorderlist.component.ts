@@ -33,7 +33,7 @@ export class mfpfwiseorderlistComponent implements OnInit {
   totalpf: number;
   isEAModeon = false;
   editmode = true;
-
+  alluse = 'allused';
   pfdetails;
   pfcpydetails;
 
@@ -123,7 +123,7 @@ public orForm : FormGroup;
 
 constructor(private orfb: FormBuilder,
             private notify: NotifyService,
-            private orderservice: OrderservService,
+            public orderservice: OrderservService,
             private dbserivce: DbservicesService,
             private cdRef: ChangeDetectorRef) { }
 
@@ -168,7 +168,7 @@ constructor(private orfb: FormBuilder,
                         this.isEAModeon = true;
                     } else {
                       this.notify.update("All Porfolios' are already in order list","info","alert");
-                        this.fundnames.push('allused');
+                        // this.fundnames.push('allused');
                     }
                   /*  let fundnamess = record['body'][0];
                     fundnamess.filter(recs => recs.pfportfolionam == );
@@ -177,7 +177,8 @@ constructor(private orfb: FormBuilder,
         }
       );
 
-    }else if (this.fundnames[0] === 'allused') {
+   // }else if (this.fundnames[0] === 'allused') {
+    }else if (this.fundnames.length === 0) {
       console.log("inside [] allused");
       this.notify.update("All Porfolios' are already in order list","info","alert");
     

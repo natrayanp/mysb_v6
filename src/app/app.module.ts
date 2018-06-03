@@ -91,7 +91,8 @@ import { BsestarmfregistrationComponent } from './postlogin/settings/bsestarmfre
 import { BannerComponent } from './commonmodule/notificationmodule/banner/banner.component';
 import { AlertsComponent } from './commonmodule/notificationmodule/alerts/alerts.component';
 import { NotificationComponent } from './commonmodule/notificationmodule/notification/notification.component';
-import { FileuploadComponent } from './fileupload/fileupload.component';
+import { NotificationMessageComponent } from './commonmodule/notificationmodule/notification-message/notification-message.component';
+// import { FileuploadComponent } from './fileupload/fileupload.component';
 import { FileuploadService } from './natservices/fileupload.service';
 import { ForgotpassComponent } from './home/forgotpass/forgotpass.component';
 import { BseregsuccComponent } from './postlogin/settings/bseregsucc/bseregsucc.component';
@@ -141,6 +142,7 @@ import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/
     BannerComponent,
     AlertsComponent,
     NotificationComponent,
+    NotificationMessageComponent,
     ForgotpassComponent,
     BseregsuccComponent,
     BsereguploadComponent,

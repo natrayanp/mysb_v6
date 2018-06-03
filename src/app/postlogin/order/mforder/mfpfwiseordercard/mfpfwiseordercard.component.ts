@@ -68,7 +68,7 @@ export class mfpfwiseordercardComponent implements OnInit {
              // private router: Router,
             //  private notifyservice: NotificationsService,
               private dbserivce: DbservicesService,
-              private orderservice: OrderservService, ) { }
+              public orderservice: OrderservService, ) { }
 
   
   ngOnInit() {
