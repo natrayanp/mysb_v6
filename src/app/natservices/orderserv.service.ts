@@ -42,7 +42,7 @@ export class OrderservService {
   ppy_success_recs = [];
   vali_comp_recs = [];
   pay_initiated_recs = [];
-  paymentpopshown = false;
+  onlysiporder = false;
   has_ontime_rec = false;
   selected_mandate = '';
   selected_accnum = '';
@@ -239,8 +239,8 @@ placeorder() {
                 } else {
                   // Go to Final screen
                   console.log('no one time records');
-                  this.paymentpopshown = true;
                   this.validateprogress = false;
+                  this.router.navigate(['/securedpg/orderhistory']);
                 }
               },
     error =>  {
@@ -430,7 +430,7 @@ get_order_status() {
     record => {
       console.log('payment status');
       console.log(record['body']);
-      this.router.navigate(['/securedpg/orderhistory']);
+        this.router.navigate(['/securedpg/orderhistory']);
     },
     error => {
       console.log('error');
