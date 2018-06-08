@@ -19,7 +19,8 @@
          <!--a *ngIf = "userstate.userstatus == 'R'" type ="button" mat-icon-button routerLink="/securedpg/settings/mfreg" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">assignment_ind</mat-icon> &nbsp; Registration</a-->
          <a type ="button" mat-icon-button routerLink="/securedpg/settings/mfreg" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">assignment_ind</mat-icon> &nbsp; Registration</a>
          
-         <!--a *ngIf = "userstate.userstatus == 'U'" type ="button" mat-icon-button routerLink="/securedpg/settings/mfregupload" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">file_upload</mat-icon> &nbsp; Docupload</a-->
+         <!--a *ngIf = "userstate.
+postlogintoolbar.component.ts:12 inside app postlogintoolbaruserstatus == 'U'" type ="button" mat-icon-button routerLink="/securedpg/settings/mfregupload" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">file_upload</mat-icon> &nbsp; Docupload</a-->
          <a mat-icon-button routerLink="/securedpg/settings/mfregupload" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">file_upload</mat-icon> &nbsp; Docupload</a>
          <a mat-icon-button routerLink="/securedpg/settings/mandate" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:55px; font-size:18px"> <mat-icon fxFlexAlign ="center">file_upload</mat-icon> &nbsp; Mandates</a>
          
@@ -27,6 +28,7 @@
 
        </div>        
       </mat-sidenav> 
+      <mat-sidenav-content>
         <div fxLayout="column" fxFlexFill>
             
                   <mat-card fxFlex>
@@ -36,7 +38,7 @@
 
             
         </div>
-
+      </mat-sidenav-content>
 </mat-sidenav-container>
 <!--button fxFlex mat-button (click)=navss.open() >Open</button>
 -->

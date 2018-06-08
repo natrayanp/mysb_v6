@@ -3,7 +3,7 @@
 
 
 
-<div fxLayout="column"  fxLayoutWrap fxLayoutAlign="center center">
+<div fxLayout="column wrap" fxLayoutAlign="center center">
 <div>
 
 </div>
@@ -13,15 +13,16 @@
   <p>{{message}}</p>
 </div>
 </div>
+[ngStyle]="{'width':'50%'}"
 -->
-<mat-card [ngStyle]="{'width':'50%'}" [ngStyle.lt-lg]="{'width':'100%'}"  [ngStyle.lt-xl]="{'width':'65%'}" fxAlign = "center" >
+<mat-card  [ngStyle.lt-md]="{'width':'100%'}"  [ngStyle.gt-md]="{'width':'65%'}" fxFlexAlign = "center" >
  
   <mat-card-title>
     <h2>Login</h2>
   </mat-card-title>
   <alerts></alerts>
   
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center"style="margin-top:0px">
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" style="margin-top:0px">
       
       <div >
         
@@ -52,8 +53,8 @@
                   </mat-form-field>
                   
                   <br>
-                              
-              <button mat-raised-button [disabled]="userpasswdlgForm.invalid" (click)="emaillogin()" id="userpassloginbtn" style="height:50px;width:400px;font-size:20px;" color="primary" fxFlex="0 1 auto"> <strong>Login</strong></button>    
+              
+              <button mat-raised-button [disabled]="userpasswdlgForm.invalid" (click)="emaillogin()" id="userpassloginbtn" style="height:50px;width:300px;font-size:20px;" color="primary" > <strong>Login</strong></button>    
               <a routerLink="/forgot" routerLinkActive="active" fxFlexAlign ="center" style="padding-left:10px; font-size:20px">Forgot Password?</a>
             </div>
           </form>
@@ -88,7 +89,7 @@
 
     <button mat-raised-button (click)="signInWithTwitter()" id="twitterloginbtn" style="height:50px;width:400px;font-size:20px;color:white; background-color:#3699ED"> <strong>Login with Twitter </strong></button>   
 
-    </div>
+    </div>3000px
     <br>
   </div>
 
@@ -116,8 +117,10 @@
 </div-->
 </mat-card>
 </div>
+<!--
 <button (click)="logout()">logout</button>
 <button (click)="print()">print</button>
+-->
 <!--
 <div class="alert alert-heading close"><p >djdjdj</p> </div>
 <button (click)="logout()">logout</button>

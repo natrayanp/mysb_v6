@@ -1,7 +1,8 @@
   import { Injectable } from '@angular/core';
   import { Router } from '@angular/router';
   
-  import * as firebase from 'firebase/app';
+//  import * as firebase from 'firebase/app';
+  import { firebase } from '@firebase/app';
   import { AngularFireAuth } from 'angularfire2/auth';
   // import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
   import { NotifyService } from './notify.service';
@@ -16,6 +17,8 @@
     displayName?: string;
   }
   
+  // https://github.com/codediodeio/angular-firestarter
+  
   @Injectable()
   export class AuthService {
 
@@ -26,7 +29,7 @@
     idToken:any;
   
     constructor(private afAuth: AngularFireAuth,
-                //private afs: AngularFirestore,
+                // private afs: AngularFirestore,
                 private router: Router,
                 private notify: NotifyService) {
   
@@ -68,13 +71,13 @@
       return this.oAuthLogin(provider);
     }
   
-    private oAuthLogin(provider: firebase.auth.AuthProvider) {
+    private oAuthLogin(provider: any) {
       return this.afAuth.auth.signInWithPopup(provider)
         .then((credential) => {
           this.credential = credential;
           // this.idToken=this.afAuth.app.auth().currentUser.getIdToken();
-          return("success");
-          //return this.updateUserData(credential.user);
+          return('success');
+          // return this.updateUserData(credential.user);
         })
         .catch((error) => this.handleError(error) );
     }

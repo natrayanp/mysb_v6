@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { UserstateService } from '../natservices/userstate.service';
+import { MatSidenav } from '@angular/material';
+import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-postlogin',
@@ -8,10 +11,17 @@ import { UserstateService } from '../natservices/userstate.service';
 })
 export class PostloginComponent implements OnInit {
 
-  constructor(private userstate:UserstateService ) { }
+  @ViewChild('navss') public myNav: MatSidenav;
+
+ constructor(private userstate: UserstateService, private router: Router, private cdRef: ChangeDetectorRef ) {
+  setTimeout(() => {
+    this.myNav.open();
+    this.cdRef.detectChanges();
+  }, 20);
+ }
 
   ngOnInit() {
-    this.userstate.parseJwt();
+    this.router.navigate(['/securedpg/dashboard']);
   }
-  
+
 }

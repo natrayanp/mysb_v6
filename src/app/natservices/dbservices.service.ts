@@ -9,26 +9,26 @@ import { environment } from '../../environments/environment';
 export class DbservicesService {
 
   constructor(private http: HttpClient) { }
-  apiurl:string;
-  action:string;  
+  apiurl: string;
+  action: string;
   location: string;
 
 
 
 
-dbaction(screen,functionality,data){
-  console.log("inside dbaction");
-  console.log(screen+functionality);
-  switch (screen+functionality) {
-    case "FundAllocFetch":
+dbaction(screen, functionality, data){
+  console.log('inside dbaction');
+  console.log(screen + functionality);
+  switch (screen + functionality) {
+    case 'FundAllocFetch':
       {
-        var apiurl=environment.FundAllocapiUrl + "/" + environment.FundAllocfetch;
+        var apiurl = environment.FundAllocapiUrl + '/' + environment.FundAllocfetch;
         console.log(apiurl);
         return this.http.get(apiurl);
       }
-      case "FundAllocSave":
+      case 'FundAllocSave':
       {
-        var apiurl=environment.FundAllocapiUrl + "/" + environment.FundAllocSave;
+        var apiurl = environment.FundAllocapiUrl + '/' + environment.FundAllocSave;
         return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
       }
       case "ClientCreation":

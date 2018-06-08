@@ -9,11 +9,10 @@ export class PostlogintoolbarComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { console.log('inside app postlogintoolbar'); }
+
+  logoutact() {
+      localStorage.removeItem('natjwt');
   }
-  logoutact()
-{
-  localStorage.removeItem("natjwt");  
-}
 
 }

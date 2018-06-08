@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DbservicesService } from '../../natservices/dbservices.service';
-//import { NoticommComponent } from '../../commonmodule/notificationmodule/noticomm/noticomm.component'
-//import { NotifyService } from '../../natservices/notify.service';
-//import { NotificationComponent } from '../../commonmodule/notificationmodule/notification/notification.component'
+// import { NoticommComponent } from '../../commonmodule/notificationmodule/noticomm/noticomm.component'
+// import { NotifyService } from '../../natservices/notify.service';
+// import { NotificationComponent } from '../../commonmodule/notificationmodule/notification/notification.component'
 
 @Component({
   selector: 'app-dashboard',
@@ -12,15 +12,15 @@ import { DbservicesService } from '../../natservices/dbservices.service';
 export class DashboardComponent implements OnInit {
 
 
-  lscreeid="dashboard";   // this is to send for notification display
-
-  constructor(private dbserivce :DbservicesService,
-              ) {     
+  lscreeid = 'dashboard';   // this is to send for notification display
+  constructor() {
+ // constructor(private dbserivce: DbservicesService) {
                             //this.parseJwt(localStorage.getItem("natjwt"));
-    
-            }
+                          }
 
   ngOnInit() {
-    //this.notificationfetch();
+    // this.notificationfetch();
   }
+
+  
 }
