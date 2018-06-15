@@ -66,6 +66,7 @@ import { UserCardComponent } from './postlogin/settings/userssetup/user-card/use
 import { PortfolioCardComponent } from './postlogin/settings/portfoliosetup/portfolio-card/portfolio-card.component';
 import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/portfolio-list/portfolio-list.component';
 import { GooglePieChartService } from './googlechartservice/google-pie-chart.service';
+import { GooglelineChartService } from './googlechartservice/linechart/google-line-charts.service';
 import { ChartComponent } from './chart/chart.component';
 import { PfserviceService } from './natservices/pfservice.service';
 import { SettingspfService } from './natservices/settingspf.service';
@@ -105,6 +106,10 @@ import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/man
 import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
 import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.component';
 import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/mfpayconfland.component';
+import { DashcardComponent } from './postlogin/dashboard/dashcard/dashcard.component';
+import { DashlistComponent } from './postlogin/dashboard/dashlist/dashlist.component';
+import { HoldetailComponent } from './postlogin/dashboard/holdetail/holdetail.component';
+import { DashfundComponent } from './postlogin/dashboard/dashfund/dashfund.component';
 
 
 
@@ -153,7 +158,11 @@ import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/
     MandateinqComponent,
     MfpaynaviComponent,
     MforderhistComponent,
-    MfpayconflandComponent
+    MfpayconflandComponent,
+    DashcardComponent,
+    DashlistComponent,
+    HoldetailComponent,
+    DashfundComponent
   ],
   imports: [
       BrowserModule,
@@ -196,10 +205,11 @@ import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/
   ],
   // entryComponents: [PfqtypopupComponent],
   providers: [GooglePieChartService,
+    GooglelineChartService,
               SettingspfService,
               OrderservService,
               DbservicesService,
-              {provide: HTTP_INTERCEPTORS,useClass: NatInterceptor, multi: true,},
+              {provide: HTTP_INTERCEPTORS, useClass: NatInterceptor, multi: true,},
               {provide: MAT_DATE_LOCALE, useValue: 'en-IN'},
               AuthService, 
               NotifyService,

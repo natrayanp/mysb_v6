@@ -53,6 +53,9 @@ export class NoticommComponent implements OnInit {
     error => {
             console.log('inside error dbservice');
             console.log(error);
+            // this.showspinner = false;
+            // this.shownoticontainer = false;
+
         }
           );
   }

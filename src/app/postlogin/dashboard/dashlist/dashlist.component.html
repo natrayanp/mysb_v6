@@ -1,0 +1,7 @@
+
+<mat-toolbar> 
+  Portfolio 
+  <span fxFlex></span>
+  <button mat-button *ngIf="mode=='detail'" (click)="navitodashbrd()">Back-to-dashboard</button>
+</mat-toolbar>
+<app-dashcard [mode]="mode"></app-dashcard>

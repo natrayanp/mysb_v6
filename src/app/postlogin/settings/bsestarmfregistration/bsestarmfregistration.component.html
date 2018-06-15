@@ -337,10 +337,12 @@
                         <mat-radio-button value="CB" >Current</mat-radio-button>
                         <mat-radio-button value="NE" >NRE</mat-radio-button>
                         <mat-radio-button value="NO" >NRO</mat-radio-button>
-                      </mat-radio-group>
+                    </mat-radio-group>
+                    
+                    <mat-checkbox fxFlex class="example-full-width" formControlName="clientacdeflg" fxHide="true" [(ngModel)]="regdet.clientdefault">Default account</mat-checkbox>
               </div>
         
-  
+              
   
   
             </div>
@@ -393,7 +395,7 @@
                       <span fxFlex></span-->            
               </div>
              
-                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="start center">
+                <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="start center" fxShow = "{{showtxrow1}}">
                     <h3> Tax Country 1 : &nbsp;</h3>
                     <mat-form-field fxFlex class="example-full-width" >
                         <mat-select placeholder="Country" formControlName="clienttaxrescntry1" [(ngModel)]="regdet.clienttaxrescntry1">
@@ -411,10 +413,16 @@
                       </mat-form-field>
                       <mat-form-field class="example-full-width" fxFlex>
                         <input matInput placeholder="Tax ID" formControlName="clienttaxid1" [(ngModel)]="regdet.clienttaxid1">
-                      </mat-form-field>                    
+                      </mat-form-field>    
+                      
+                      <mat-icon fxAlign="end" fxShow = "{{showtxbtn1}}" (click)="toggletaxrow(2)">add_circle</mat-icon>
+                      <mat-icon fxAlign="end" fxShow = "!{{showtxbtn1}}" (click)="removetaxrow(1)" color="warn">delete</mat-icon>                                
+                      
+                      
+
               </div>
   
-              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="start center">
+              <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="start center" fxShow = "{{showtxrow2}}">
               <h3> Tax Country 2 : &nbsp;</h3>
               <mat-form-field fxFlex class="example-full-width" >
                   <mat-select placeholder="Country" formControlName="clienttaxrescntry2" [(ngModel)]="regdet.clienttaxrescntry2">
@@ -432,11 +440,13 @@
                 </mat-form-field>
                 <mat-form-field class="example-full-width" fxFlex>
                   <input matInput placeholder="Tax ID" formControlName="clienttaxid2" [(ngModel)]="regdet.clienttaxid2">
-                </mat-form-field>                    
+                </mat-form-field> 
+                <mat-icon fxAlign="end" fxShow = "{{showtxbtn2}}" (click)="toggletaxrow(3)">add_circle</mat-icon>                   
+                <mat-icon fxAlign="end" fxShow = "!{{showtxbtn1}}" (click)="removetaxrow(2)" color="warn">delete</mat-icon>                                
           </div>
               
   
-          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="start center">
+          <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="start center" fxShow = "{{showtxrow3}}">
             <h3> Tax Country 3 : &nbsp;</h3>
             <mat-form-field fxFlex class="example-full-width" >
                 <mat-select placeholder="Country" formControlName="clienttaxrescntry3" [(ngModel)]="regdet.clienttaxrescntry3">
@@ -454,15 +464,18 @@
               </mat-form-field>
               <mat-form-field class="example-full-width" fxFlex>
                 <input matInput placeholder="Tax ID" formControlName="clienttaxid3" [(ngModel)]="regdet.clienttaxid3">
-              </mat-form-field>                    
+              </mat-form-field>       
+              <mat-icon fxAlign="end" fxShow = "{{showtxbtn3}}" (click)="toggletaxrow(4)">add_circle</mat-icon>                                
+              <mat-icon fxAlign="end" fxShow = "!{{showtxbtn1}}" (click)="removetaxrow(3)" color="warn">delete</mat-icon>                                
+             
         </div>
             
   
-        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="start center">
+        <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="30px" fxLayoutAlign="start center" fxShow = "{{showtxrow4}}">
           <h3> Tax Country 4 : &nbsp;</h3>
           <mat-form-field fxFlex class="example-full-width" >
               <mat-select placeholder="Country" formControlName="clienttaxrescntry4" [(ngModel)]="regdet.clienttaxrescntry4">
-                <mat-option *ngFor="let country of fcountrys" [value]="country">
+                <mat-option *ngFor="let country of countrys" [value]="country">
                   {{ country }}
                 </mat-option>
               </mat-select>
@@ -476,7 +489,8 @@
             </mat-form-field>
             <mat-form-field class="example-full-width" fxFlex>
               <input matInput placeholder="Tax ID" formControlName="clienttaxid4" [(ngModel)]="regdet.clienttaxid4">
-            </mat-form-field>                    
+            </mat-form-field>         
+            <mat-icon fxAlign="end" fxShow = "!{{showtxbtn1}}" (click)="removetaxrow(4)" color="warn">delete</mat-icon>                                           
       </div>
   
   
@@ -505,7 +519,7 @@
   <pre>{{clientdetails.value | json}}</pre>
   <pre>{{clientaddress.value | json}}</pre>
   <pre>{{clientbank.value | json}}</pre>
-  <pre>{{clientfatca.value | json}}</pre>
+  <pre>{{clientfatca.value.clienttaxrescntry1}}</pre>
 
   <pre>{{regdet | json}}</pre>
   

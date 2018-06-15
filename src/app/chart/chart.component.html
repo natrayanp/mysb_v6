@@ -1,4 +1,2 @@
-<p>
-  chart works!
-</p>
-<div id="{{elementId}}" style="width: 800px; height: 400px;"></div>
+<div (window:resize)="onResize($event)"></div>
+<div id="{{elementId}}" fxFlex="1 1 100%" [ngClass]="(detailmode)?'fulll':'lesss'" fxFlex = '1 1 auto'></div>

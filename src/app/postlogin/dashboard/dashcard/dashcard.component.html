@@ -1,0 +1,121 @@
+
+<mat-card [ngClass]="(detailmode)?'dashcarddetail mat-elevation-z8':'dashcardless mat-elevation-z8'" >
+  <mat-card-header>
+    <mat-card-title><h2>Natrayan</h2></mat-card-title>
+    <mat-card-subtitle>Saving for retirement</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout = "row wrap">
+          
+      <div fxFlex="1 1 25%">
+        <p>Total Value</p>
+        <p>
+            <label>
+                <h3>50,000</h3>
+            </label>
+        </p>
+      </div>
+
+      <div fxFlex="1 1 auto">
+          <p>Invested Amount </p>
+          <p>
+              <label>
+                  <h3>28,650</h3>
+              </label>
+          </p>
+        </div>
+        <div fxFlex="1 1 auto">
+            <p>P/L Amount </p>
+            <p>
+                <label>
+                    <h3>10,650</h3>
+                </label>
+            </p>
+          </div>
+
+          <div fxFlex="1 1 auto">
+              <p>Growth % </p>
+              <p>
+                  <label>
+                      <h3>15%</h3>
+                  </label>
+              </p>
+            </div>
+
+    </div>
+
+    <!--div fxLayout = "row wrap">
+          
+        <div fxFlex="1 1 50%">
+          <p>Start date </p>
+          <p>
+              <label>
+                  <h3>25-May-2018</h3>
+              </label>
+          </p>
+        </div>
+  
+        <div fxFlex="1 1 50%">
+            <p>End date </p>
+            <p>
+                <label>
+                    <h3>25-May-2028</h3>
+                </label>
+            </p>
+          </div>
+  
+      </div-->
+      <div >
+          <app-chart [data] = "linedata" [config]="config1" [elementId]="elementId1" [charttype]="'line'" [detailmode]="detailmode"></app-chart>
+      </div>
+
+      <div *ngIf = "detailmode">
+          <mat-table #table2 [dataSource]="dataSourceval" class = "mat-elevation-z4">
+    
+           
+          
+              <ng-container matColumnDef="Fund">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Fund </mat-header-cell>
+                  <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.fundname}} </mat-cell>
+                  <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      
+                </ng-container>
+  
+            <ng-container matColumnDef="Units">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Total Units </mat-header-cell>
+              <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.units}} </mat-cell>
+              <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+  
+            </ng-container>
+        
+            
+            <ng-container matColumnDef="Invested Amount">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Investment Amount </mat-header-cell>
+              <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.invamt}} </mat-cell>
+             
+            </ng-container>
+            
+            
+            <ng-container matColumnDef="Amount">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
+              <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.amount}} </mat-cell>
+              
+            </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getRecord(row)" [ngClass]="{'highlight': selectedRowIndex == row.id}"></mat-row>
+            
+          </mat-table>
+          <mat-paginator #paginator2
+            [pageSize]="10"
+            [pageSizeOptions]="[10, 20, 30, 50, 80, 100]"
+            [showFirstLastButtons]="true" class = "mat-elevation-z4">
+          </mat-paginator>
+      </div>
+
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button *ngIf = "!detailmode" (click)="navigatedetailspg()">Details</button>    
+  </mat-card-actions>
+</mat-card>

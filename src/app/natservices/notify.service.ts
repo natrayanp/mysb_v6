@@ -35,7 +35,7 @@
 
 
 
-    update(content: string, style: 'error' | 'info' | 'success',type: 'notification' | 'alert' | 'banner') {
+    update(content: any, style: 'error' | 'info' | 'success',type: 'notification' | 'alert' | 'banner') {
       if(type == "notification"){        
           const msg: Msg = { content, style, type };
           this.notimsg1.push(msg);

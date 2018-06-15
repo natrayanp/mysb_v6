@@ -32,6 +32,8 @@ import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/man
 import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
 import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.component';
 import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/mfpayconfland.component';
+import { HoldetailComponent } from './postlogin/dashboard/holdetail/holdetail.component';
+import { DashfundComponent } from './postlogin/dashboard/dashfund/dashfund.component';
 
 
 export const ROUTES: Routes = [
@@ -43,13 +45,14 @@ export const ROUTES: Routes = [
     { path: 'orders',  component: mfpfwiseorderlistComponent },
     { path: 'mfordcof/:id',  component: MforderconfpgComponent },
     { path: 'orderhistory',  component: MforderhistComponent },
-    
   /*  {path: 'orders',  component: OrderComponent, children: [
       {path: 'pfwise',  component: PfwiseorderlistComponent},
       {path: 'stwise',  component: StkwiseorderComponent},
       {path: 'finalorder',  component: OrderfinalComponent}
     ]},    */
     {path: 'dashboard',  component: DashboardComponent},
+    {path: 'dapffulldetail', component: HoldetailComponent},
+    {path: 'dafundetail',  component: DashfundComponent},
     {path: 'fundalloc',  component: FundallocatComponent},
     {path: 'settings',  component: SettingsComponent, children: [
           {path: 'usersetup',  component: UserListComponent},

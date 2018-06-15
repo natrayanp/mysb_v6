@@ -135,6 +135,7 @@ export class regisuccfatcadetail{
       clientacnumb :number;
       clientmicrno:string;
       clientifsc:string;
+      clientdefault: string;
       //createclientfatcafrm
       clientsrcwealth:string;
       clientincslb :string;

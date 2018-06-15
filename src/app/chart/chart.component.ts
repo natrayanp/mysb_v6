@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { GooglePieChartService } from './../googlechartservice/google-pie-chart.service';
 import { PieChartConfig } from './../googlechartservice/PieChartConfig';
+
+import { GooglelineChartService } from './../googlechartservice/linechart/google-line-charts.service';
+import { linechartconfig } from './../googlechartservice/linechart/linechartconfig';
+
 
 declare var google: any;
 
@@ -16,14 +20,23 @@ declare var google: any;
 })
 export class ChartComponent implements OnInit {
 
-  data: any[];
-  config: PieChartConfig;
-  elementId: String;
+  @Input() data: any[];
+  @Input() config: any;
+  @Input() elementId: String;
+  @Input() charttype: String;
+  @Input() detailmode: boolean;
 
-  constructor(private _pieChartService: GooglePieChartService) { }
+  @HostListener('window:resize', ['$event'])
+
+  onResize(event) {
+    console.log(event);
+    this.preparechart();
+  }
+
+  constructor(private _pieChartService: GooglePieChartService, private _lineChartService: GooglelineChartService) { }
   
     ngOnInit() {
-      //Piechart1 Data & Config
+      /*Piechart1 Data & Config
       this.data = [['Task', 'Hours per Day'],
       ['Eat',      3],
       ['Commute',  2],
@@ -31,15 +44,28 @@ export class ChartComponent implements OnInit {
       ['Video games', 4],
       ['Sleep',    10]];
   
-      this.config = new PieChartConfig('My Daily Activities at 20 years old', 0.4);
-      this.elementId = 'myPieChart1';
-      this._pieChartService.BuildPieChart(this.elementId, this.data, this.config); 
+      // this.config = new PieChartConfig('My Daily Activities at 20 years old', 0.4);
+      // this.elementId = 'myPieChart1';
+      */
+  
+
+
+     this.preparechart();
     }
 
-      
-      
 
-
-
+    preparechart() {
+    switch (this.charttype) {
+      case('pie'): {
+        this._pieChartService.BuildPieChart(this.elementId, this.data, this.config);
+        break;
+      }
+   
+      case('line'): {
+        this._lineChartService.BuildLineChart(this.elementId, this.data, this.config);
+        break;
+      }
+   }
+  }
 
 }

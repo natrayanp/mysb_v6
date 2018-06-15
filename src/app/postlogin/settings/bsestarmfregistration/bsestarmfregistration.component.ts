@@ -48,6 +48,15 @@ export class BsestarmfregistrationComponent implements OnInit {
   incslbs: any;
   srcwlths:any;
   showsubmitprogress=false;
+  showtxbtn1 = false;
+  showtxbtn2 = false;
+  showtxbtn3 = false;
+  showtxrow1 = true;
+  showtxrow2 = false;
+  showtxrow3 = false;
+  showtxrow4 = false;
+
+
 
   constructor(private fb: FormBuilder,
               private dbserivce :DbservicesService,
@@ -138,12 +147,13 @@ export class BsestarmfregistrationComponent implements OnInit {
       clientactype: ['', Validators.required],
       clientacnumb : ['', Validators.required],
       clientmicrno: ['', Validators.required],
-      clientifsc: ['', {validators:Validators.required,updateOn: 'blur'}]
+      clientifsc: ['', {validators:Validators.required,updateOn: 'blur'}],
+      clientacdeflg: [true, Validators.required],
     });
   }
 
   createclientfatcafrm(){
-    this.clientfatca = this.fb.group({
+    const clientfatcac = this.fb.group({
       clientsrcwealth: ['', Validators.required],
       clientincslb : ['', Validators.required],
       clientpobir: ['', Validators.required],
@@ -161,6 +171,15 @@ export class BsestarmfregistrationComponent implements OnInit {
       clienttaxid4: ['', Validators.required],
       clienttaxidtype4: ['', Validators.required]
     });
+
+
+
+    clientfatcac.controls['clienttaxrescntry1'].valueChanges.subscribe(values => {this.showtaxaddbut();});
+    clientfatcac.controls['clienttaxrescntry2'].valueChanges.subscribe(values => {this.showtaxaddbut();});
+    clientfatcac.controls['clienttaxrescntry3'].valueChanges.subscribe(values => {this.showtaxaddbut();});
+    clientfatcac.controls['clienttaxrescntry4'].valueChanges.subscribe(values => {this.showtaxaddbut();});
+
+    this.clientfatca = clientfatcac;
   }
 
   tooglenominee(event){
@@ -305,7 +324,7 @@ export class BsestarmfregistrationComponent implements OnInit {
   this.clientfatca.controls.clienttaxid4.setValue(this.regdet.clienttaxid4);
   this.clientfatca.controls.clienttaxidtype4.setValue(this.regdet.clienttaxidtype4);
   
-  
+  this.showrowdecision();
   }
 
   onFileInput(event){
@@ -469,5 +488,206 @@ export class BsestarmfregistrationComponent implements OnInit {
 
     
   }
+
+
+  showtaxaddbut() {
+    const taxcnt1 = this.clientfatca.controls['clienttaxrescntry1'].value;
+    const taxcnt2 = this.clientfatca.controls['clienttaxrescntry2'].value;
+    const taxcnt3 = this.clientfatca.controls['clienttaxrescntry3'].value;
+    const taxcnt4 = this.clientfatca.controls['clienttaxrescntry4'].value;
+
+    console.log(taxcnt1);
+    console.log(taxcnt2);
+    
+    if (taxcnt1 !== '' && taxcnt2 === '') {
+      console.log("inside true");
+      this.showtxbtn1 = true;
+    } else {
+      console.log("inside false");
+      this.showtxbtn1 = false;
+    }
+
+    if (taxcnt2 !== '' && taxcnt3 === '') {
+      console.log("inside true");
+      this.showtxbtn2 = true;
+    } else {
+      console.log("inside false");
+      this.showtxbtn2 = false;
+    }
+
+
+    if (taxcnt3 !== '' && taxcnt4 === '') {
+      console.log("inside true");
+      this.showtxbtn3 = true;
+    } else {
+      console.log("inside false");
+      this.showtxbtn3 = false;
+    }
+
+  }
+
+  showrowdecision() {
+    const taxcnt1 = this.clientfatca.controls['clienttaxrescntry1'].value;
+    const taxcnt2 = this.clientfatca.controls['clienttaxrescntry2'].value;
+    const taxcnt3 = this.clientfatca.controls['clienttaxrescntry3'].value;
+    const taxcnt4 = this.clientfatca.controls['clienttaxrescntry4'].value;
+
+
+
+    if (taxcnt1 !== undefined && (taxcnt1 !== '' || 0 !== taxcnt1.length)) {
+      this.toggletaxrow(1);
+      console.log('showing row1');
+    } 
+    
+    if (taxcnt2 !== undefined && (taxcnt2 !==  '' || 0 !==  taxcnt2.length)) {
+      this.toggletaxrow(2);
+      console.log('showing row2');
+    } else {
+      this.showtxrow2 = false;
+    }
+    if (taxcnt3 !== undefined && (taxcnt3 !==  '' || 0 !==  taxcnt3.length)) {
+      this.toggletaxrow(3);
+      console.log('showing row3');
+    } else {
+      this.showtxrow3 = false;
+    }
+    if (taxcnt4 !== undefined && (taxcnt4 !==  '' || 0 !==  taxcnt4.length)) {
+      this.toggletaxrow(4);
+      console.log('showing row4');
+    } else {
+      this.showtxrow4 = false;
+    }
+  }
+
+  toggletaxrow(indexx) {
+    switch(indexx) {
+      case 1: {
+        this.showtxrow1 = true;
+        break;
+      }
+      case 2: {
+        this.showtxrow2 = true;
+        this.showtxbtn1 = false;
+        break;
+      }
+      case 3: {
+        this.showtxrow3 = true;
+        this.showtxbtn2 = false;
+        break;
+      }
+      case 4: {
+        this.showtxrow4 = true;
+        this.showtxbtn3 = false;
+        break;
+      }
+
+    }
+  }
+
+  removetaxrow(indexx) {
+
+    switch(indexx) {
+      case 1: {
+
+        if (this.showtxrow2) {
+          this.copytaxrow2to1();
+        } else {
+          this.resettaxrow1();
+        }
+
+        if (this.showtxrow3) {
+          this.copytaxrow3to2();
+        }
+
+        if (this.showtxrow4) {
+          this.copytaxrow4to3();
+        }
+        this.showrowdecision();
+        break;
+      }
+
+      case 2: {
+        if (this.showtxrow3) {
+          this.copytaxrow3to2();
+        } else {
+          this.resettaxrow2();
+        }
+
+        if (this.showtxrow4) {
+          this.copytaxrow4to3();
+        }
+        this.showrowdecision();
+        break;
+      }
+
+
+      case 3: {
+        if (this.showtxrow4) {
+          this.copytaxrow4to3();
+        } else {
+          this.resettaxrow3();
+        }
+        this.showrowdecision();
+        break;
+      }
+      case 4: {
+
+        this.resettaxrow3();
+        this.showrowdecision();
+        break;
+      }
+
+  }
+}
+
+copytaxrow2to1() {
+    this.clientfatca.controls.clienttaxrescntry1.setValue(this.clientfatca.controls['clienttaxrescntry2'].value);
+    this.clientfatca.controls.clienttaxid1.setValue(this.clientfatca.controls['clienttaxid2'].value);
+    this.clientfatca.controls.clienttaxidtype1.setValue(this.clientfatca.controls['clienttaxidtype2'].value);
+    this.resettaxrow2();
+
+}
+
+
+copytaxrow3to2() {
+this.clientfatca.controls.clienttaxrescntry2.setValue(this.clientfatca.controls['clienttaxrescntry3'].value);
+this.clientfatca.controls.clienttaxid2.setValue(this.clientfatca.controls['clienttaxid3'].value);
+this.clientfatca.controls.clienttaxidtype2.setValue(this.clientfatca.controls['clienttaxidtype3'].value);
+this.resettaxrow3();
+
+}
+
+copytaxrow4to3() {
+this.clientfatca.controls.clienttaxrescntry3.setValue(this.clientfatca.controls['clienttaxrescntry4'].value);
+this.clientfatca.controls.clienttaxid3.setValue(this.clientfatca.controls['clienttaxid4'].value);
+this.clientfatca.controls.clienttaxidtype3.setValue(this.clientfatca.controls['clienttaxidtype4'].value);
+this.resettaxrow4();
+
+}
+
+resettaxrow1() {
+  this.clientfatca.controls.clienttaxrescntry1.reset('');
+  this.clientfatca.controls.clienttaxid1.reset('');
+  this.clientfatca.controls.clienttaxidtype1.reset('');
+}
+
+resettaxrow2() {
+  this.clientfatca.controls.clienttaxrescntry2.reset('');
+  this.clientfatca.controls.clienttaxid2.reset('');
+  this.clientfatca.controls.clienttaxidtype2.reset('');
+}
+
+resettaxrow3() {
+this.clientfatca.controls.clienttaxrescntry3.reset('');
+this.clientfatca.controls.clienttaxid3.reset('');
+this.clientfatca.controls.clienttaxidtype3.reset('');
+}
+
+resettaxrow4() {
+this.clientfatca.controls.clienttaxrescntry4.reset('');
+this.clientfatca.controls.clienttaxid4.reset('');
+this.clientfatca.controls.clienttaxidtype4.reset('');
+}
+
 
 }
