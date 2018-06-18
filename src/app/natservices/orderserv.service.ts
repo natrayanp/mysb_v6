@@ -50,6 +50,7 @@ export class OrderservService {
   failpaylink = false;
   fetchingdata = false;
 
+  
   mandateids = [{
     'mandate_id':'BSE000000016247',
     'bank' : 'ICICI BANK LIMITED',
