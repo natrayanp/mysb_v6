@@ -1,5 +1,5 @@
 
-    <div class="sk-cube-grid" *ngIf ="orderservice.onfetch">
+    <div class="sk-cube-grid" *ngIf = "orderservice.onfetch">
         <div class="sk-cube sk-cube1"></div>
         <div class="sk-cube sk-cube2"></div>
         <div class="sk-cube sk-cube3"></div>
@@ -23,7 +23,8 @@
   </div>
 </div>
 
-<div fxHide = "!orderservice.onfetch">
+
+<div *ngIf = "!orderservice.onfetch">
 <mat-toolbar class="mat-elevation-z8" color ="primary" >
         <label>&nbsp; <strong>Order Placement</strong> &nbsp;</label>
         <span>&nbsp;</span>  

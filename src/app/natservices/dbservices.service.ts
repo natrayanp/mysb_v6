@@ -127,19 +127,31 @@ dbaction(screen, functionality, data){
       {
             console.log('inside fund details fetch');
             var apiurl = environment.pfUrl + '/' + environment.pfmainfetch;
-            return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
       }
       case 'pfexecute':
       {
             console.log('inside execute pf');
             var apiurl = environment.pfUrl + '/' + environment.executepf;
-            return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
+      case 'dashpfdet':
+      {
+            console.log('inside pf details');
+            var apiurl = environment.dashUrl + '/' + environment.pfdet;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
+      case 'dashchart':
+      {
+            console.log('inside pf details');
+            var apiurl = environment.dashUrl + '/' + environment.dashchart;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
       }
       case 'mfordersaveforlater':
       {
             console.log('inside mf order save');
             var apiurl = environment.mforderUrl + '/' + environment.mfsaveforlater;
-            return this.http.post(apiurl, JSON.stringify(data),{observe: 'response'});
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
       }
       case 'mfordersubmit':
       {

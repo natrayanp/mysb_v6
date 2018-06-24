@@ -134,6 +134,7 @@ constructor(private orfb: FormBuilder,
     //this.gettotalacrosspf();  
     //this.addPortfolio();
     //this.test();
+    console.log(this.orderservice.onfetch);
     
   }
   ngAfterViewChecked(){

@@ -110,7 +110,7 @@ import { DashcardComponent } from './postlogin/dashboard/dashcard/dashcard.compo
 import { DashlistComponent } from './postlogin/dashboard/dashlist/dashlist.component';
 import { HoldetailComponent } from './postlogin/dashboard/holdetail/holdetail.component';
 import { DashfundComponent } from './postlogin/dashboard/dashfund/dashfund.component';
-
+import { DashboardService } from './natservices/dashboard.service';
 
 
 
@@ -214,7 +214,8 @@ import { DashfundComponent } from './postlogin/dashboard/dashfund/dashfund.compo
               AuthService, 
               NotifyService,
               FileuploadService,
-              UserstateService
+              UserstateService,
+              DashboardService
               ],
   bootstrap: [AppComponent]
 })

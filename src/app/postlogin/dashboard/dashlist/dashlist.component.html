@@ -4,4 +4,23 @@
   <span fxFlex></span>
   <button mat-button *ngIf="mode=='detail'" (click)="navitodashbrd()">Back-to-dashboard</button>
 </mat-toolbar>
-<app-dashcard [mode]="mode"></app-dashcard>
+
+<div *ngIf="pfmainfetch">
+  <mat-spinner [diameter]="40"></mat-spinner>
+</div>
+
+<div *ngIf="mode =='less'">
+  <div  *ngIf="!pfmainfetch" fxLayout = "row wrap" fxLayoutGap.gt-md = "20px">
+    <div *ngFor = "let pf of pfs; let i = index" fxFlex.gt-md = "0 0 auto" fxFlex.lt-md="1 1 auto">
+      <app-dashcard [mode]="mode" [pfmain]= "pf" [idpsum]="idpsum" [idpprods]="idpprods" [myind]="i" fxFlex.lt-md = "1 1 100%" fxFlex.gt-md = "0 1 50%"></app-dashcard>  
+    </div>
+  </div>
+</div>
+
+<div *ngIf="mode =='detail'">
+  <div  *ngIf="!pfmainfetch" fxLayout = "column wrap">
+    <div *ngFor = "let pf of pfs; let i = index" fxFlex>
+      <app-dashcard [mode]="mode" [pfmain]= "pf" [idpsum]="idpsum" [idpprods]="idpprods" [myind]="i"></app-dashcard>      
+    </div>
+  </div>
+</div>

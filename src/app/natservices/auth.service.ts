@@ -3,6 +3,7 @@
   
 //  import * as firebase from 'firebase/app';
   import { firebase } from '@firebase/app';
+  import { auth } from 'firebase';
   import { AngularFireAuth } from 'angularfire2/auth';
   // import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
   import { NotifyService } from './notify.service';
@@ -33,7 +34,7 @@
                 private router: Router,
                 private notify: NotifyService) {
   
-                  this.afAuth.authState.subscribe((auth) => {
+                  this.afAuth.authState.subscribe((auths) => {
                     this.authState = auth;
                   });
     }
@@ -46,7 +47,7 @@
 
     ////// OAuth Methods /////
     googleLogin() {
-      const provider = new firebase.auth.GoogleAuthProvider();
+      const provider = new auth.GoogleAuthProvider();
       provider.setCustomParameters({
         prompt: 'select_account'
      });
@@ -54,20 +55,20 @@
     }
   
     githubLogin() {
-      const provider = new firebase.auth.GithubAuthProvider();
+      const provider = new auth.GithubAuthProvider();
       return this.oAuthLogin(provider);
     }
   
     facebookLogin() {
-      const provider = new firebase.auth.FacebookAuthProvider();
+      const provider = new auth.FacebookAuthProvider();
       provider.setCustomParameters({
-        auth_type :'rerequest'
+        auth_type : 'rerequest'
       });
       return this.oAuthLogin(provider);
     }
   
     twitterLogin() {
-      const provider = new firebase.auth.TwitterAuthProvider();
+      const provider = new auth.TwitterAuthProvider();
       return this.oAuthLogin(provider);
     }
   
@@ -124,7 +125,7 @@
   
     // Sends email allowing user to reset password
     resetPassword(email: string) {
-      const fbAuth = firebase.auth();
+      const fbAuth = auth();
   
       return fbAuth.sendPasswordResetEmail(email)
         .then(() => this.notify.update('Password reset link sent to your email', 'info','alert'))
