@@ -61,6 +61,8 @@ export const environment = {
   pfsave: 'pfdatasave',
   pfmainfetch: 'onlypf',
   dashUrl: 'http://127.0.0.1:8080',
+  getdata: 'dashfetchdata',
+  chartdata: 'dashchart',
   pfdet: 'dashpfdet',
   dashchart: 'dashchart',
   fundUrl: 'http://127.0.0.1:8080',

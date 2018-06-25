@@ -111,6 +111,8 @@ import { DashlistComponent } from './postlogin/dashboard/dashlist/dashlist.compo
 import { HoldetailComponent } from './postlogin/dashboard/holdetail/holdetail.component';
 import { DashfundComponent } from './postlogin/dashboard/dashfund/dashfund.component';
 import { DashboardService } from './natservices/dashboard.service';
+import { ProdcardComponent } from './postlogin/dashboard/prodcard/prodcard.component';
+import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.component';
 
 
 
@@ -162,7 +164,9 @@ import { DashboardService } from './natservices/dashboard.service';
     DashcardComponent,
     DashlistComponent,
     HoldetailComponent,
-    DashfundComponent
+    DashfundComponent,
+    ProdcardComponent,
+    ProdlistComponent
   ],
   imports: [
       BrowserModule,

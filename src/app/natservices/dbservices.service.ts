@@ -135,6 +135,24 @@ dbaction(screen, functionality, data){
             var apiurl = environment.pfUrl + '/' + environment.executepf;
             return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
       }
+      case 'dashgetdata':
+      {
+            console.log('inside dash get data');
+            var apiurl = environment.dashUrl + '/' + environment.getdata;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
+      case 'dashgetdata':
+      {
+            console.log('inside dash get data');
+            var apiurl = environment.dashUrl + '/' + environment.getdata;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
+      case 'dashchartdata':
+      {
+            console.log('inside dashchartdata');
+            var apiurl = environment.dashUrl + '/' + environment.chartdata;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
       case 'dashpfdet':
       {
             console.log('inside pf details');

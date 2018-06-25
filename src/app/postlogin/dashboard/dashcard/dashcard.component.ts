@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PieChartConfig } from '../../../googlechartservice/PieChartConfig';
 import { linechartconfig } from '../../../googlechartservice/linechart/linechartconfig';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import {Router} from '@angular/router';
 import { DbservicesService } from '../../../natservices/dbservices.service';
 import { DashboardService } from '../../../natservices/dashboard.service';
@@ -13,7 +12,7 @@ import { DashboardService } from '../../../natservices/dashboard.service';
   styleUrls: ['./dashcard.component.scss']
 })
 export class DashcardComponent implements OnInit {
-
+  /*
   displayedColumns = ['Fund', 'Units', 'Invested Amount', 'Amount'];
   
   dataSourceval = new MatTableDataSource();
@@ -23,7 +22,7 @@ export class DashcardComponent implements OnInit {
     this.paginator2 = paginator2;
     this.dataSourceval.paginator = this.paginator2;
   }
-
+*/
   @Input() mode;
   @Input() pfmain;
   @Input() idpsum;
@@ -53,7 +52,7 @@ export class DashcardComponent implements OnInit {
   ngOnInit() {
     this.dashcharfetch = true;
 
-
+    /*
     this.dataSourceval.data = [
       {'fundname': 'Birla Sun life MNC', 'units': 150, 'invamt': 400000, 'amount': 500563.25},
       {'fundname': 'HDFC Midcap', 'units': 11550, 'invamt': 4000, 'amount': 7800.25},
@@ -69,7 +68,7 @@ export class DashcardComponent implements OnInit {
     ['Sleep',    10]];
     this.config = new PieChartConfig('My Daily Activities at 20 years old', 0.4);
     this.elementId1 = 'myPieChart2';
-
+    */
     if (this.mode === 'detail') {
       console.log(this.mode);
       this.detailmode = true;
@@ -130,12 +129,15 @@ export class DashcardComponent implements OnInit {
                   }
       );
       this.chart_init();
-      const dataa = {'pfid': this.pfmain['pfportfolioid']};
-      this.dbserivce.dbaction('dash', 'chart', dataa)
+      const apidata = {
+        'pfid': this.pfmain['pfportfolioid'],
+        'datareq': 'pffull'
+       };
+      this.dbserivce.dbaction('dash', 'chartdata', apidata)
       .subscribe(
           data => {
                     console.log(data['body']);
-                    this.linedata = data['body']['data'];
+                    this.linedata = data['body']['pffulldata'];
                     console.log(this.linedata);
                     this.dashcharfetch = false;
                   },
@@ -179,6 +181,7 @@ export class DashcardComponent implements OnInit {
       */
       console.log(this.linedata);
     }
+    console.log(this.detailmode);
   }
 
   chart_init() {
@@ -186,11 +189,6 @@ export class DashcardComponent implements OnInit {
     this.elementId = 'mylinechart' + (this.myind + 1);
   }
 
-
-  getRecord(row) {
-    console.log(row);
-    this.router.navigate(['/securedpg/dafundetail']);
-  }
 
   navigatedetailspg() {
     this.dashb.dpprods = this.dpprods;

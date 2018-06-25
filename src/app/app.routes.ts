@@ -34,7 +34,7 @@ import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.
 import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/mfpayconfland.component';
 import { HoldetailComponent } from './postlogin/dashboard/holdetail/holdetail.component';
 import { DashfundComponent } from './postlogin/dashboard/dashfund/dashfund.component';
-
+import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.component';
 
 export const ROUTES: Routes = [
 
@@ -52,6 +52,7 @@ export const ROUTES: Routes = [
     ]},    */
     {path: 'dashboard',  component: DashboardComponent},
     {path: 'dapffulldetail', component: HoldetailComponent},
+    {path: 'daproddetail', component: ProdlistComponent},
     {path: 'dafundetail',  component: DashfundComponent},
     {path: 'fundalloc',  component: FundallocatComponent},
     {path: 'settings',  component: SettingsComponent, children: [
