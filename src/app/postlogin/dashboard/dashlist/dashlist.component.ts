@@ -30,6 +30,7 @@ export class DashlistComponent implements OnInit {
       .subscribe(
           data => {
                     this.pfs = data['body'];
+                    console.log('this.pfs');
                     console.log(this.pfs);
                     this.pfmainfetch = false;
                   },

@@ -29,6 +29,7 @@ export class DashcardComponent implements OnInit {
   @Input() idpprods;
   @Input() myind;
 
+  
   dailypos = {};
   detailmode: boolean;
   config: PieChartConfig;
@@ -111,13 +112,18 @@ export class DashcardComponent implements OnInit {
         */
 
     } else {
-      this.dbserivce.dbaction('dash', 'pfdet', this.pfmain['pfportfolioid'])
+      const apidata1 = {
+        'pfid': this.pfmain['pfportfolioid'],
+        'datareq': 'pffull',
+        'offset':0
+       };
+      this.dbserivce.dbaction('dash', 'getdata', apidata1 )
       .subscribe(
           data => {
                     console.log(data['body']);
-                    console.log(data['body']['sumrec']);
-                    this.dpsum = data['body']['sumrec'];
-                    this.dpprods = data['body']['prodrecs'];
+                    console.log(data['body']['pfsumrec']);
+                    this.dpsum = data['body']['pfsumrec'];
+                    this.dpprods = data['body']['prodsumrec'];
                     this.dailyposfetch = false;
                   },
           error => {

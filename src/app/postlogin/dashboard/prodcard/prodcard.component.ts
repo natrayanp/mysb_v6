@@ -40,7 +40,6 @@ export class ProdcardComponent implements OnInit {
     this.paginator = paginator;
     this.dataSourceval.paginator = this.paginator;
   }
- 
 
   constructor(private router: Router,
               private dbserivce: DbservicesService,
@@ -54,8 +53,15 @@ export class ProdcardComponent implements OnInit {
     if (this.mode === 'integrated') {
       this.fetch_prod_det();
     } else if (this.mode === 'detach') {
-      this.linechartdata = this.dashb.prod_chartdata;
+      console.log(this.dashb.prod_chartdata);
       this.dataSourceval.data = this.dashb.prod_dpproddets;
+      this.chart_init();
+      this.linechartdata = this.dashb.prod_chartdata;
+      /*
+      if (this.linechartdata.length < 1 ) {
+        this.fetch_chart_data();
+      }
+      */
     }
   }
 
@@ -63,16 +69,17 @@ export class ProdcardComponent implements OnInit {
   fetch_prod_det() {
     console.log(this.dpprod);
     this.proddetfetch = true;
-    this.apidata = {
+    const apidata = {
                     'pfid': this.dpprod['pfid'],
                     'prodtyp': this.dpprod['prodtyp'],
-                    'datareq': 'prodfull'
+                    'datareq': 'prodfull',
+                    'offset': 0
                    };
-    this.dbserivce.dbaction('dash', 'getdata', this.apidata)
+    this.dbserivce.dbaction('dash', 'getdata', apidata)
     .subscribe(
         data => {
                   console.log(data['body']);
-                  this.dpproddets = data['body']['proddetrecs'];
+                  this.dpproddets = data['body']['fundsumrec'];
                   this.dataSourceval.data = this.dpproddets;
                   this.proddetfetch = false;
                 },
@@ -99,6 +106,7 @@ export class ProdcardComponent implements OnInit {
          data => {
                    console.log(data['body']);
                    this.linechartdata = data['body']['prodfulldata'];
+                   console.log(this.linechartdata);
                    this.prodchartfetch = false;
                  },
          error => {
@@ -122,11 +130,9 @@ export class ProdcardComponent implements OnInit {
   togglechart() {
     this.showchart = !this.showchart;
     if (this.showchart) {
-      if (this.mode === 'integrated') {
         if (this.linechartdata.length < 1 ) {
           this.fetch_chart_data();
         }
-      }
     }
   }
 
@@ -139,6 +145,8 @@ export class ProdcardComponent implements OnInit {
     this.dashb.prod_dpprods = this.dpprod;
     this.dashb.prod_dpproddets = this.dpproddets;
     this.dashb.prod_chartdata = this.linechartdata;
+    // this.dashb.prod_chartdata.push(this.linechartdata);
+    console.log(this.dashb.prod_chartdata);
     this.dashb.prod_pfindex = this.pfindex;
     this.dashb.prod_prodindex = this.prodindex;
     this.router.navigate(['/securedpg/daproddetail']);

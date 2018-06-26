@@ -19,7 +19,4 @@ export class DashboardService {
   prod_pfindex: number;
   prod_prodindex: number;
 
-
-
-
 }
