@@ -57,11 +57,7 @@ export class ProdcardComponent implements OnInit {
       this.dataSourceval.data = this.dashb.prod_dpproddets;
       this.chart_init();
       this.linechartdata = this.dashb.prod_chartdata;
-      /*
-      if (this.linechartdata.length < 1 ) {
-        this.fetch_chart_data();
-      }
-      */
+      this.togglechart();
     }
   }
 
