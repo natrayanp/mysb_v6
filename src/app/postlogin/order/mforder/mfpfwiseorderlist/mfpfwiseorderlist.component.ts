@@ -158,11 +158,11 @@ constructor(private orfb: FormBuilder,
       .subscribe(
         record => {
                     console.log('fetchfetch');
-                    console.log(record['body'][0]);
-                    console.log(record['body'][0].length);
-                    if ( record['body'][0].length > 0 ) {
+                    console.log(record['body']);
+                    console.log(record['body'].length);
+                    if ( record['body'].length > 0 ) {
                         console.log('fetchfetch true');
-                        this.fundnames = record['body'][0];
+                        this.fundnames = record['body'];
                         this.fundnamescpy = this.fundnames;
                         let dd = JSON.parse(JSON.stringify(this.empty_pfdetails));
                         dd.pfnameadd = 'edit';

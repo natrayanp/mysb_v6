@@ -7,11 +7,51 @@
     <mat-card-subtitle>{{pfmain.pfpurpose}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <div *ngIf = "dailyposfetch">
+        <alerts></alerts>
+    <!--div *ngIf = "pfmain.length < 1" fxLayout = "column wrap" fxLayoutAlign="center">
+        <div fxFlexFill>
+            You have not created any portfolio.  Start investing now by creating portfolio.
+
+            <mat-chip-list>
+                <mat-chip>+</mat-chip>
+            </mat-chip-list>
+        </div>
+    </div-->
+    <div *ngIf = "!dailyposfetch">
+    <mat-grid-list cols="1" style="padding:10px" *ngIf =  "(pfmain | json) == '{}'">
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <div fxLayout="column" fxLayoutAlign="center center">
+                <div>
+                    You have not created any portfolio.  Start investing now by creating portfolio.
+                </div>
+                <div>
+                    <mat-chip-list>
+                        <mat-chip style = "font-size: 15px" color="accent" selected><strong>+</strong></mat-chip>
+                    </mat-chip-list>
+                </div>
+                </div>
+            </mat-grid-tile>
+
+    </mat-grid-list>
+    
+    <mat-grid-list cols="1"  *ngIf = "dpprods.length < 1 && (pfmain | json) !== '{}'">
+
+            <mat-grid-tile colspan="1" rowspan="1">
+                <div fxLayout="column" fxLayoutAlign="center center">
+                <div>
+                        You don't have any confirmed transactions in this portfolio
+                </div>
+                </div>
+            </mat-grid-tile>
+
+    </mat-grid-list>
+    </div>
+    <div *ngIf = "dailyposfetch" fxLayout = "column" fxLayoutAlign = "center center">
         <mat-spinner [diameter]="40"></mat-spinner>
     </div>
-    <div fxLayout = "row wrap" *ngIf = "!dailyposfetch">
-          
+
+    <div fxLayout = "row wrap" *ngIf = "!dailyposfetch && dpprods.length > 0">
       <div fxFlex="1 1 25%">
         <p>Total Value</p>
         <p>
@@ -47,7 +87,14 @@
               </p>
             </div>
 
+  
+
+
+    <div >
+            
     </div>
+    </div>
+
 
     <!--div fxLayout = "row wrap">
           
@@ -70,13 +117,14 @@
           </div>
   
       </div-->
-      <div *ngIf = "dashcharfetch">
+      <div *ngIf = "dashcharfetch" fxLayout = "column" fxLayoutAlign = "center center">
             <mat-spinner [diameter]="40"></mat-spinner>
       </div>
       <div *ngIf = "!dashcharfetch" >
+        <div *ngIf = "dpprods.length > 0">
           <app-chart [data] = "linedata" [config]="config1" [elementId]="elementId" [charttype]="'line'" [detailmode]="detailmode"></app-chart>
+        </div>
       </div>
-
 
     <div *ngIf = "detailmode">
         <div *ngFor = "let dpprod of dpprods; let j = index">
@@ -86,6 +134,6 @@
 
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button *ngIf = "!detailmode" (click)="navigatedetailspg()">Details</button>    
+    <button mat-button *ngIf = "!detailmode && (dpprods?.length > 0)" (click)="navigatedetailspg()">Details</button>    
   </mat-card-actions>
 </mat-card>

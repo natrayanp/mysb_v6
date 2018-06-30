@@ -36,6 +36,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -201,6 +202,7 @@ import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.compo
       MatProgressBarModule,
       MatDividerModule,
       MatTreeModule,
+      MatGridListModule,
     RouterModule.forRoot(ROUTES /*,{enableTracing: true }*/),
    // NotifymoduleModule,
     AngularFireModule.initializeApp(environment.firebase),

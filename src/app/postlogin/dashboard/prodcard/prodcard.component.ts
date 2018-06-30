@@ -3,7 +3,7 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { DbservicesService } from '../../../natservices/dbservices.service';
 import { DashboardService } from '../../../natservices/dashboard.service';
 import { linechartconfig } from '../../../googlechartservice/linechart/linechartconfig';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'prodcard',
@@ -43,7 +43,7 @@ export class ProdcardComponent implements OnInit {
 
   constructor(private router: Router,
               private dbserivce: DbservicesService,
-              private dashb: DashboardService
+              public dashb: DashboardService
              ) { }
 
   ngOnInit() {
@@ -134,6 +134,10 @@ export class ProdcardComponent implements OnInit {
 
   getRecord(row) {
     console.log(row);
+    this.dashb.fund_fndsumdet = row;
+    this.dashb.fund_fndid = row.schemecode;
+    this.dashb.fund_pfid = row.pfid;
+    this.dashb.fund_prodtyp = row.prodtyp;
     this.router.navigate(['/securedpg/dafundetail']);
   }
 
@@ -141,7 +145,6 @@ export class ProdcardComponent implements OnInit {
     this.dashb.prod_dpprods = this.dpprod;
     this.dashb.prod_dpproddets = this.dpproddets;
     this.dashb.prod_chartdata = this.linechartdata;
-    // this.dashb.prod_chartdata.push(this.linechartdata);
     console.log(this.dashb.prod_chartdata);
     this.dashb.prod_pfindex = this.pfindex;
     this.dashb.prod_prodindex = this.prodindex;
