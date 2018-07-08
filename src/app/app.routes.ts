@@ -30,11 +30,12 @@ import { MandateComponent } from './postlogin/settings/mandate/mandate.component
 import { MandateregComponent } from './postlogin/settings/mandate/mandatereg/mandatereg.component';
 import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/mandateinq.component';
 import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
-import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.component';
+import { MforderhistComponent } from './postlogin/order/orderhist/mforderhist/mforderhist.component';
 import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/mfpayconfland.component';
 import { HoldetailComponent } from './postlogin/dashboard/holdetail/holdetail.component';
 import { DashfundComponent } from './postlogin/dashboard/dashfund/dashfund.component';
 import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.component';
+import { OrderhistComponent } from './postlogin/order/orderhist/orderhist.component';
 
 export const ROUTES: Routes = [
 
@@ -44,7 +45,7 @@ export const ROUTES: Routes = [
   { path: 'securedpg',  component: PostloginComponent, children: [
     { path: 'orders',  component: mfpfwiseorderlistComponent },
     { path: 'mfordcof/:id',  component: MforderconfpgComponent },
-    { path: 'orderhistory',  component: MforderhistComponent },
+    { path: 'orderhistory',  component: OrderhistComponent },
   /*  {path: 'orders',  component: OrderComponent, children: [
       {path: 'pfwise',  component: PfwiseorderlistComponent},
       {path: 'stwise',  component: StkwiseorderComponent},

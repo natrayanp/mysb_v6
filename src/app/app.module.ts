@@ -105,7 +105,7 @@ import { MandateregComponent } from './postlogin/settings/mandate/mandatereg/man
 import { MandateComponent } from './postlogin/settings/mandate/mandate.component';
 import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/mandateinq.component';
 import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
-import { MforderhistComponent } from './postlogin/order/mforderhist/mforderhist.component';
+import { MforderhistComponent } from './postlogin/order/orderhist/mforderhist/mforderhist.component';
 import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/mfpayconfland.component';
 import { DashcardComponent } from './postlogin/dashboard/dashcard/dashcard.component';
 import { DashlistComponent } from './postlogin/dashboard/dashlist/dashlist.component';
@@ -114,6 +114,7 @@ import { DashfundComponent } from './postlogin/dashboard/dashfund/dashfund.compo
 import { DashboardService } from './natservices/dashboard.service';
 import { ProdcardComponent } from './postlogin/dashboard/prodcard/prodcard.component';
 import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.component';
+import { OrderhistComponent } from './postlogin/order/orderhist/orderhist.component';
 
 
 
@@ -167,7 +168,8 @@ import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.compo
     HoldetailComponent,
     DashfundComponent,
     ProdcardComponent,
-    ProdlistComponent
+    ProdlistComponent,
+    OrderhistComponent
   ],
   imports: [
       BrowserModule,
