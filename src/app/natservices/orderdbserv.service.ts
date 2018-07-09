@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {HttpClient, HttpEvent, HttpInterceptor, HttpHandler,HttpHeaders, HttpRequest} from '@angular/common/http';
-import { DbservicesService } from '../natservices/dbservices.service';
+import { DbservicesService } from './dbservices.service';
 
 @Injectable()
 export class OrderdbservService {

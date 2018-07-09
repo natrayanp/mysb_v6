@@ -1,4 +1,22 @@
 
+
+<mat-tab-group>
+  <div *ngFor="let tab of products">
+    <mat-tab *ngIf="tab == 'Mutual Fund' " label = "{{tab}}" >
+      <ng-template matTabContent>
+      <orderhistlist [prod] = "tab"></orderhistlist>
+    </ng-template>
+    </mat-tab>
+
+    <mat-tab *ngIf="tab == 'Stocks' " label = "{{tab}}" >
+      <ng-template matTabContent>
+          <orderhistlist [prod] = "tab"></orderhistlist>
+      </ng-template>      
+    </mat-tab>
+  </div>
+</mat-tab-group>
+
+<!--
 <mat-tab-group>
   <mat-tab>
     <ng-template mat-tab-label>      
@@ -24,3 +42,4 @@
     Content 3
   </mat-tab>
 </mat-tab-group>
+-->

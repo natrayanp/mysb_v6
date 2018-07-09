@@ -76,4 +76,6 @@ export const environment = {
   mforderpayment: 'mforderpayment',
   mforderdetails: 'mforderdetails',
   mfordpaystaus: 'mfordpaystatus',
+  orderhistUrl: 'http://127.0.0.1:8080',
+  orderhistfetch: 'orderhistfetch'
 };

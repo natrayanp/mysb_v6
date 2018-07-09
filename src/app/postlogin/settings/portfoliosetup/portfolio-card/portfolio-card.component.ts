@@ -6,7 +6,7 @@ import { DbservicesService } from '../../../../natservices/dbservices.service';
 import { NotifyService } from '../../../../natservices/notify.service';
 import { NotificationComponent } from '../../../../commonmodule/notificationmodule/notification/notification.component'
 
-import { mffundlistComponent } from '../../../../postlogin/order/mforder/mffundlist/mffundlist.component'
+import { mffundlistComponent } from '../../../order/mforder/mffundlist/mffundlist.component'
 
 
 // import { empty } from 'rxjs/observable/empty';

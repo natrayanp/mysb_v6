@@ -105,7 +105,6 @@ import { MandateregComponent } from './postlogin/settings/mandate/mandatereg/man
 import { MandateComponent } from './postlogin/settings/mandate/mandate.component';
 import { MandateinqComponent } from './postlogin/settings/mandate/mandateinq/mandateinq.component';
 import { MfpaynaviComponent } from './postlogin/order/mforder/mfpaynavi/mfpaynavi.component';
-import { MforderhistComponent } from './postlogin/order/orderhist/mforderhist/mforderhist.component';
 import { MfpayconflandComponent } from './postlogin/order/mforder/mfpayconfland/mfpayconfland.component';
 import { DashcardComponent } from './postlogin/dashboard/dashcard/dashcard.component';
 import { DashlistComponent } from './postlogin/dashboard/dashlist/dashlist.component';
@@ -115,7 +114,8 @@ import { DashboardService } from './natservices/dashboard.service';
 import { ProdcardComponent } from './postlogin/dashboard/prodcard/prodcard.component';
 import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.component';
 import { OrderhistComponent } from './postlogin/order/orderhist/orderhist.component';
-
+import { OrderhistlistComponent } from './postlogin/order/orderhist/orderhistlist/orderhistlist.component';
+import { OrderhistcardComponent } from './postlogin/order/orderhist/orderhistcard/orderhistcard.component';
 
 
 @NgModule({
@@ -161,7 +161,6 @@ import { OrderhistComponent } from './postlogin/order/orderhist/orderhist.compon
     MandateComponent,
     MandateinqComponent,
     MfpaynaviComponent,
-    MforderhistComponent,
     MfpayconflandComponent,
     DashcardComponent,
     DashlistComponent,
@@ -169,7 +168,9 @@ import { OrderhistComponent } from './postlogin/order/orderhist/orderhist.compon
     DashfundComponent,
     ProdcardComponent,
     ProdlistComponent,
-    OrderhistComponent
+    OrderhistComponent,
+    OrderhistlistComponent,
+    OrderhistcardComponent
   ],
   imports: [
       BrowserModule,

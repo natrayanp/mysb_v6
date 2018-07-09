@@ -204,6 +204,13 @@ dbaction(screen, functionality, data){
             var apiurl = environment.mforderUrl + '/' + environment.mfordpaystaus;
             return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
       }
+      case 'orderhistfetch':
+      {
+            console.log('inside order history fetch');
+            console.log(JSON.stringify(data));
+            var apiurl = environment.orderhistUrl + '/' + environment.orderhistfetch;
+            return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
+      }
 
   }
 }

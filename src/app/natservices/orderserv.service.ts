@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { DbservicesService } from '../natservices/dbservices.service';
-import { NotifyService } from '../natservices/notify.service';
+import { DbservicesService } from './dbservices.service';
+import { NotifyService } from './notify.service';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import {Router} from '@angular/router';
 import { ActivatedRoute } from '@angular/router';

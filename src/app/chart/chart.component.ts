@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
-import { GooglePieChartService } from './../googlechartservice/google-pie-chart.service';
-import { PieChartConfig } from './../googlechartservice/PieChartConfig';
+import { GooglePieChartService } from '../googlechartservice/google-pie-chart.service';
+import { PieChartConfig } from '../googlechartservice/PieChartConfig';
 
-import { GooglelineChartService } from './../googlechartservice/linechart/google-line-charts.service';
-import { linechartconfig } from './../googlechartservice/linechart/linechartconfig';
+import { GooglelineChartService } from '../googlechartservice/linechart/google-line-charts.service';
+import { linechartconfig } from '../googlechartservice/linechart/linechartconfig';
 
 
 declare var google: any;
