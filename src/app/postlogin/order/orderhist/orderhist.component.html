@@ -1,9 +1,9 @@
+<mat-toolbar class = "mat-elevation-z1">Order History</mat-toolbar>
 
-
-<mat-tab-group>
+<mat-tab-group class = "mat-elevation-z4">
   <div *ngFor="let tab of products">
     <mat-tab *ngIf="tab == 'Mutual Fund' " label = "{{tab}}" >
-      <ng-template matTabContent>
+      <ng-template matTabContent >
       <orderhistlist [prod] = "tab"></orderhistlist>
     </ng-template>
     </mat-tab>

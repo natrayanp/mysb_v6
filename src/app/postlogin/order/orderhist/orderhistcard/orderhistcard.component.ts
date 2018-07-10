@@ -15,7 +15,9 @@ export class OrderhistcardComponent implements OnInit {
   crdprod: string;
   crdfreq: string;
   submit_date = {};
-
+  trandetfetch: boolean;
+  adhocfrmld: boolean;
+  tranadfetch: boolean;
 
   displayedColumns = ['trandate', 'Units', 'Invested Amount', 'currentnav'];
 
@@ -35,10 +37,23 @@ export class OrderhistcardComponent implements OnInit {
   ngOnInit() {
     this.crdprod = this.product;
     this.crdfreq = this.freq;
-    this.get_tran_details();
+    if (this.crdfreq !== 'adhoc') {
+      this.get_tran_details();
+    } else if (this.crdfreq === 'adhoc') {
+      this.tranadfetch = true;
+      this.adhocfrmld = true;
+      this.init_form();
+    }
+
+  }
+
+  init_form() {
+    this.adhocfrmld = false;
   }
 
   get_tran_details() {
+    this.tranadfetch = true;
+    this.trandetfetch = true;
     this.submit_date = {
       'product': this.crdprod,
       'freq': this.crdfreq  // today,week,month,adhoc
@@ -46,9 +61,23 @@ export class OrderhistcardComponent implements OnInit {
     this.dbserivce.dbaction('orderhist', 'fetch', this.submit_date)
     .subscribe(
       data => {
-        console.log(data['body']);
+        if (this.crdfreq === 'today') {
+          this.dataSourceval.data = data['body']['todaydata'];
+        } else if (this.crdfreq === 'week') {
+          this.dataSourceval.data = data['body']['weekdata'];
+        } else if (this.crdfreq === 'month') {
+          this.dataSourceval.data = data['body']['monthdata'];
+        } else if (this.crdfreq === 'adhoc') {
+          this.dataSourceval.data = data['body']['daterange'];
+        }
+        this.trandetfetch = false;
+        this.adhocfrmld = false;
+        this.tranadfetch = false;
       },
-error => {
+      error => {
+          this.trandetfetch = false;
+          this.adhocfrmld = false;
+          this.tranadfetch = false;
           console.log('error dta fetch');
           this.notify.update(error['error']['failreason'], 'error', 'alert');
           console.log(error);

@@ -1,24 +1,30 @@
+
 <br>
 <mat-tab-group>
     
-      <mat-tab label = "Today's Tran" >
+      <mat-tab label = "Today's Transactions" >
         <ng-template matTabContent>
           <orderhistcard [freq] = "'today'" [product] = "product" ></orderhistcard>
         </ng-template>
       </mat-tab>
   
-      <mat-tab label = "Week's Tran" >
+      <mat-tab label = "This Week's Transactions" >
         <ng-template matTabContent>
             <orderhistcard [freq] = "'week'" [product] = "product" ></orderhistcard>
         </ng-template>      
       </mat-tab>
     
-      <mat-tab label = "Month's Tran" >
+      <mat-tab label = "This Month's Transactions" >
           <ng-template matTabContent>
               <orderhistcard [freq] = "'month'" [product] = "product" ></orderhistcard>
           </ng-template>      
         </mat-tab>
 
+        <mat-tab label = "Custom Period Search" >
+          <ng-template matTabContent>
+              <orderhistcard [freq] = "'adhoc'" [product] = "product" ></orderhistcard>
+          </ng-template>      
+        </mat-tab>
 
   </mat-tab-group>
 
