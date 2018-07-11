@@ -1,12 +1,15 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { DbservicesService } from '../../../../natservices/dbservices.service';
 import { NotifyService } from '../../../../natservices/notify.service';
+import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { formatDate } from '@angular/common';
+import { LOCALE_ID } from '@angular/core';
 
 @Component({
   selector: 'orderhistcard',
   templateUrl: './orderhistcard.component.html',
-  styleUrls: ['./orderhistcard.component.scss']
+  styleUrls: ['./orderhistcard.component.scss'],
 })
 export class OrderhistcardComponent implements OnInit {
   @Input() public freq: string;
@@ -16,8 +19,9 @@ export class OrderhistcardComponent implements OnInit {
   crdfreq: string;
   submit_date = {};
   trandetfetch: boolean;
-  adhocfrmld: boolean;
   tranadfetch: boolean;
+  dtFormgrp: FormGroup;
+
 
   displayedColumns = ['trandate', 'Units', 'Invested Amount', 'currentnav'];
 
@@ -31,33 +35,40 @@ export class OrderhistcardComponent implements OnInit {
 
 
   constructor(private dbserivce: DbservicesService,
-              private notify: NotifyService
-            ) { }
+              private notify: NotifyService,
+              @Inject(LOCALE_ID) private locale: string,
+              private fb: FormBuilder,
+            ) {this.createdtForm(); }
 
   ngOnInit() {
+    
     this.crdprod = this.product;
     this.crdfreq = this.freq;
     if (this.crdfreq !== 'adhoc') {
       this.get_tran_details();
-    } else if (this.crdfreq === 'adhoc') {
-      this.tranadfetch = true;
-      this.adhocfrmld = true;
-      this.init_form();
     }
-
-  }
-
-  init_form() {
-    this.adhocfrmld = false;
   }
 
   get_tran_details() {
     this.tranadfetch = true;
     this.trandetfetch = true;
-    this.submit_date = {
-      'product': this.crdprod,
-      'freq': this.crdfreq  // today,week,month,adhoc
-    };
+    this.dataSourceval.data = [];
+    
+
+    if (this.crdfreq !== 'adhoc') {
+      this.submit_date = {
+        'product': this.crdprod,
+        'freq': this.crdfreq  // today,week,month,adhoc
+      };
+    } else if (this.crdfreq === 'adhoc') {
+      this.submit_date = {
+        'product': this.crdprod,
+        'freq': this.crdfreq,  // today,week,month,adhoc
+        'startdt' : formatDate(this.dtFormgrp.controls.frmdt.value, 'yyyy-MM-dd', this.locale),
+        'enddt' : formatDate(this.dtFormgrp.controls.todat.value, 'yyyy-MM-dd', this.locale)
+      };
+    }
+
     this.dbserivce.dbaction('orderhist', 'fetch', this.submit_date)
     .subscribe(
       data => {
@@ -71,12 +82,10 @@ export class OrderhistcardComponent implements OnInit {
           this.dataSourceval.data = data['body']['daterange'];
         }
         this.trandetfetch = false;
-        this.adhocfrmld = false;
         this.tranadfetch = false;
       },
       error => {
           this.trandetfetch = false;
-          this.adhocfrmld = false;
           this.tranadfetch = false;
           console.log('error dta fetch');
           this.notify.update(error['error']['failreason'], 'error', 'alert');
@@ -85,6 +94,17 @@ export class OrderhistcardComponent implements OnInit {
       },
 
     );
+  }
+
+  createdtForm() {
+    this.dtFormgrp = this.fb.group({
+      frmdt: ['',  Validators.compose([Validators.required])],
+      todat: ['',  Validators.compose([Validators.required])]
+    });
+  }
+
+  submitdts() {
+    this.get_tran_details();
   }
 
 }
