@@ -88,7 +88,12 @@ export class OrderhistcardComponent implements OnInit {
           this.trandetfetch = false;
           this.tranadfetch = false;
           console.log('error dta fetch');
-          this.notify.update(error['error']['failreason'], 'error', 'alert');
+          if ('failreason' in error['error']) {
+            this.notify.update(error['error']['failreason'], 'error', 'alert');
+          } else {
+            this.notify.update(error['message'], 'error', 'alert');
+          }
+
           console.log(error);
 
       },

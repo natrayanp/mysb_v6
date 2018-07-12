@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {Router} from '@angular/router';
 import { DbservicesService } from '../../../natservices/dbservices.service';
 import { DashboardService } from '../../../natservices/dashboard.service';
-
+import { NotifyService } from '../../../natservices/notify.service';
 
 @Component({
   selector: 'app-dashlist',
@@ -17,7 +17,8 @@ export class DashlistComponent implements OnInit {
 
   constructor(private router: Router,
               private dbserivce: DbservicesService,
-              private dashb: DashboardService
+              private dashb: DashboardService,
+              private notify: NotifyService
               ) { }
 
   pfs = [];
@@ -39,6 +40,12 @@ export class DashlistComponent implements OnInit {
                   },
           error => {
                       console.log(error);
+                      if ('failreason' in error['error']) {
+                        this.notify.update(error['error']['failreason'], 'error', 'alert');
+                      } else {
+                        this.notify.update(error['message'], 'error', 'alert');
+                      }
+                      this.pfmainfetch = false;
                    },
           ()   => {
                       this.pfmainfetch = false;

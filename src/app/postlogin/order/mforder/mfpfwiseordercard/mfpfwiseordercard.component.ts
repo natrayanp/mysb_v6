@@ -11,7 +11,7 @@ import { OrderservService } from '../../../../natservices/orderserv.service';
   styleUrls: ['./mfpfwiseordercard.component.scss']
 })
 export class mfpfwiseordercardComponent implements OnInit {
-  public pfForm : FormGroup;
+  public pfForm: FormGroup;
 
 
 
@@ -60,9 +60,6 @@ export class mfpfwiseordercardComponent implements OnInit {
       ormffundorderlists: ''
     };
 
-
-
-
  
   constructor(private pffb: FormBuilder,
              // private router: Router,
@@ -96,6 +93,24 @@ export class mfpfwiseordercardComponent implements OnInit {
     this.Mypfdetailcpy = JSON.parse(JSON.stringify(this.Mypfdetail));
 
   }
+
+  onetimeonChange() {
+    this.orderservice.mforderdetails[this.myindex].pfsiptotal = this.Mypfdetail.pfsiptotal;
+    this.orderservice.mforderdetails[this.myindex].pfonetimetotal = this.Mypfdetail.pfonetimetotal;
+    this.orderservice.gettotalacrosspf();
+    console.log("emiting");
+    //this.calctotalamt.emit();
+  }
+  
+  pfconfirm(Mypfdetailcpy) {
+    // Mypfdetailcpy.pfnameadd = '';
+    // this.EAMode = false;
+    console.log(Mypfdetailcpy);
+    console.log(this.myindex);
+    this.orderservice.formref = this.pfForm;
+    this.cardsave.emit(this.myindex);
+  }
+  
 
   chtoupper() {
    // this.Mypfdetail.pfportfolioname = this.Mypfdetail.pfportfolioname.toUpperCase();
@@ -148,26 +163,4 @@ showex() {
   }
 }
 */
-
-onetimeonChange() {
-  this.orderservice.mforderdetails[this.myindex].pfsiptotal = this.Mypfdetail.pfsiptotal;
-  this.orderservice.mforderdetails[this.myindex].pfonetimetotal = this.Mypfdetail.pfonetimetotal;
-  this.orderservice.gettotalacrosspf();
-  console.log("emiting");
-  //this.calctotalamt.emit();
-}
-
-pfconfirm(Mypfdetailcpy) {
-  // Mypfdetailcpy.pfnameadd = '';
-  // this.EAMode = false;
-  console.log(Mypfdetailcpy);
-  console.log(this.myindex);
-  this.orderservice.formref = this.pfForm;
-  this.cardsave.emit(this.myindex);
-}
-
-
-
-
-
 }

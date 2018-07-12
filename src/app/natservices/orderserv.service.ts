@@ -94,15 +94,13 @@ export class OrderservService {
   onetimeamtacrosspfob = this._onetimeamt.asObservable();
   sipacrosspfob = this._sipamt.asObservable();
 */
-getmforderdata(){
+getmforderdata() {
     this.onfetch = true;
     this.dbserivce.dbaction('mforder', 'fetch', '').subscribe(
       data =>
             {
               this.mforderdetails = data['body'];
               console.log(this.mforderdetails);
-              // this.totalpf=this.pfdetails.length;
-              // this.pfcpydetails=JSON.parse(JSON.stringify((this.pfdetails)));
               this.onfetch = false;
             },
       error =>
