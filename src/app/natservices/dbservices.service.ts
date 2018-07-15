@@ -112,9 +112,9 @@ dbaction(screen, functionality, data){
       }
       case 'mforderfetch':
       {
-        console.log('inside pforderdata fetch');
+        console.log('inside pfmforderdata fetch');
         var apiurl = environment.pfUrl + '/' + environment.mforderfetch;
-        return this.getmethod(apiurl,{observe: 'response'});
+        return this.postmethod(apiurl, data, {observe: 'response'});
         // return this.http.post('http://127.0.0.1:8000/pfdatasave', JSON.stringify(pfform),{observe: 'response'});
       }
       case 'fundfetch':

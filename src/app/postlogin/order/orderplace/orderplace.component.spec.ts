@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PfwiseorderComponent } from './pfwiseorder.component';
+import { OrderplaceComponent } from './orderplace.component';
 
-describe('PfwiseorderComponent', () => {
-  let component: PfwiseorderComponent;
-  let fixture: ComponentFixture<PfwiseorderComponent>;
+describe('OrderplaceComponent', () => {
+  let component: OrderplaceComponent;
+  let fixture: ComponentFixture<OrderplaceComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PfwiseorderComponent ]
+      declarations: [ OrderplaceComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PfwiseorderComponent);
+    fixture = TestBed.createComponent(OrderplaceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

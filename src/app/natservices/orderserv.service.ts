@@ -35,7 +35,7 @@ export class OrderservService {
   show = false; // this is used to display 
   urltyp = '';
   // ordchanged= new BehaviorSubject("YES");
-  sipamtacrosspf= new BehaviorSubject(0);
+  sipamtacrosspf = new BehaviorSubject(0);
   onetimeamtacrosspf = new BehaviorSubject(0);
   mynoti = new BehaviorSubject('nofull');
   error_recs = [];
@@ -49,7 +49,25 @@ export class OrderservService {
   showtables = false;
   failpaylink = false;
   fetchingdata = false;
+  testval: string;
+  listdata: string;
 
+  // ###########################
+  // Data for all products
+  fullpflist: any[];
+
+  // Data for BSEMF buy
+  mfb_pfdistnames =  null;
+  mfb_mforderdetails = null;
+  mfb_gotodb = true;
+
+
+  // Data for BSEMF sell
+  mfs_pfdistnames = null;
+  mfs_mforderdetails = null;
+  mfs_gotodb = true;
+
+// ###########################
   
   mandateids = [{
     'mandate_id':'BSE000000016247',
@@ -99,6 +117,7 @@ getmforderdata() {
     this.dbserivce.dbaction('mforder', 'fetch', '').subscribe(
       data =>
             {
+              console.log(data['body']);
               this.mforderdetails = data['body'];
               console.log(this.mforderdetails);
               this.onfetch = false;
@@ -149,7 +168,7 @@ getmforderdata() {
   if (fundname) {
     this.selectedfund = JSON.parse(JSON.stringify(fundname));
     return (fundname ? fundname.pfportfolioname : undefined);
-  }else {
+  } else {
     return undefined;
   }
 }
@@ -437,6 +456,11 @@ get_order_status() {
 
     }
   ) ;
+}
+
+reset_gotodb() {
+  this.mfb_gotodb = true;
+  this.mfs_gotodb = true;
 }
 
 }

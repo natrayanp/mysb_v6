@@ -1,0 +1,71 @@
+<form [formGroup]="pfForm">
+    <!--input matInput [fxHide]="true" formControlName="pfOnetimetotal" [(ngModel)]="Mypfdetail.pfonetimetotal" (ngModelChange)="onetimeonChange()">
+    <input matInput [fxHide]="true" formControlName="pfSiptotal" [(ngModel)]="Mypfdetail.pfsiptotal" (ngModelChange)="onetimeonChange()"-->      
+    <mat-card [ngClass]="{'shadow':onEdit}" style="margin-top:15px; border-radius:10px" >
+        <mat-card-header>
+            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 1 100%">    
+                <mat-card-title [fxShow]="Mypfdetail.pfnameadd!='edit'">
+                    <h1>{{Mypfdetail.pfportfolioname}} &nbsp;<button mat-icon-button (click)="removepf()"><mat-icon style="color:red; margin-top:-5px">delete_forever</mat-icon></button></h1>
+                </mat-card-title>
+
+                <mat-form-field [fxShow]="Mypfdetail.pfnameadd =='edit'" fxFlex>
+                                <mat-select placeholder="Portfolioname"  [(value)]="selected2" >
+                                  <mat-option *ngFor="let pfdistname of pfdistnames" [value]="pfdistname.pfportfolioname">
+                                    {{ pfdistname.pfportfolioname }}
+                                  </mat-option>
+                                </mat-select>
+                        <mat-error *ngIf="!pfForm.controls['pfPortfolioname'].valid">
+                        Portfolioname is
+                        <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="pfForm.controls.pfPortfolioname.hasError('nameincorct')">                                                                
+                            Please chose a valid Portfolioname
+                        </mat-error>  
+                </mat-form-field>
+                <button  mat-icon-button (click)="pfconfirm()" [fxShow]="Mypfdetail.pfnameadd=='edit' || EAMode=='true'" ><mat-icon style="color:green;">check_circle</mat-icon></button>
+            </div>
+            <label style="color:green">{{myindex + 1}}</label>
+        </mat-card-header>
+        <mat-card-content>
+            <!--  This is for NONEDIT START-->
+            <div [fxHide]="onEdit" fxLayout="row wrap">
+                <div [fxHide]="true">
+                    <input matInput fxFlex="100%" formControlName="pfPortfolioid" [(ngModel)]="Mypfdetail.pfportfolioid" [fxHide]="true">
+                    <input matInput fxFlex="100%" formControlName="pfuserid" [(ngModel)]="Mypfdetail.pfuserid" [fxHide]="true">
+                    <input matInput fxFlex="100%" formControlName="pfScreen" [(ngModel)]="Mypfdetail.pfscreen" [fxHide]="true">
+                    <input matInput fxFlex="100%" formControlName="pfBeneUsers" [(ngModel)]="Mypfdetail.pfbeneUsers" [fxHide]="true">
+                </div>
+            </div>    
+            <!--  This is for NONEDIT END-->   
+            <!--  This is for edit START-->    
+            <div [fxHide]="!onEdit" fxLayout="row wrap" fxLayoutGap="10px">    
+            </div>
+            <!--  This is for edit END-->    
+            <!-- This is for any new row >    
+            <div fxFlexLayout="row" fxLayoutAlign="center center">
+            </div-->
+            <div *ngIf="Mypfdetail.pfnameadd!='edit'">
+                <div [ngSwitch]="prod+trantype">
+                    <div *ngSwitchCase="'BSEMFbuy'" >
+                        <mffundlist [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
+                            [mypfdet]="Mypfdetail"
+                            [onEdit]="onEdit"
+                            [rbsstr]="'INCART'"
+                            (totalchange)="cardtotalchange()">
+                        </mffundlist>
+                    </div>
+                    <div *ngSwitchCase="'BSEMFsell'" >
+                        <mffundlist [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
+                            [mypfdet]="Mypfdetail"
+                            [onEdit]="onEdit"
+                            [rbsstr]="'INCART'"
+                            (totalchange)="cardtotalchange()">
+                        </mffundlist>
+                    </div>
+                </div> 
+            </div>
+            <!--https://gist.github.com/dherges/e1ecdd03a319fbd2a5495f54fbc1ea87#file-nested-form-component-ts -->      
+
+        </mat-card-content>    
+    </mat-card>       
+</form>

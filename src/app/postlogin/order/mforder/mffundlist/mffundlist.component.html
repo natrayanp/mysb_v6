@@ -40,7 +40,7 @@
 <div fxLayout = "column" fxLayout.lt-md="column wrap" [fxHide]="false">
 <div  fxFlex="35%" fxFlex.lt-md="100%" style="padding-right:7%">
     <div> 
-        <h3 [fxHide]="orMFlist.controls.orMFFndnameedit.value == 'edit'">{{orMFlist.controls.orMFFundname.value}} <button mat-icon-button (click)="edittog(orMFlist,k)" *ngIf="orMFlist.controls.orMFFndnameedit.value == 'noedit' && onEdit"><mat-icon style="color:Red;" [fxShow]="orMFlist.controls.orMFFndnameedit.value == 'noedit' && onEdit">edit</mat-icon></button></h3>
+        <h3 [fxHide]="orMFlist.controls.orMFFndnameedit.value == 'edit'">{{orMFlist.controls.orMFFundname.value}} <button mat-icon-button (click)="edittog1(orMFlist,k)" *ngIf="orMFlist.controls.orMFFndnameedit.value == 'noedit' && onEdit"><mat-icon style="color:Red;" [fxShow]="orMFlist.controls.orMFFndnameedit.value == 'noedit' && onEdit">edit</mat-icon></button></h3>
 
         <mat-form-field  class="example-full-width1" [fxShow]="orMFlist.controls.orMFFndnameedit.value == 'edit'" fxFlex="90%">
             <input matInput placeholder="Fund Name" aria-label="Fund Name" [matAutocomplete]="fnauto" formControlName="orMFFundname" [(ngModel)]="mypfdet.pfmflist[k].ormffundname" >

@@ -4,7 +4,7 @@ import { DbservicesService } from '../../../../natservices/dbservices.service';
 import { empty } from 'rxjs';
 import { debounceTime, distinctUntilChanged , switchMap} from 'rxjs/operators';
 import { NotifyService } from '../../../../natservices/notify.service';
-
+import { DialogsService } from '../../../../commonmodule/dialogs/dialogs.service';
 
 
 const resolvedPromise = Promise.resolve(null);
@@ -14,7 +14,7 @@ const resolvedPromise = Promise.resolve(null);
   templateUrl: './mffundlist.component.html',
   styleUrls: ['./mffundlist.component.scss']
 })
-export class mffundlistComponent  {
+export class mffundlistComponent implements OnInit {
 
 
 
@@ -31,7 +31,7 @@ export class mffundlistComponent  {
   fundnames: string[];
   cardpfonetimetotal = 0;
   cardpfsiptotal = 0;
-  
+  @Output() totalchange: EventEmitter<any> = new EventEmitter();
 
 empty = {
   ormflistid: '',
@@ -70,7 +70,9 @@ emptyinitfundordlist= {
 
 constructor(private orfb: FormBuilder,
             private notify: NotifyService,
-            private dbserivce: DbservicesService) {}
+            private dbserivce: DbservicesService,
+            private dialogsService: DialogsService
+          ) {}
 
   ngOnInit() {
 
@@ -129,8 +131,8 @@ constructor(private orfb: FormBuilder,
   */
 
  
-  addPortfolio(){
-    this.orForm = this.orfb.group({ 
+  addPortfolio() {
+    this.orForm = this.orfb.group({
       orpflists: new FormArray([])
       });
   }
@@ -147,7 +149,7 @@ addonefundordlist(controln, valuelist, ind) {
   const controll1 = (<FormArray>((<FormGroup>this.pfMFlistsFormArray.controls[ind]).controls).orMFFundorderlists);
   if (valuelist.ormffundordelstrtyp === 'SIP') {
     controll1.push(this.initfundordlist(valuelist));
-  }else {
+  } else {
     controll1.insert(0, this.initfundordlist(valuelist));
   }
 }
@@ -300,70 +302,74 @@ initfundordlist(valuelist) {
     console.log("filterss");
   }
 */
-//###############This is not working and may need to remove//###############
+// ###############This is not working and may need to remove//###############
 
 cardMFtotalcalc()
 {
-  this.cardpfonetimetotal=0;
-  this.cardpfsiptotal=0;
-  this.pfMFlistsFormArray.value.forEach((cure,inder) => {    
-    cure.orMFFundorderlists.forEach((cure1,inder1) => {
-      if(cure1.orMFfundordelstrtyp == "One Time"){
-        this.cardpfonetimetotal =  this.cardpfonetimetotal+ Number(cure1.orMFfundordelsamt);             
-      }else if(cure1.orMFfundordelstrtyp == "SIP"){
-        this.cardpfsiptotal = this.cardpfsiptotal+Number(cure1.orMFfundordelsamt);
-      }      
-      
-    })
-    })
-    this.mypfdet.pfonetimetotal=this.cardpfonetimetotal;
-    this.mypfdet.pfsiptotal = this.cardpfsiptotal;    
+  console.log('cardmftotalcalc');
+  this.cardpfonetimetotal = 0;
+  this.cardpfsiptotal = 0;
+  this.pfMFlistsFormArray.value.forEach((cure, inder) => {
+    cure.orMFFundorderlists.forEach((cure1, inder1) => {
+      if ( cure1.orMFfundordelstrtyp === 'One Time') {
+        this.cardpfonetimetotal =  this.cardpfonetimetotal + Number(cure1.orMFfundordelsamt);
+      } else if (cure1.orMFfundordelstrtyp === 'SIP') {
+        this.cardpfsiptotal = this.cardpfsiptotal + Number(cure1.orMFfundordelsamt);
+      }
+    });
+    });
+    this.mypfdet.pfonetimetotal = this.cardpfonetimetotal;
+    this.mypfdet.pfsiptotal = this.cardpfsiptotal;
+    this.totalchange.emit();
   }
 
 addnewmflist(){
-  if (this.mypfdet.pfmflist == "" || this.mypfdet.pfmflist == null){    
-    this.mypfdet.pfmflist=[];
+  if (this.mypfdet.pfmflist === '' || this.mypfdet.pfmflist == null) {
+    this.mypfdet.pfmflist = [];
   }
   this.mypfdet.pfmflist.push(JSON.parse(JSON.stringify(this.empty)));
   this.addonemflist(this.empty);
 }
 
-addnewfundordlist(reccontrol,siponetime,ind){
+addnewfundordlist(reccontrol, siponetime, ind){
 
-  if (this.mypfdet.pfmflist[ind].ormffundorderlists == "" || this.mypfdet.pfmflist[ind].ormffundorderlists == null){    
-    this.mypfdet.pfmflist[ind].ormffundorderlists=[];
+  if (this.mypfdet.pfmflist[ind].ormffundorderlists === '' || this.mypfdet.pfmflist[ind].ormffundorderlists == null) {
+    this.mypfdet.pfmflist[ind].ormffundorderlists = [];
   }
-  
-  let modempty = JSON.parse(JSON.stringify(this.emptyinitfundordlist));
+
+  const modempty = JSON.parse(JSON.stringify(this.emptyinitfundordlist));
   modempty.ormffundordelstrtyp = siponetime;
   modempty.ormffndstatus = this.rbsstr;
 
 
-  if(siponetime=="SIP"){    
+  if (siponetime === 'SIP') {
     this.mypfdet.pfmflist[ind].ormffundorderlists.push(modempty);
-  }else{
+  } else {
     this.mypfdet.pfmflist[ind].ormffundorderlists.splice(0,0,modempty);
   }
-  
-  
-  this.addonefundordlist(reccontrol,modempty,ind); 
+  this.addonefundordlist(reccontrol, modempty, ind);
 }
 
-
-
-
-deleteMFRow(controlls,k,l) {
-  const control = <FormArray>controlls['orMFFundorderlists'];
-  control.removeAt(l);
-  this.mypfdet.pfmflist[k].ormffundorderlists.splice(l,1);
-  this.cardMFtotalcalc();
-   
+deleteMFRow(controlls, k, l) {
+  this.mfrowdeldialog(controlls, k, l);
 }
 
-
+mfrowdeldialog(controlls, k, l) {
+  this.dialogsService
+    .deletealert('Delete Alert', 'Are you sure you want to do this? Order Data will be removed')
+    .subscribe(res => {
+      if (res) {
+        const control = <FormArray>controlls['orMFFundorderlists'];
+        control.removeAt(l);
+        this.mypfdet.pfmflist[k].ormffundorderlists.splice(l,1);
+        this.cardMFtotalcalc();
+      }
+    }
+    );
+}
 
 issip(controlnn){
-  if(controlnn.value =='SIP'){
+  if (controlnn.value === 'SIP') {
     return true;
   } else{
     return false;
@@ -372,98 +378,109 @@ issip(controlnn){
 }
 
 
-otshowcal(controlnn){
-
-  return this.computeshows(controlnn['orMFFundorderlists'],"otshobutt");
+otshowcal(controlnn) {
+  return this.computeshows(controlnn['orMFFundorderlists'], 'otshobutt');
 }
 
 
 sipshowcal(controlnn){
-  return this.computeshows(controlnn['orMFFundorderlists'],"sipshobutt");
+  return this.computeshows(controlnn['orMFFundorderlists'], 'sipshobutt');
 }
 
 
 
-  computeshows(controlnn,resfor){
-    
-    var cond1='';
-    var cond2='';
-    var sipshow = false;
-    var otshow = false;
-    for (var i=0 ;i < controlnn.length; i++){
-      if(controlnn.controls[i].get(['orMFfundordelstrtyp']).value == 'SIP'){        
+  computeshows(controlnn, resfor) {
+    let cond1 = '';
+    let cond2 = '';
+    let sipshow = false;
+    let otshow = false;
+    for ( let i = 0 ; i < controlnn.length; i++) {
+      if (controlnn.controls[i].get(['orMFfundordelstrtyp']).value === 'SIP'){
         cond1 = 'SIP';
-      }else if (controlnn.controls[i].get(['orMFfundordelstrtyp']).value == 'One Time'){
-        cond2 = 'OT';      
-      }    
-      
+      } else if (controlnn.controls[i].get(['orMFfundordelstrtyp']).value === 'One Time'){
+        cond2 = 'OT';
       }
-    var strss = cond1+cond2;    
-      switch(strss){
-        case "SIP": {
-          sipshow= false;
-          otshow =true;
+      }
+    const strss = cond1 + cond2;
+      switch (strss) {
+        case 'SIP': {
+          sipshow = false;
+          otshow = true;
           break;
         }
-        case "OT":{
-          sipshow= true;
-          otshow =false;
+        case 'OT': {
+          sipshow = true;
+          otshow = false;
           break;
         }
-        case "SIPOT":{
-         sipshow= false;
-         otshow =false;
+        case 'SIPOT': {
+         sipshow = false;
+         otshow = false;
           break;
         }
-        default:{
-          sipshow= true;
-          otshow =true;
+        default: {
+          sipshow = true;
+          otshow = true;
         }
 
       }
 
-      if (resfor == 'otshobutt'){
+      if (resfor === 'otshobutt') {
         return otshow;
-      }else if(resfor == 'sipshobutt'){
+      } else if(resfor === 'sipshobutt') {
         return sipshow;
       }
 
     }
 
 
-showfndselect(){
-  this.shofndselect=!this.shofndselect;
+showfndselect() {
+  this.shofndselect = !this.shofndselect;
 }
 
-edittog(control,k){
 
+edittog1(control, k) {
+  this.edittogdialog(control, k);
+}
+
+edittogdialog(control, k) {
+  this.dialogsService
+    .deletealert('Delete Alert', 'Are you sure you want to do this? Any Order created under this fund will be removed')
+    .subscribe(res => {
+      if (res) {
+        this.edittog(control, k);
+      }
+    }
+    );
+}
+
+edittog(control, k)  {
   console.log(control);
   console.log(this.mypfdet.pfmflist[k]);
-  
-  if(control.controls.orMFFndnameedit.value == 'edit'){
+
+  if (control.controls.orMFFndnameedit.value === 'edit') {
 
   // Check to restrict same fund added in the pf
-  let allrecord =  this.pfMFlistsFormArray.value;
-  let result = allrecord.filter(recs => recs.orMFFundname == control.controls.orMFFundname.value);  
-  if(result.length>1){
+  const allrecord =  this.pfMFlistsFormArray.value;
+  let result = allrecord.filter(recs => recs.orMFFundname === control.controls.orMFFundname.value);
+  if(result.length > 1) {
     control.controls.orMFFundname.setErrors({'namexists': true});
     return;
-  }else{
+  } else {
     control.controls.orMFFundname.setErrors(null);
-    
   }
-  
+
   // Check to see valid fund is selected // Check to see valid fund is selected
   result = this.fundnames.filter(recs => (<any>recs).fnddisplayname == control.controls.orMFFundname.value);  
   if(result.length<1){
     control.controls.orMFFundname.setErrors({'invalidfund': true});
     return;
-  }else{
+  } else {
     control.controls.orMFFundname.setErrors(null);
   }
   control.controls.orMFFndnameedit.patchValue('noedit');
 
-  }else{
+  } else {
     control.controls.orMFFndnameedit.patchValue('edit');
     while (control.controls.orMFFundorderlists.length !== 0) {
       control.controls.orMFFundorderlists.removeAt(0); // control.controls.orMFFundorderlists.removeAt(0);
@@ -475,93 +492,82 @@ edittog(control,k){
 }
 
 
-freqSelectchange(evt: any,sipdetail:any){
+freqSelectchange(evt: any, sipdetail: any) {
   evt['ormfSipdthold'].patchValue(sipdetail.sipfreqdates);
   evt['ormfSelctedSip'].patchValue(sipdetail);
 }
 
-removefund(k,l){
-  const control = this.pfMFlistsFormArray;
-
-  control.removeAt(k);
-  this.mypfdet.pfmflist.splice(k,1);
-  
-  this.cardMFtotalcalc();
+removefund(k, l) {
+  this.fundremovaldialog(k, l);
 }
 
-validatesip(controlref,selectedsip){
-  if (selectedsip == 0){
-  
+fundremovaldialog(k, l) {
+  this.dialogsService
+    .deletealert('Delete Alert', 'Are you sure you want to do this? All details under thi fund will be removed')
+    .subscribe(res => {
+      if (res) {
+        const control = this.pfMFlistsFormArray;
+        control.removeAt(k);
+        this.mypfdet.pfmflist.splice(k, 1);
+        this.cardMFtotalcalc();
+      }
+    }
+    );
+}
+
+validatesip(controlref, selectedsip){
+  if (selectedsip === 0) {
     controlref.setErrors({'incorrect': true});
   }
-  if( (Number(controlref.value) < Number(selectedsip.sipmininstal)) ||  (Number(controlref.value) > Number(selectedsip.sipmaxinstal))){
-    controlref.setErrors({'incorrect': true});    
-  }else{
-      
+  if ( (Number(controlref.value) < Number(selectedsip.sipmininstal)) ||  (Number(controlref.value) > Number(selectedsip.sipmaxinstal))){
+    controlref.setErrors({'incorrect': true});
+  } else {
   }
 }
 
-validateamt(sublist,main){
+validateamt(sublist, main) {
   console.log(sublist.controls.orMFfundordelsamt.value);
   console.log((main.controls.orMFDathold.value)[0].fndmaxpuramt);
   console.log(sublist.controls.orMFfundordelstrtyp.value);
 
   console.log((sublist.controls.ormfSelctedSip.value).sipmaxamt);
 
-  if(main == 0){
+  if (main === 0) {
     sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
   }
-  //Clear the error before the check
-  sublist.controls.orMFfundordelsamt.setErrors(null);  
-  
-  if(sublist.controls.orMFfundordelstrtyp.value == "One Time"){
-    if((sublist.controls.orMFfundordelsamt.value > (main.controls.orMFDathold.value)[0].fndmaxpuramt)){
+  // Clear the error before the check
+  sublist.controls.orMFfundordelsamt.setErrors(null);
+
+  if (sublist.controls.orMFfundordelstrtyp.value === 'One Time') {
+    if ((sublist.controls.orMFfundordelsamt.value > (main.controls.orMFDathold.value)[0].fndmaxpuramt)) {
       sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
-      console.log("indieonetime1");
-    }
-    
-    if((sublist.controls.orMFfundordelsamt.value < (main.controls.orMFDathold.value)[0].fndminpuramt)){
-      console.log("indieonetime11");
-      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});      
+      console.log('indieonetime1');
     }
 
-    console.log(((sublist.controls.orMFfundordelsamt.value*100)%(((main.controls.orMFDathold.value)[0].fndpuramtinmulti)*100)));
-    if(((sublist.controls.orMFfundordelsamt.value*100)%(((main.controls.orMFDathold.value)[0].fndpuramtinmulti)*100))!=0){
+    if ((sublist.controls.orMFfundordelsamt.value < (main.controls.orMFDathold.value)[0].fndminpuramt)) {
+      console.log('indieonetime11');
       sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
-      console.log("indieonetime2");
+    }
+
+    console.log(((sublist.controls.orMFfundordelsamt.value * 100) % (((main.controls.orMFDathold.value)[0].fndpuramtinmulti) * 100)));
+    if (((sublist.controls.orMFfundordelsamt.value * 100) % (((main.controls.orMFDathold.value)[0].fndpuramtinmulti) * 100)) !== 0) {
+      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
+      console.log('indieonetime2');
     }
   }
-    
-  if(sublist.controls.orMFfundordelstrtyp.value == "SIP"){
 
-  if((sublist.controls.orMFfundordelsamt.value > (sublist.controls.ormfSelctedSip.value).sipmaxamt)){
-    sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});  
+  if (sublist.controls.orMFfundordelstrtyp.value === 'SIP') {
+  if ((sublist.controls.orMFfundordelsamt.value > (sublist.controls.ormfSelctedSip.value).sipmaxamt)) {
+    sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
   }
-
-  if((sublist.controls.orMFfundordelsamt.value < (sublist.controls.ormfSelctedSip.value).sipminamt)){
-    sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});  
+  if ((sublist.controls.orMFfundordelsamt.value < (sublist.controls.ormfSelctedSip.value).sipminamt)) {
+    sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
   }
-
-  if((((sublist.controls.orMFfundordelsamt.value)*100) % (((sublist.controls.ormfSelctedSip.value).sipmulamt)*100))!=0){
-      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});    
+  if ((((sublist.controls.orMFfundordelsamt.value)*100) % (((sublist.controls.ormfSelctedSip.value).sipmulamt)*100))!=0) {
+      sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});
   }
-
 }
 }
-
-
-viewchildchk(){
-  
-}
-
-cc(orMFfundorderlis){
-  
-
-  return true;
-
-}
-
-
 }
 
 

@@ -1,16 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { NotifyService } from '../../../../natservices/notify.service';
-import { NotificationComponent } from '../../../../commonmodule/notificationmodule/notification/notification.component'
 import { DbservicesService } from '../../../../natservices/dbservices.service';
 import { OrderservService } from '../../../../natservices/orderserv.service';
 
 @Component({
-  selector: 'mfpfwiseordercard',
-  templateUrl: './mfpfwiseordercard.component.html',
-  styleUrls: ['./mfpfwiseordercard.component.scss']
+  selector: 'ordplace-pfwisecard',
+  templateUrl: './ordplace-pfwisecard.component.html',
+  styleUrls: ['./ordplace-pfwisecard.component.scss']
 })
-export class mfpfwiseordercardComponent implements OnInit {
+export class OrdplacePfwisecardComponent implements OnInit {
   public pfForm: FormGroup;
 
 
@@ -31,11 +29,14 @@ export class mfpfwiseordercardComponent implements OnInit {
   @Input() myindex;
   @Input() onEdit;
   @Input() EAMode;
-  @Input() fundnames;
+  @Input() pfdistnames;
+  @Input() prod;
+  @Input() trantype;
   
   
-  @Output() cardsave: EventEmitter<any> = new EventEmitter();
-   
+  @Output() confirpfselection: EventEmitter<any> = new EventEmitter();
+  @Output() tatalchangetolist: EventEmitter<any> = new EventEmitter();
+  @Output() removethispf: EventEmitter<any> = new EventEmitter();
 
   Mypfdetailcpy: any;
   OnAddEdit = false;
@@ -101,16 +102,21 @@ export class mfpfwiseordercardComponent implements OnInit {
     console.log("emiting");
     //this.calctotalamt.emit();
   }
-  
-  pfconfirm(Mypfdetailcpy) {
-    // Mypfdetailcpy.pfnameadd = '';
-    // this.EAMode = false;
-    console.log(Mypfdetailcpy);
-    console.log(this.myindex);
+
+  pfconfirm() {
     this.orderservice.formref = this.pfForm;
-    this.cardsave.emit(this.myindex);
+    this.confirpfselection.emit({'index': this.myindex, 'selected': this.selected2});
   }
-  
+
+  cardtotalchange() {
+    this.tatalchangetolist.emit();
+  }
+
+  removepf() {
+    console.log(this.myindex);
+    this.removethispf.emit(this.myindex);
+  }
+
 
   chtoupper() {
    // this.Mypfdetail.pfportfolioname = this.Mypfdetail.pfportfolioname.toUpperCase();

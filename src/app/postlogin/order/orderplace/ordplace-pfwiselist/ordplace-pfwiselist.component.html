@@ -1,53 +1,62 @@
 
-    <div  *ngIf = "orderservice.onfetch">
-        <mat-spinner [diameter]="40"></mat-spinner>
-    </div>
 
 
-<div *ngIf = "!orderservice.onfetch">
-<mat-toolbar  color ="primary" >
+<br>
+<div  *ngIf = "onfetch">
+    <mat-spinner [diameter]="40"></mat-spinner>
+</div>
+
+<div *ngIf = "!onfetch ">
+<!--mat-toolbar  color ="primary" >
         <label>&nbsp; <strong>Order Placement</strong> &nbsp;</label>
         <span>&nbsp;</span>  
         <p style="font-size:8px"> *Changes will be lost if it is not saved before navigating away from this page</p>    
-      </mat-toolbar>
-      <mat-toolbar color ="primary" *ngIf="this.fundnames.length==0">
-      <button mat-raised-button class="mat-elevation-z8" color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon || !editmode" ><strong>Add portfolio for order addition</strong></button>
-      <span fxFlex = "20px"></span>
-      <button mat-raised-button  color="warn" *ngIf="showit && editmode" (click)="savordforlater()"><strong>Save for Later</strong></button>
+      </mat-toolbar-->
+    <mat-toolbar color ="primary">
+        <button mat-raised-button class="mat-elevation-z8" color="warn" (click)="addNewPortfolio()" *ngIf = "((!isEAModeon) && (editmode) && (pfdistnames.length > 0))" ><strong>Add portfolio for order addition</strong></button>
+        <!--button mat-raised-button class="mat-elevation-z8" color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon || !editmode || fundnames[0] == 'allused' || pfdistnames.length == 0" ><strong>Add portfolio for order addition</strong></button-->
+        <span fxFlex = "20px"></span>
+        <button mat-raised-button  color="warn" *ngIf="showit && editmode" (click)="savordforlater()"><strong>Save for Later</strong></button>
     </mat-toolbar>
 
     <br>
     <alerts></alerts>
 
-
+    <div  *ngIf = "onpffetch">
+            <mat-spinner [diameter]="40" color="accent"></mat-spinner>Getting PF details
+    </div>
     
-    <div fxLayout="row wrap" fxLayoutGap="10px">    
+    <div fxLayout="row wrap" fxLayoutGap="10px" *ngIf = "!onpffetch">    
 
         
     <div fxLayout="column" fxFlex="70" fxFlex.lt-lg="100" fxFlexOrder.lt-lg="2" fxFlexOrder="1">
-      <div *ngFor="let pfdetail of orderservice.mforderdetails; let i = index" 
+      <div *ngFor="let pfdetail of mforderdetails; let i = index" 
       fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" 
       >        
-        <mfpfwiseordercard [Mypfdetail] = "pfdetail" 
+        <ordplace-pfwisecard [Mypfdetail] = "pfdetail" 
                             [myindex]="i" 
                             [onEdit]="editmode" 
-                            [EAMode]="isEAModeon" 
-                            [fundnames]="fundnames"
-                            (cardsave)="cardasave($event,ind)" 
+                            [EAMode]="isEAModeon"
+                            [pfdistnames] = "pfdistnames"
+                            [prod] = "prod"
+                            [trantype] = "trantype"
+                            (confirpfselection)="confirmpfselection($event)" 
+                            (tatalchangetolist) = "get_total()"
+                            (removethispf) = "removeapf($event)"
                             > 
-        </mfpfwiseordercard>
+        </ordplace-pfwisecard>
     
     
 
     </div>
 
-    <div *ngIf="orderservice.mforderdetails?.length <1" [fxShow]="!orderservice.onfetch">
+    <div *ngIf="mforderdetails?.length <1 &&  !onpffetch" [fxShow]="!onfetch">
         <h3>You don't have any pending Orders</h3>
         <p>Check Order History for orders already placed</p>
         <p>Click on "Add portfolio for order addition" to Place New Orders</p>
     </div>
     
-    <div *ngIf="orderservice.onfetch" class="circle">
+    <div *ngIf="onfetch" class="circle">
         <br>
         <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
     </div>
@@ -55,12 +64,12 @@
 
 
 </div> 
-    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" *ngIf="orderservice.mforderdetails?.length >0" [fxHide]="(orderservice.sipamtacrosspf.value < 1) && (orderservice.onetimeamtacrosspf.value < 1)">
+    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" *ngIf="mforderdetails?.length >0 && ((sipamtacrosspf > 0) || (onetimeamtacrosspf > 0))">
         <br>
         
         <mat-card>
-            <div fxLayout="column" [fxHide]="orderservice.sipamtacrosspf.value < 1">
-                    <p>Every Month you Invest : {{orderservice.sipamtacrosspf.value}} </p>            
+            <div fxLayout="column" [fxHide]="sipamtacrosspf < 1">
+                    <p>Every Month you Invest : {{sipamtacrosspf}} </p>            
                     <mat-form-field>
                             <mat-select placeholder="Mandate id"[(value)] = "orderservice.selected_mandate" >
                               <mat-option *ngFor="let mandateid of mandateids" [value]="mandateid" (onSelectionChange) = "sipmanselchg($event)">
@@ -74,10 +83,10 @@
                     <br>
             </div>
 
-            <mat-divider [fxHide]="(orderservice.sipamtacrosspf.value < 1) || (orderservice.onetimeamtacrosspf.value < 1)"></mat-divider>
+            <mat-divider [fxHide]="(sipamtacrosspf < 1) || (onetimeamtacrosspf < 1)"></mat-divider>
             <br>
-            <div fxLayout="column" [fxHide]="orderservice.onetimeamtacrosspf.value < 1">
-                    <p>Amount you pay now : {{orderservice.onetimeamtacrosspf.value}} </p>
+            <div fxLayout="column" [fxHide]="onetimeamtacrosspf < 1">
+                    <p>Amount you pay now : {{onetimeamtacrosspf}} </p>
 
 
                       <mat-form-field>
@@ -94,18 +103,18 @@
                 </div>
 
             <br>
-            <mat-divider [fxHide]="(orderservice.sipamtacrosspf.value < 1) && (orderservice.onetimeamtacrosspf.value < 1)"></mat-divider>
+            <mat-divider [fxHide]="(sipamtacrosspf < 1) && (onetimeamtacrosspf < 1)"></mat-divider>
             
             <br>
-            <div *ngIf="orderservice.onsavelater" class="circle">
+            <div *ngIf="onsavelater" class="circle">
                 <br>
                 <mat-progress-spinner mode="indeterminate" color = "blue"></mat-progress-spinner>
             </div>
-            <div fxLayout="row"  fxLayoutGap = "5px" [fxHide]="(orderservice.sipamtacrosspf.value < 1) && (orderservice.onetimeamtacrosspf.value < 1)">                
+            <div fxLayout="row"  fxLayoutGap = "5px" [fxHide]="(sipamtacrosspf < 1) && (onetimeamtacrosspf < 1)">                
                 <!--span fxFlex></span>
                 <button mat-raised-button color="accent" *ngIf="!showit">Place order</button>
                 <button mat-raised-button color="accent" *ngIf="showit" (click)="refshclk()">Refresh</button-->
-                <div *ngIf="!orderservice.onsavelater" class="circle">
+                <div *ngIf="!onsavelater" class="circle">
                     <!--button mat-raised-button color="accent" *ngIf="showit && editmode" (click)="savordforlater()">Save for Later</button-->
                     <button mat-raised-button color="accent" *ngIf="!editmode" (click)="backbtn()">back</button>
                     <span fxFlex></span>
@@ -128,5 +137,8 @@
     </div>
 
   
-  <pre>{{ orderservice.mforderdetails | json }}</pre>
+  <pre>{{ mforderdetails | json }}</pre>
+  <pre>{{sipamtacrosspf}}</pre>
+  <pre>{{onetimeamtacrosspf}}</pre>
+
 </div>

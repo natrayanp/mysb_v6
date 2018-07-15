@@ -75,8 +75,6 @@ import { NatInterceptor } from './natservices/natinterceptor';
 import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
 import { OrderservService } from './natservices/orderserv.service';
 import { DbservicesService } from './natservices/dbservices.service';
-import { mfpfwiseorderlistComponent } from './postlogin/order/mforder/mfpfwiseorderlist/mfpfwiseorderlist.component';
-import { mfpfwiseordercardComponent } from './postlogin/order/mforder/mfpfwiseordercard/mfpfwiseordercard.component';
 import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
 import { mffundlistComponent } from './postlogin/order/mforder/mffundlist/mffundlist.component';
 
@@ -116,7 +114,12 @@ import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.compo
 import { OrderhistComponent } from './postlogin/order/orderhist/orderhist.component';
 import { OrderhistlistComponent } from './postlogin/order/orderhist/orderhistlist/orderhistlist.component';
 import { OrderhistcardComponent } from './postlogin/order/orderhist/orderhistcard/orderhistcard.component';
-
+import { OrderComponent } from './postlogin/order/order.component';
+import { OrderplaceComponent } from './postlogin/order/orderplace/orderplace.component';
+import { DialogsModule } from './commonmodule/dialogs/dialogs.module';
+import { OrderplaceTypeComponent } from './postlogin/order/orderplace/orderplace-type/orderplace-type.component';
+import { OrdplacePfwiselistComponent } from './postlogin/order/orderplace/ordplace-pfwiselist/ordplace-pfwiselist.component';
+import { OrdplacePfwisecardComponent } from './postlogin/order/orderplace/ordplace-pfwisecard/ordplace-pfwisecard.component';
 
 @NgModule({
   declarations: [
@@ -142,8 +145,6 @@ import { OrderhistcardComponent } from './postlogin/order/orderhist/orderhistcar
     PfserviceService,
     FundallocatComponent,
     // OrderComponent,
-    mfpfwiseorderlistComponent,
-    mfpfwiseordercardComponent,
     StkwiseorderComponent,
     mffundlistComponent,
     SignupComponent,
@@ -170,7 +171,12 @@ import { OrderhistcardComponent } from './postlogin/order/orderhist/orderhistcar
     ProdlistComponent,
     OrderhistComponent,
     OrderhistlistComponent,
-    OrderhistcardComponent
+    OrderhistcardComponent,
+    OrderComponent,
+    OrderplaceComponent,
+    OrderplaceTypeComponent,
+    OrdplacePfwiselistComponent,
+    OrdplacePfwisecardComponent
   ],
   imports: [
       BrowserModule,
@@ -210,7 +216,8 @@ import { OrderhistcardComponent } from './postlogin/order/orderhist/orderhistcar
    // NotifymoduleModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    DialogsModule
   ],
   // entryComponents: [PfqtypopupComponent],
   providers: [GooglePieChartService,

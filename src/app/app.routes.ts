@@ -16,7 +16,6 @@ import { PortfolioListComponent } from './postlogin/settings/portfoliosetup/port
 import { ChartComponent } from './chart/chart.component';
 import { PfserviceService } from './natservices/pfservice.service';
 import { FundallocatComponent } from './postlogin/fundallocat/fundallocat.component';
-import { mfpfwiseorderlistComponent } from './postlogin/order/mforder/mfpfwiseorderlist/mfpfwiseorderlist.component';
 import { StkwiseorderComponent } from './postlogin/order/stkwiseorder/stkwiseorder.component';
 import { mffundlistComponent } from './postlogin/order/mforder/mffundlist/mffundlist.component';
 import { SignupComponent } from './home/signup/signup.component';
@@ -36,6 +35,7 @@ import { DashfundComponent } from './postlogin/dashboard/dashfund/dashfund.compo
 import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.component';
 import { OrderhistComponent } from './postlogin/order/orderhist/orderhist.component';
 import { OrderhistlistComponent } from './postlogin/order/orderhist/orderhistlist/orderhistlist.component';
+import { OrderplaceComponent } from './postlogin/order/orderplace/orderplace.component';
 
 export const ROUTES: Routes = [
 
@@ -43,7 +43,7 @@ export const ROUTES: Routes = [
   {path: 'paylnk', component: MfpaynaviComponent},
   {path: 'paycomp/:id', component: MfpayconflandComponent},
   { path: 'securedpg',  component: PostloginComponent, children: [
-    { path: 'orders',  component: mfpfwiseorderlistComponent },
+    { path: 'orders',  component: OrderplaceComponent },
     { path: 'mfordcof/:id',  component: MforderconfpgComponent },
     { path: 'orderhistory',  component: OrderhistComponent },
     { path: 'orderlist',  component: OrderhistlistComponent },
