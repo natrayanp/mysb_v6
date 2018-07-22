@@ -99,7 +99,7 @@ import { UserstateService } from '../../natservices/userstate.service';
 
   signInWithTwitter(): void {
     this.auth.twitterLogin()
-      .then((user) => { 
+      .then((user) => {
                         console.log('inside user');
                         this.afterSignIn(user);
                     }
@@ -127,7 +127,7 @@ import { UserstateService } from '../../natservices/userstate.service';
     this.auth.signOut('nonavigation');
   }
 
-  mymessage= 'Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content. Whenever you need to, be sure to use margin utilities to keep things nice and tidy.'
+  mymessage = 'Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content. Whenever you need to, be sure to use margin utilities to keep things nice and tidy.'
 
 print() {
     this.notify.update(this.mymessage, 'success', 'alert');
@@ -155,17 +155,13 @@ print() {
 getUsers(natkey) {
   this.dbserivce.dbaction('Set', 'Jwt', {'natkey': natkey}).subscribe(
     datae => {
-            console.log('inside natkey success dbservice');
             const body = datae['body'];
-            console.log(body['natjwt']);
             localStorage.setItem('natjwt', (body['natjwt']));
             this.userstate.parseJwt();
             // this.router.navigateByUrl('/securedpg/dashboard');
             this.router.navigate(['/securedpg']);
           },
     error => {
-      console.log('inside success dbservice');
-      console.log(error);
       if (error.hasOwnProperty('error')) {
         this.notify.update('Error!!!' + error.error.statusdetails, 'error', 'alert');
       } else {

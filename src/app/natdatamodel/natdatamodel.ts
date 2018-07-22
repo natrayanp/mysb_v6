@@ -171,4 +171,3 @@ export class regisuccfatcadetail{
       errormsg:string;
     }
 
-  

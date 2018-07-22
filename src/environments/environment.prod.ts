@@ -3,21 +3,24 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
+
+
 export const environment = {
   production: false,
-  TknAddSites: ["https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev","http://127.0.0.1:8080"],
+  TknAddSites: ["https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev","http://assetscube.com"],
   //Fund Allocation screen
-  FundAllocapiUrl: "http://127.0.0.1:8080",
+  FundAllocapiUrl: "http://assetscube.com",
   FundAllocfetch: "getfundaloc",
   FundAllocSave:"savefundaloc",
-  bsecustUrl:"http://127.0.0.1:8080",
+  bsecustUrl:"http://assetscube.com",
   bseCustcreate:"custcreation",
-  bsemandatetUrl:"http://127.0.0.1:8080",
+  bsemandatetUrl:"http://assetscube.com",
   bseMandataecreate:"mandatecreation",
   // SetJwtapiUrl: 'https://www.saplingclub.com/natkeyss',
   // SetJwtapiUrl: 'https://n54fu4lte2.execute-api.ap-southeast-1.amazonaws.com/dev/natkeyss',
   // SetJwtapiUrl: 'https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev',
-  SetJwtapiUrl: 'http://127.0.0.1:8080',
+  // SetJwtapiUrl: 'http://assetscube.com',
+  SetJwtapiUrl: 'http://assetscube.com',
   SetJwtapiSave: 'natkeyss',
   firebase: {
     apiKey: "AIzaSyDQg2KUEAJaj-bfdQfp_08T6L2ybnpbOSc",
@@ -28,19 +31,19 @@ export const environment = {
     messagingSenderId: "753856447807"
   },
   //RecordSignupapiUrl:"https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev",
-  RecordSignupapiUrl:"http://127.0.0.1:8080",
+  RecordSignupapiUrl:"http://assetscube.com",
   RecordSignupapiSave:"signup",
   //IFSCfetchapiUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
-  IFSCfetchapiUrl:'http://127.0.0.1:8080',
+  IFSCfetchapiUrl:'http://assetscube.com',
   IFSCapifetch:"bankdet",
   //notifiapiUrl :"https://816ug405pd.execute-api.ap-southeast-1.amazonaws.com/allprocessingdev",
-  notifiapiUrl: 'http://127.0.0.1:8080',
+  notifiapiUrl: 'http://assetscube.com',
   notififetch: 'notification',
   //registapiUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
-  registapiUrl:'http://127.0.0.1:8080',
+  registapiUrl:'http://assetscube.com',
   registfetch:"registdetfetch",
   //registfrmapiUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
-  registfrmapiUrl: 'http://127.0.0.1:8080',
+  registfrmapiUrl: 'http://assetscube.com',
   detailsfrmsave:'dtlfrmsave',
  /* detailsfrmsave:"/dtlfrmsave"
   detailsfrmsave:"/dtlfrmsave"
@@ -48,27 +51,27 @@ export const environment = {
   detailsfrmsave:"/dtlfrmsave"*/
   regisfrmsubmit:"regisandfatcsubmit",
   //Fileupload EndPoints START
-  FileuploadUrl:"http://127.0.0.1:8080",
+  FileuploadUrl:"http://assetscube.com",
   //FileuploadUrl:"https://o7cm2vmfq4.execute-api.ap-southeast-1.amazonaws.com/dev",
   FileUpload:"uploadfile",
   Filelist:"uploadedfilelist",
   Filedelete:"uploadedfiledelete",
   Finalsubmit:"uploadedfilesubmit",
   // Fileupload EndPoints END
-  pfUrl: 'http://127.0.0.1:8080',
+  pfUrl: 'http://assetscube.com',
   pffetch: 'pfdatafetch',
   executepf: 'executepf',
   pfsave: 'pfdatasave',
   pfmainfetch: 'onlypf',
-  dashUrl: 'http://127.0.0.1:8080',
+  dashUrl: 'http://assetscube.com',
   getdata: 'dashfetchdata',
   chartdata: 'dashchart',
   pfdet: 'dashpfdet',
   dashchart: 'dashchart',
-  fundUrl: 'http://127.0.0.1:8080',
+  fundUrl: 'http://assetscube.com',
   // fundUrl:"http://127.0.0.1:5000/",
   fundfetch: 'funddatafetch',
-  mforderUrl: 'http://127.0.0.1:8080',
+  mforderUrl: 'http://assetscube.com',
   mforderfetch: 'mforderdatafetch',
   mfsaveforlater: 'mfordersave',
   mfsubmitmorder: 'mfordersubmit',
@@ -76,4 +79,6 @@ export const environment = {
   mforderpayment: 'mforderpayment',
   mforderdetails: 'mforderdetails',
   mfordpaystaus: 'mfordpaystatus',
+  orderhistUrl: 'http://assetscube.com',
+  orderhistfetch: 'orderhistfetch'
 };

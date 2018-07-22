@@ -86,7 +86,7 @@ constructor(private orfb: FormBuilder,
     console.log(this.mypfdet);
     const screen_id = this.mypfdet.pfscreen;
     console.log(screen_id);
-    if( this.mypfdet.pfmflist != null) {
+    if (this.mypfdet.pfmflist != null) {
       this.mypfdet.pfmflist.forEach((recor, index1) => {
         console.log(recor);
         this.addonemflist(recor);
@@ -186,7 +186,7 @@ initorMFlists(valuelist) {
 
     console.log(mfform);
 
-    mfform.get('orMFFundname').valueChanges
+    mfform.get('orMFFundname').valueChanges 
     .pipe( debounceTime(200),
           distinctUntilChanged(),
           switchMap((query) =>  ((query.length > 2) ? this.dbserivce.dbaction('fund', 'fetch', query.toUpperCase() ) : empty()))
@@ -323,7 +323,7 @@ cardMFtotalcalc()
     this.totalchange.emit();
   }
 
-addnewmflist(){
+addnewmflist() {
   if (this.mypfdet.pfmflist === '' || this.mypfdet.pfmflist == null) {
     this.mypfdet.pfmflist = [];
   }

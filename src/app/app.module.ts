@@ -15,7 +15,7 @@ import { MatCardModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material';
-import { MatCard } from '@angular/material';
+import { MatSortModule } from '@angular/material';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import { MatSlideToggleModule } from '@angular/material';
 import { MatStepperModule } from '@angular/material';
@@ -120,6 +120,7 @@ import { DialogsModule } from './commonmodule/dialogs/dialogs.module';
 import { OrderplaceTypeComponent } from './postlogin/order/orderplace/orderplace-type/orderplace-type.component';
 import { OrdplacePfwiselistComponent } from './postlogin/order/orderplace/ordplace-pfwiselist/ordplace-pfwiselist.component';
 import { OrdplacePfwisecardComponent } from './postlogin/order/orderplace/ordplace-pfwisecard/ordplace-pfwisecard.component';
+import { MfselllistComponent } from './postlogin/order/mforder/mfselllist/mfselllist.component';
 
 @NgModule({
   declarations: [
@@ -176,7 +177,8 @@ import { OrdplacePfwisecardComponent } from './postlogin/order/orderplace/ordpla
     OrderplaceComponent,
     OrderplaceTypeComponent,
     OrdplacePfwiselistComponent,
-    OrdplacePfwisecardComponent
+    OrdplacePfwisecardComponent,
+    MfselllistComponent
   ],
   imports: [
       BrowserModule,
@@ -185,6 +187,7 @@ import { OrdplacePfwisecardComponent } from './postlogin/order/orderplace/ordpla
       MatSidenavModule,
       MatToolbarModule,
       MatButtonModule,
+      MatSortModule,
       MatCardModule,
       FlexLayoutModule,
       MatInputModule,

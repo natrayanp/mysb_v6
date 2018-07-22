@@ -3,6 +3,8 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
+// in case of prod change "http://127.0.0.1:8080" to "http://assetscube.com".
+
 export const environment = {
   production: false,
   TknAddSites: ["https://izsp1n5tfl.execute-api.ap-southeast-1.amazonaws.com/dev","http://127.0.0.1:8080"],
@@ -68,6 +70,8 @@ export const environment = {
   fundUrl: 'http://127.0.0.1:8080',
   // fundUrl:"http://127.0.0.1:5000/",
   fundfetch: 'funddatafetch',
+  orderplaceUrl: 'http://127.0.0.1:8080',
+  detailsfetch: 'ordplacedetails',
   mforderUrl: 'http://127.0.0.1:8080',
   mforderfetch: 'mforderdatafetch',
   mfsaveforlater: 'mfordersave',

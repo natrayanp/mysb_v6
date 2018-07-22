@@ -1,0 +1,95 @@
+<mat-toolbar class = "mat-elevation-z8" fxLayoutGap = "5px">
+  <span fxFlex></span>
+  <button mat-raised-button color="primary" (click)="applyFilter('')">Show All</button>
+  <button mat-raised-button color="primary" (click)="applyFilter('true')">Sell Orders</button>
+</mat-toolbar>
+<mat-table #table1 [dataSource]="dataSourceval" matSort matSortActive = "schemename" matSortDirection = "asc" matSortDisableClear class = "mat-elevation-z4">
+
+   <!-- Checkbox Column -->
+   <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef><strong>Sell</strong>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? rowToggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="select2">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+        <strong>Sell</strong>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? rowToggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+  <ng-container matColumnDef="schemname">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Scheme Name </mat-header-cell>
+      <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.dailyposition.dpos_schmname}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>        
+  </ng-container>     
+
+  <!--ng-container matColumnDef="Fund">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Fund </mat-header-cell>
+      <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.schemename}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>        
+  </ng-container-->
+
+<ng-container matColumnDef="Units">
+  <mat-header-cell *matHeaderCellDef mat-sort-header> Total Units </mat-header-cell>
+  <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.dailyposition.dpos_unit}} </mat-cell>
+  <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+</ng-container>
+
+
+<!--ng-container matColumnDef="Invested Amount">
+  <mat-header-cell *matHeaderCellDef mat-sort-header> Investment Amount </mat-header-cell>
+  <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.invamt}} </mat-cell>               
+</ng-container-->
+
+
+<ng-container matColumnDef="currentnav">
+  <mat-header-cell *matHeaderCellDef mat-sort-header> NAV </mat-header-cell>
+  <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.dailyposition.dpos_curnav}} </mat-cell>                
+</ng-container>
+
+<ng-container matColumnDef="sellunit">
+  <mat-header-cell *matHeaderCellDef mat-sort-header> Sell Unit </mat-header-cell>
+  <mat-cell *matCellDef="let elementv" [style.color]="'green'">
+      <mat-form-field>
+        <input matInput type="number" [disabled]= "!elementv.orderselect" [(ngModel)]="elementv.ormffundordunit" (focusout)="onSearchChange(elementv.ormffundordunit,elementv.dailyposition.dpos_unit)">
+        <!--div *ngIf = "test(row, elementv.ormffundordunit,elementv.dailyposition.dpos_unit)">Sell Unit should be less than holding</div-->
+      </mat-form-field>
+ </mat-cell>                
+</ng-container>
+
+<ng-container matColumnDef="edit">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
+    <mat-cell *matCellDef="let elementv" [style.color]="'green'">{{elementv.orderselect}}</mat-cell>                
+  </ng-container>
+
+  
+
+<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'highlight': selectedRowIndex == row.id}" ></mat-row>
+
+</mat-table>
+<mat-paginator #paginator
+[pageSize]="10"
+[pageSizeOptions]="[1, 5, 10, 20, 30, 50, 80, 100]"
+[showFirstLastButtons]="true" class = "mat-elevation-z4">
+</mat-paginator>

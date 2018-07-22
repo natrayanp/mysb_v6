@@ -1,3 +1,12 @@
+<div class="loading-overlay" *ngIf="loading">
+  <!-- show something fancy here, here with Angular 2 Material's loading bar or circle -->
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<div *ngIf = "loading">
+  <mat-spinner [diameter]="40"></mat-spinner>
+</div>
+
 <mat-toolbar class = "mat-elevation-z1">Order History</mat-toolbar>
 
 <mat-tab-group class = "mat-elevation-z4">

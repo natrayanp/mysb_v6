@@ -290,9 +290,8 @@ export class OrdplacePfwiselistComponent implements OnInit {
   }
 
   confirmpfselection(eve) {
-    console.log(eve);
-    console.log(eve.index);
-    console.log(eve.selected);
+    console.log('confirmpfwiselist');
+    console.log(this.pfdistnames);
     const eventrec = this.pfdistnames.filter(rec => rec.pfportfolioname === eve.selected);
     if (eventrec.length === 1) {
       this.mforderdetails.splice(eve.index, 1, eventrec[0]);
@@ -309,10 +308,14 @@ export class OrdplacePfwiselistComponent implements OnInit {
           this.pfdistnames.splice(removeitemindex, 1);
         }
       // remove the item from fundnames to ensure it has pf's not in order list: END
+      }
+
+      if ((this.prod + this.trantype) === 'BSEMFsell') {
+        console.log('t');
       } else {
         this.orderservice.formref.controls.pfPortfolioname.setErrors({'nameincorct': true});
       }
-  }
+}
 
 
   savordforlater() {

@@ -18,6 +18,7 @@ export class OrdplacePfwisecardComponent implements OnInit {
   onetimeamtacrosspf = 0;
   sipamtacrosspf = 0;
   selected2: string;
+  screen: string;
   
   // fundnames: string[];
   mfsummed = 0;
@@ -51,8 +52,30 @@ export class OrdplacePfwisecardComponent implements OnInit {
       pfsttotunit: 0
     };
 
+    emptysell = {
+      ormflistid: '',
+      orportfolioid: '',
+      ormffundname: '',
+      ormffndcode: '',
+      ormfnatamccode: '',
+      ormffndnameedit: 'edit',
+      ormfdathold: '',
+      ormffundorderlists: '',
+      ormfexecuteshow: 'dontshow',
+      // All fields in dailyposition,
+      dpos_schemecd: '',
+      dpos_schmname: '',
+      dpos_invamount: '',
+      dpos_unit: '',
+      dpos_avgnav: '',
+      dpos_curnav: '',
+      dpos_curvalue: '',
+      dpos_totalpnl: '',
+      dpos_pfportfolioid: '',
+      dpos_producttype: ''
+    };
 
-    emptymf= {
+    emptymf = {
       ormflistid: '',
       orportfolioid: '',
       ormffundname: '',
@@ -90,9 +113,8 @@ export class OrdplacePfwisecardComponent implements OnInit {
       pfStocklists: new FormArray([]),
       pfMFlists: new FormArray([])
       });
-      this.Mypfdetail['pfscreen'] = 'ord';
-    this.Mypfdetailcpy = JSON.parse(JSON.stringify(this.Mypfdetail));
-
+      this.Mypfdetail['pfscreen'] = 'ord' + this.prod + this.trantype;
+      this.Mypfdetailcpy = JSON.parse(JSON.stringify(this.Mypfdetail));
   }
 
   onetimeonChange() {
@@ -104,8 +126,21 @@ export class OrdplacePfwisecardComponent implements OnInit {
   }
 
   pfconfirm() {
+    if ((this.prod + this.trantype) === 'BSEMFsell') {
+      console.log(this.Mypfdetail);
+     /*
+      this.Mypfdetail.pfnameadd = '';
+      this.Mypfdetail['pfscreen'] = 'ordsell';
+      this.Mypfdetail['pfmflist'] = [];
+      this.Mypfdetail['pfmflist'].push(this.emptysell);    
+      this.confirpfselection.emit(this.Mypfdetail);
+      */
+      this.confirpfselection.emit({'index': this.myindex, 'selected': this.selected2});
+      console.log('@@@@@@@@@@@@@@@@@@@@@@@@');
+    } else {
     this.orderservice.formref = this.pfForm;
     this.confirpfselection.emit({'index': this.myindex, 'selected': this.selected2});
+    }
   }
 
   cardtotalchange() {

@@ -55,12 +55,12 @@
                         </mffundlist>
                     </div>
                     <div *ngSwitchCase="'BSEMFsell'" >
-                        <mffundlist [pfMFlistsFormArray]="pfForm.controls['pfMFlists']"
-                            [mypfdet]="Mypfdetail"
-                            [onEdit]="onEdit"
-                            [rbsstr]="'INCART'"
-                            (totalchange)="cardtotalchange()">
-                        </mffundlist>
+                        <mfselllist 
+                        [prod] = "prod"
+                        [trantype] = "trantype"
+                        [mypfdet]="Mypfdetail"
+                        >
+                        </mfselllist>
                     </div>
                 </div> 
             </div>

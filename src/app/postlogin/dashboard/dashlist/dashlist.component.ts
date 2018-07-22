@@ -1,19 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import {Router} from '@angular/router';
 import { DbservicesService } from '../../../natservices/dbservices.service';
 import { DashboardService } from '../../../natservices/dashboard.service';
 import { NotifyService } from '../../../natservices/notify.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashlist',
   templateUrl: './dashlist.component.html',
   styleUrls: ['./dashlist.component.scss']
 })
-export class DashlistComponent implements OnInit {
+export class DashlistComponent implements OnInit, OnDestroy {
   @Input() mode: string;
   @Input() idpsum;
   @Input() idpprods;
   @Input() ipfmain;
+  mySubscription: Subscription; // Set a variable for your subscription
 
   constructor(private router: Router,
               private dbserivce: DbservicesService,
@@ -27,7 +29,7 @@ export class DashlistComponent implements OnInit {
   ngOnInit() {
     this.pfmainfetch = true;
     if (this.mode === 'less') {
-    this.dbserivce.dbaction('pfmain', 'fetch', '')
+      this.mySubscription = this.dbserivce.dbaction('pfmain', 'fetch', '')
       .subscribe(
           data => {
                     this.pfs = data['body'];
@@ -67,6 +69,14 @@ export class DashlistComponent implements OnInit {
     this.dashb.dpsum = {};
     this.dashb.pfmain = {};
     this.router.navigate(['/securedpg/dashboard']);
+  }
+
+  ngOnDestroy() {
+    this.mySubscription.unsubscribe();
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
+    console.log(this.mySubscription);
+    console.log(this.mySubscription.closed);
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
   }
 
 }
