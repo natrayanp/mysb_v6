@@ -74,7 +74,7 @@ export const environment = {
   detailsfetch: 'ordplacedetails',
   mforderUrl: 'http://127.0.0.1:8080',
   mforderfetch: 'mforderdatafetch',
-  mfsaveforlater: 'mfordersave',
+  mfsaveforlater: 'mfordersave1',
   mfsubmitmorder: 'mfordersubmit',
   mfvalidatemorder: 'mfordervalidate',
   mforderpayment: 'mforderpayment',

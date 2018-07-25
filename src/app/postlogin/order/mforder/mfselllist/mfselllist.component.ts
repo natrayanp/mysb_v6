@@ -159,9 +159,9 @@ export class MfselllistComponent implements OnInit {
   }
 
   sellselect(row) {
-    row.orderselect = this.selection.isSelected(row);
-    if (!row.orderselect) {
-      row.ormffundordunit = 0;
+    row.ormffundorderlists[0].orderselect = this.selection.isSelected(row);
+    if (!row.ormffundorderlists[0].orderselect) {
+      row.ormffundorderlists[0].ormffundordunit = 0;
       this.reset_err_msg();
     }
   }

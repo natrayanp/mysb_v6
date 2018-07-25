@@ -71,7 +71,7 @@
   <mat-header-cell *matHeaderCellDef mat-sort-header> Sell Unit </mat-header-cell>
   <mat-cell *matCellDef="let elementv" [style.color]="'green'">
       <mat-form-field>
-        <input matInput type="number" [disabled]= "!elementv.orderselect" [(ngModel)]="elementv.ormffundordunit" (focusout)="onSearchChange(elementv.ormffundordunit,elementv.dailyposition.dpos_unit)">
+        <input matInput type="number" [disabled]= "!elementv.ormffundorderlists[0].orderselect" [(ngModel)]="elementv.ormffundorderlists[0].ormffundordunit" (focusout)="onSearchChange(elementv.ormffundorderlists[0].ormffundordunit,elementv.dailyposition.dpos_unit)">
         <!--div *ngIf = "test(row, elementv.ormffundordunit,elementv.dailyposition.dpos_unit)">Sell Unit should be less than holding</div-->
       </mat-form-field>
  </mat-cell>                
@@ -79,7 +79,7 @@
 
 <ng-container matColumnDef="edit">
     <mat-header-cell *matHeaderCellDef mat-sort-header> Edit </mat-header-cell>
-    <mat-cell *matCellDef="let elementv" [style.color]="'green'">{{elementv.orderselect}}</mat-cell>                
+    <mat-cell *matCellDef="let elementv" [style.color]="'green'">{{elementv.ormffundorderlists[0].orderselect}}</mat-cell>                
   </ng-container>
 
   
