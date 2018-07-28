@@ -115,6 +115,8 @@ export class OrdplacePfwisecardComponent implements OnInit {
       });
       this.Mypfdetail['pfscreen'] = 'ord' + this.prod + this.trantype;
       this.Mypfdetailcpy = JSON.parse(JSON.stringify(this.Mypfdetail));
+      console.log("checking orderplace card");
+      console.log(this.Mypfdetail);
   }
 
   onetimeonChange() {
@@ -132,11 +134,10 @@ export class OrdplacePfwisecardComponent implements OnInit {
       this.Mypfdetail.pfnameadd = '';
       this.Mypfdetail['pfscreen'] = 'ordsell';
       this.Mypfdetail['pfmflist'] = [];
-      this.Mypfdetail['pfmflist'].push(this.emptysell);    
+      this.Mypfdetail['pfmflist'].push(this.emptysell);
       this.confirpfselection.emit(this.Mypfdetail);
       */
       this.confirpfselection.emit({'index': this.myindex, 'selected': this.selected2});
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@@');
     } else {
     this.orderservice.formref = this.pfForm;
     this.confirpfselection.emit({'index': this.myindex, 'selected': this.selected2});

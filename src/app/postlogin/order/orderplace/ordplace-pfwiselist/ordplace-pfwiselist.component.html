@@ -16,7 +16,7 @@
         <button mat-raised-button class="mat-elevation-z8" color="warn" (click)="addNewPortfolio()" *ngIf = "((!isEAModeon) && (editmode) && (pfdistnames.length > 0))" ><strong>Add portfolio for order addition</strong></button>
         <!--button mat-raised-button class="mat-elevation-z8" color="warn" (click)="addNewPortfolio()" [disabled] = "isEAModeon || !editmode || fundnames[0] == 'allused' || pfdistnames.length == 0" ><strong>Add portfolio for order addition</strong></button-->
         <span fxFlex = "20px"></span>
-        <button mat-raised-button  color="warn" *ngIf="showit && editmode" (click)="savordforlater()"><strong>Save for Later</strong></button>
+        <button mat-raised-button  color="warn" *ngIf="showit && editmode && orderservice.savelater" (click)="savordforlater()"><strong>Save for Later</strong></button>
     </mat-toolbar>
 
     <br>
@@ -64,10 +64,11 @@
 
 
 </div> 
-    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" *ngIf="mforderdetails?.length >0 && ((sipamtacrosspf > 0) || (onetimeamtacrosspf > 0))">
+    <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" *ngIf="mforderdetails?.length >0 && ((sipamtacrosspf > 0) || (onetimeamtacrosspf > 0)) && (prod === 'BSEMF' && trantype === 'buy')">
         <br>
         
         <mat-card>
+            <div >
             <div fxLayout="column" [fxHide]="sipamtacrosspf < 1">
                     <p>Every Month you Invest : {{sipamtacrosspf}} </p>            
                     <mat-form-field>
@@ -116,7 +117,7 @@
                 <button mat-raised-button color="accent" *ngIf="showit" (click)="refshclk()">Refresh</button-->
                 <div *ngIf="!onsavelater" class="circle">
                     <!--button mat-raised-button color="accent" *ngIf="showit && editmode" (click)="savordforlater()">Save for Later</button-->
-                    <button mat-raised-button color="accent" *ngIf="!editmode" (click)="backbtn()">back</button>
+                    <button mat-raised-button color="accent" *ngIf="!editmode" (click)="backbtn()">back to edit</button>
                     <span fxFlex></span>
                     <button mat-raised-button color="accent" *ngIf="editmode" (click)="placeorder()">Place order</button>
                     <button mat-raised-button color="accent" *ngIf="!editmode" (click)="confirmorder()">confirm order</button>
@@ -128,12 +129,20 @@
 
 
  
-            
-        </mat-card>   
-
-        
-
         </div>
+
+        </mat-card>   
+        </div>
+        <!--- BSEMF SELL order buttons page-->
+        <div fxFlexOrder="2" fxFlexOrder.lt-lg="1" fxFlex.lt-lg="1 1 100" fxFlex="1 1 auto" *ngIf = "(prod === 'BSEMF' && trantype === 'sell') && orderservice.hassellorder">
+            <mat-card>
+                <button mat-raised-button color="accent" *ngIf="!editmode" (click)="backbtn()">back to edit</button>
+                <span fxFlex></span>
+                <button mat-raised-button color="accent" *ngIf="editmode" (click)="placeorder()">Place order</button>
+                <button mat-raised-button color="accent" *ngIf="!editmode" (click)="confirmorder()">confirm order</button>                
+            </mat-card>
+        </div>            
+        <!--- BSEMF SELL order buttons page end-->
     </div>
 
   

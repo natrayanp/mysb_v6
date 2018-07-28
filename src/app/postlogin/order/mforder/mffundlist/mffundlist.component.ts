@@ -42,7 +42,8 @@ empty = {
   ormffndnameedit: 'edit',
   ormfdathold: '',
   ormffundorderlists: '',
-  ormfexecuteshow: 'dontshow'
+  ormfexecuteshow: 'dontshow',
+  ormfprodtype: ''
 };
 
 
@@ -90,7 +91,7 @@ constructor(private orfb: FormBuilder,
       this.mypfdet.pfmflist.forEach((recor, index1) => {
         console.log(recor);
         this.addonemflist(recor);
-        if (screen_id === 'ord') {
+        if (screen_id === 'ordBSEMFbuy') {
           recor.ormffndnameedit = 'noedit';
         }
         if (recor.ormffundorderlists != null) {
@@ -327,6 +328,10 @@ addnewmflist() {
   if (this.mypfdet.pfmflist === '' || this.mypfdet.pfmflist == null) {
     this.mypfdet.pfmflist = [];
   }
+  if (this.mypfdet.pfscreen === 'ordBSEMFbuy') {
+    this.empty.ormfprodtype = 'BSEMF';
+  }
+  this.empty.orportfolioid = this.mypfdet.pfportfolioid;
   this.mypfdet.pfmflist.push(JSON.parse(JSON.stringify(this.empty)));
   this.addonemflist(this.empty);
 }
@@ -371,7 +376,7 @@ mfrowdeldialog(controlls, k, l) {
 issip(controlnn){
   if (controlnn.value === 'SIP') {
     return true;
-  } else{
+  } else {
     return false;
   }
 
@@ -530,7 +535,7 @@ validateamt(sublist, main) {
   console.log((main.controls.orMFDathold.value)[0].fndmaxpuramt);
   console.log(sublist.controls.orMFfundordelstrtyp.value);
 
-  console.log((sublist.controls.ormfSelctedSip.value).sipmaxamt);
+  // console.log((sublist.controls.ormfSelctedSip.value).sipmaxamt);
 
   if (main === 0) {
     sublist.controls.orMFfundordelsamt.setErrors({'amtlimit': true});

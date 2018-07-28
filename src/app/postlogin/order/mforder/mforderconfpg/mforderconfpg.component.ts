@@ -62,9 +62,7 @@ export class MforderconfpgComponent implements OnInit {
 
   constructor(public orderservice: OrderservService,
               private router: Router,
-              private route: ActivatedRoute){
-
-
+              private route: ActivatedRoute) {
     this.orderservice.mynoti.subscribe(rrr => {
       if ( rrr === 'success') {
       if (this.orderservice.urltyp === 'dirpayhtml') {

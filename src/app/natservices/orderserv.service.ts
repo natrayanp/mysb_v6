@@ -51,6 +51,8 @@ export class OrderservService {
   fetchingdata = false;
   testval: string;
   listdata: string;
+  savelater = true;
+  hassellorder = false;
 
   // ###########################
   // Data for all products

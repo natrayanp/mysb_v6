@@ -121,6 +121,7 @@ import { OrderplaceTypeComponent } from './postlogin/order/orderplace/orderplace
 import { OrdplacePfwiselistComponent } from './postlogin/order/orderplace/ordplace-pfwiselist/ordplace-pfwiselist.component';
 import { OrdplacePfwisecardComponent } from './postlogin/order/orderplace/ordplace-pfwisecard/ordplace-pfwisecard.component';
 import { MfselllistComponent } from './postlogin/order/mforder/mfselllist/mfselllist.component';
+import { OrderplaceConfoptionsComponent } from './postlogin/order/orderplace/orderplace-confoptions/orderplace-confoptions.component';
 
 @NgModule({
   declarations: [
@@ -178,7 +179,8 @@ import { MfselllistComponent } from './postlogin/order/mforder/mfselllist/mfsell
     OrderplaceTypeComponent,
     OrdplacePfwiselistComponent,
     OrdplacePfwisecardComponent,
-    MfselllistComponent
+    MfselllistComponent,
+    OrderplaceConfoptionsComponent
   ],
   imports: [
       BrowserModule,

@@ -140,6 +140,7 @@ export class OrdplacePfwiselistComponent implements OnInit {
     this.fetchsavedorderdata();
     this.orderservice.listdata = 'init';
     console.log('listdate oninit'+ this.orderservice.listdata+ this.prod + this.trantype);
+
   }
 /*
   ngAfterViewChecked() {
@@ -162,12 +163,17 @@ export class OrdplacePfwiselistComponent implements OnInit {
           'prod': this.prod,
           'trantype' : this.trantype
         };
+
+        console.log(data_to_api);
         this.dbserivce.dbaction('mforder', 'fetch', data_to_api).subscribe(
           data =>
                 {
                   this.mforderdetails = data['body']['orderdata'];
                   this.onfetch = false;
                   this.get_pf_details();
+                  console.log("order tracker");
+                  console.log(this.mforderdetails);
+                  console.log("order tracker");
                 },
           error =>
                 {
@@ -320,6 +326,8 @@ export class OrdplacePfwiselistComponent implements OnInit {
 
   savordforlater() {
     this.norecordtosave = false;
+
+    if (this.prod === 'BSEMF') {
     if (this.mforderdetails.length === 0) {
       this.norecordtosave = true;
     } else if (this.mforderdetails.length > 0) {
@@ -341,6 +349,7 @@ export class OrdplacePfwiselistComponent implements OnInit {
 
       });
     }
+  }
 
     if ( this.norecordtosave ) {
           this.notify.update('No orders to save', 'info', 'alert');
@@ -381,7 +390,7 @@ export class OrdplacePfwiselistComponent implements OnInit {
   }
 
   placeorder() {
-    this.savordforlater()
+    this.savordforlater();
     // this.fundnames = this.orderservice.fundnames;
     this.editmode = false;
   }

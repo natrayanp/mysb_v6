@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, FormControl, FormArray, Validators } from '@ang
 import { formatDate } from '@angular/common';
 import { LOCALE_ID } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
-
+import { OrderservService } from '../../../../natservices/orderserv.service';
 
 @Component({
   selector: 'mfselllist',
@@ -30,7 +30,7 @@ export class MfselllistComponent implements OnInit {
     ormfnatamccode: '',
     ormffndnameedit: 'edit',
     ormfdathold: '',
-    ormffundorderlists: '',
+    ormffundorderlists: [],
     ormfexecuteshow: 'dontshow',
     // All fields in dailyposition,
     dailyposition: {},
@@ -91,16 +91,23 @@ export class MfselllistComponent implements OnInit {
   constructor(private dbserivce: DbservicesService,
               private notify: NotifyService,
               @Inject(LOCALE_ID) private locale: string,
-              private fb: FormBuilder
+              private fb: FormBuilder,
+              public orderservice: OrderservService
             ) { }
 
   ngOnInit() {
+    console.log("init mfsellist");
+    console.log(this.mypfdet);
     if ((this.prod + this.trantype) === 'BSEMFsell') {
       if ( this.mypfdet.pfportfolioid !== '') {
         // Fetch data from api for empty_pfmflist_dlypos
         this.get_data_for_pf();
       }
     }
+
+    this.dataSourceval.filterPredicate = function(data: any, filter: any): boolean {
+      return data.ormffundorderlists[0].orderselect.toString().includes(filter.toString());
+    };
     }
 
 
@@ -133,6 +140,8 @@ export class MfselllistComponent implements OnInit {
           }
         });
       }
+      this.applyFilter('');
+      this.savelater_button_toggle();
   }
 
   rowToggle(row) {
@@ -156,6 +165,7 @@ export class MfselllistComponent implements OnInit {
         this.msgdlastlineadded = true;
       }
     }
+    this.savelater_button_toggle();
   }
 
   sellselect(row) {
@@ -166,10 +176,20 @@ export class MfselllistComponent implements OnInit {
     }
   }
 
+  savelater_button_toggle() {
+    this.orderservice.savelater = true;
+    if (this.selection.selected.length && (!this.rowerror)) {
+      this.orderservice.hassellorder = true;
+    } else {
+      this.orderservice.hassellorder = false;
+    }
+  }
+
   get_data_for_pf() {
     const data_to_post = {
       'prod' : this.prod,
-      'trantype': this.trantype
+      'trantype': this.trantype,
+      'pfid' :  this.mypfdet.pfportfolioid
     }
     this.dbserivce.dbaction('placeorderdetail', 'fetch', data_to_post)
     .subscribe(
@@ -202,6 +222,7 @@ export class MfselllistComponent implements OnInit {
         this.msgd = '';
         this.msgdlastlineadded = false;
       }
+      this.savelater_button_toggle();
   }
 
   reset_err_msg() {
@@ -212,6 +233,7 @@ export class MfselllistComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
+
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSourceval.filter = filterValue;
