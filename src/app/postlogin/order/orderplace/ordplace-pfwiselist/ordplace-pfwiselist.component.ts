@@ -397,6 +397,7 @@ export class OrdplacePfwiselistComponent implements OnInit {
 
   confirmorder() {
     this.orderservice.mforderdetails = this.mforderdetails;
+    this.orderservice.screenid = this.mforderdetails[0].pfscreen;
     this.orderservice.placeorder();
   }
 

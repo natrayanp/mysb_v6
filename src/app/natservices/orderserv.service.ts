@@ -42,6 +42,7 @@ export class OrderservService {
   ppy_success_recs = [];
   vali_comp_recs = [];
   pay_initiated_recs = [];
+  bse_submitted_recs = [];
   onlysiporder = false;
   has_ontime_rec = false;
   selected_mandate = '';
@@ -57,7 +58,7 @@ export class OrderservService {
   // ###########################
   // Data for all products
   fullpflist: any[];
-
+  screenid: string;
   // Data for BSEMF buy
   mfb_pfdistnames =  null;
   mfb_mforderdetails = null;
@@ -68,6 +69,7 @@ export class OrderservService {
   mfs_pfdistnames = null;
   mfs_mforderdetails = null;
   mfs_gotodb = true;
+  
 
 // ###########################
   
@@ -226,6 +228,7 @@ placeorder() {
       'sip_pay': this.selected_mandate,
       'userid' : '',
       'entityid' : '',
+      'screenid' : this.screenid
     };
 
     this.dbserivce.dbaction('mforder', 'validate', submit_recs )
@@ -235,6 +238,7 @@ placeorder() {
                 this.has_ontime_rec = record['body'].has_ontime_rec;
                 const rec = record['body'].one_time;
 
+                // This is common route for ordBSEMFbuy and ordBSEMFsell
                 if ( this.has_ontime_rec) {
                   if (rec.val_success_recs.length > 0) {
                     // This is path where we have atleast one success record
@@ -271,9 +275,6 @@ placeorder() {
 }
 
 
-
-
-
 submitorder(succrecs) {
   this.orderplacment = true;
   // this.validatefail = false;
@@ -283,6 +284,7 @@ submitorder(succrecs) {
     'sip_pay': this.selected_mandate,
     'userid' : '',
     'entityid' : '',
+    'screenid' : this.screenid
   };
   console.log(succrecs);
   this.dbserivce.dbaction('mforder', 'submit', submit_recs )
@@ -293,22 +295,33 @@ submitorder(succrecs) {
                 this.allsubmitrecs = record['body'];
                 console.log(this.allsubmitrecs);
                 this.prepare_data_for_tables(record['body']);
-                if (this.error_recs.length < 1 && this.ppy_success_recs.length > 0) {
-
-                  this.order_payment_link(this.ppy_success_recs);
-                  this.orderplacment = false;
-
-                } else if ( this.error_recs.length > 0 ) {
-
-                  this.orderplacment = false;
-                  this.showtables = true;
-                  this.selected_accnum = '';
-                  this.selected_mandate = '';
-
-                } else if ( this.error_recs.length < 1 && this.ppy_success_recs.length < 1 ) {
-
-                  this.notify.update('Internal error occured, please contact us', 'error', 'alert');
-                  this.orderplacment = false;
+                console.log(this.screenid);
+                // In case of sell  after submitting to BSE go to final screen
+                if (this.screenid === 'ordBSEMFsell') {
+                  if ( this.error_recs.length > 0 ) {
+                    this.orderplacment = false;
+                    this.showtables = true;
+                    this.selected_accnum = '';
+                    this.selected_mandate = '';
+                  } else if (this.bse_submitted_recs.length > 0) {
+                    // Go to Final screen
+                    console.log('no one time records');
+                    this.orderplacment = false;
+                    this.router.navigate(['/securedpg/orderhistory']);
+                  }
+                } else if (this.screenid === 'ordBSEMFbuy') {
+                  if (this.error_recs.length < 1 && this.ppy_success_recs.length > 0) {
+                    this.order_payment_link(this.ppy_success_recs);
+                    this.orderplacment = false;
+                  } else if ( this.error_recs.length > 0 ) {
+                    this.orderplacment = false;
+                    this.showtables = true;
+                    this.selected_accnum = '';
+                    this.selected_mandate = '';
+                  } else if ( this.error_recs.length < 1 && this.ppy_success_recs.length < 1 ) {
+                    this.notify.update('Internal error occured, please contact us', 'error', 'alert');
+                    this.orderplacment = false;
+                  }
                 }
               },
     error =>  {
@@ -329,6 +342,7 @@ order_payment_link(orderrec) {
     'sip_pay': this.selected_mandate,
     'userid' : '',
     'entityid' : '',
+    'screenid' : this.screenid
   };
   this.dbserivce.dbaction('mforder', 'payment', submit_recs)
   .subscribe(
@@ -423,6 +437,10 @@ prepare_data_for_tables(rec) {
     this.pay_initiated_recs = rec.pay_initiated_recs;
     console.log(this.pay_initiated_recs);
 
+    /// SBE (Submitted to BSE succesfully)
+    this.bse_submitted_recs = rec.bse_submitted_recs;
+    console.log(this.pay_initiated_recs);
+
     // }
     // this.orderplacment = false;
     this.mynoti.next('ordersub');
@@ -442,6 +460,7 @@ reset() {
   this.paylnk = '';
   this.showtables = false;
   this.failpaylink = false;
+  // this.screenid = '';
 }
 
 get_order_status() {
