@@ -92,4 +92,19 @@ get_fulldata() {
   ) ;
 }
 
+getpaylnk() {
+  const vali = this.orderservice.ppy_success_recs;
+  this.orderservice.reset();
+  this.orderservice.fullload = false;
+  this.orderservice.order_payment_link(vali);
+}
+
+send_submit() {
+  const vali = this.orderservice.vali_comp_recs;
+  this.orderservice.reset();
+  this.orderservice.fullload = false;
+  this.orderservice.orderplacment = true;
+  this.orderservice.submitorder(vali);
+}
+
 }

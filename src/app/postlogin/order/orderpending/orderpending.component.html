@@ -1,10 +1,10 @@
-<mat-toolbar *ngIf = "orderservice.fullload">
+<mat-toolbar class = "mat-elevation-z1" *ngIf = "orderservice.fullload">
   Pending Orders
   <span fxFlex></span>
   <button mat-raised-button (click)="initpage()"><mat-progress-spinner *ngIf = "orderservice.fetchingdata" [diameter]="10" strokeWidth="10"></mat-progress-spinner>Refresh</button>
 </mat-toolbar>
 
-<mat-toolbar *ngIf = "!orderservice.fullload">
+<mat-toolbar class = "mat-elevation-z1" *ngIf = "!orderservice.fullload">
   Submitted orders status
   <span fxFlex></span>
   <button mat-raised-button (click)="initpage()">Go to Pending Orders</button>
@@ -13,24 +13,28 @@
 <alerts></alerts>
 
 
-<br>
-<br>
 <div *ngIf="orderservice.validateprogress">
-<mat-spinner></mat-spinner>
-<p>
-  Validation in progress
-</p>
+  <br>
+  <br>
+  <mat-spinner></mat-spinner>
+  <p>
+    Validation in progress
+  </p>
 </div>
 
 
 <div *ngIf="orderservice.orderplacment">
-<mat-spinner></mat-spinner>
-<p>
-  Orderplacement in progress
-</p>
+  <br>
+  <br>
+  <mat-spinner></mat-spinner>
+  <p>
+    Orderplacement in progress
+  </p>
 </div>
 
 <div *ngIf="orderservice.paymentlink">
+  <br>
+  <br>
   <mat-spinner></mat-spinner>
   <p>
     waiting for payment link
@@ -39,6 +43,8 @@
 
 
 <div *ngIf="orderservice.failpaylink">
+    <br>
+    <br>
     <mat-spinner></mat-spinner>
     <p>
       Unable to get payment link at the moment. Please <a [routerLink]="" (click)="initpage()">Go to Pending Orders page</a> to retrigger payment. 

@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { OrderservService } from '../../../natservices/orderserv.service';
 import { UserstateService } from '../../../natservices/userstate.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
-import {FormControl, Validators} from '@angular/forms';
+import { Router, ActivatedRoute,  } from '@angular/router';
+
 
 @Component({
   selector: 'app-orderpending',
@@ -13,19 +12,15 @@ import {FormControl, Validators} from '@angular/forms';
 export class OrderpendingComponent implements OnInit {
 
   Total = 'Total Amt';
-  // paymentpopshown = false;
-  totalSizesuc = 0;
-  totalSizefai = 0;
   showtran: string;
   showprod: string;
   products: string[];
-  email = new FormControl([Validators.required]);
-
 
   constructor(public orderservice: OrderservService,
               private router: Router,
               private route: ActivatedRoute,
               private userserv: UserstateService) {
+
     this.orderservice.mynoti.subscribe(rrr => {
       if ( rrr === 'success') {
       if (this.orderservice.urltyp === 'dirpayhtml') {
@@ -34,9 +29,8 @@ export class OrderpendingComponent implements OnInit {
         this.popu(this.orderservice.paylnk);
       }
       } else if ( rrr === 'ordersub') {
-          console.log('dont do anything here');
+          // This is done in listcomponent
       }
-
     });
 
    }
@@ -45,7 +39,6 @@ export class OrderpendingComponent implements OnInit {
    ngOnInit() {
     this.orderservice.paylnk = '';
     this.initpage();
-  // this.dataSource = this.orderservice.error_recs;
   }
 
 
@@ -69,7 +62,6 @@ initpage() {
       this.orderservice.showtables = true;
       this.showtran = 'all';
       this.showprod = 'all';
-      // this.get_fulldata();
     } else {
       console.log('how to check');
       console.log(this.orderservice.screenid);
@@ -85,14 +77,7 @@ initpage() {
 
     }
   } );
-  console.log(this.orderservice.validateprogress);
 }
-
-
-get_fulldata() {
-  this.orderservice.get_order_detailss();
-}
-
 
 
 ngonDestroy() {
@@ -100,31 +85,5 @@ ngonDestroy() {
   this.orderservice.reset();
 }
 
-getTotalCost_suc() {
-  return this.orderservice.vali_comp_recs.map(t => t.mfor_amount).reduce((acc, value) => acc + value, 0);
-}
-
-getTotalCost_fai() {
-  return this.orderservice.error_recs.map(t => t.mfor_amount).reduce((acc, value) => acc + value, 0);
-}
-
-getTotalCost_penpay() {
-  return this.orderservice.ppy_success_recs.map(t => t.mfor_amount).reduce((acc, value) => acc + value, 0);
-}
-
-getpaylnk() {
-  const vali = this.orderservice.ppy_success_recs;
-  this.orderservice.reset();
-  this.orderservice.fullload = false;
-  this.orderservice.order_payment_link(vali);
-}
-
-send_submit() {
-  const vali = this.orderservice.vali_comp_recs;
-  this.orderservice.reset();
-  this.orderservice.fullload = false;
-  this.orderservice.orderplacment = true;
-  this.orderservice.submitorder(vali);
-}
 
 }
