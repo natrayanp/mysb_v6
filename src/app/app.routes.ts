@@ -36,6 +36,7 @@ import { ProdlistComponent } from './postlogin/dashboard/prodlist/prodlist.compo
 import { OrderhistComponent } from './postlogin/order/orderhist/orderhist.component';
 import { OrderhistlistComponent } from './postlogin/order/orderhist/orderhistlist/orderhistlist.component';
 import { OrderplaceComponent } from './postlogin/order/orderplace/orderplace.component';
+import { OrderpendingComponent } from './postlogin/order/orderpending/orderpending.component';
 
 export const ROUTES: Routes = [
 
@@ -44,7 +45,7 @@ export const ROUTES: Routes = [
   {path: 'paycomp/:id', component: MfpayconflandComponent},
   { path: 'securedpg',  component: PostloginComponent, children: [
     { path: 'orders',  component: OrderplaceComponent },
-    { path: 'mfordcof/:id',  component: MforderconfpgComponent },
+    { path: 'mfordcof/:id',  component: OrderpendingComponent },
     { path: 'orderhistory',  component: OrderhistComponent },
     { path: 'orderlist',  component: OrderhistlistComponent },
   /*  {path: 'orders',  component: OrderComponent, children: [

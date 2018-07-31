@@ -1,0 +1,63 @@
+    <mat-table #table2 [dataSource]="dataSourceval" matSort>
+
+      <ng-container matColumnDef="product">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Product </mat-header-cell>
+        <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.mfor_producttype}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+      </ng-container>
+      
+        <ng-container matColumnDef="Unique Order#">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Unique Order# </mat-header-cell>
+            <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.mfor_uniquereferencenumber}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+          </ng-container>
+        
+          <ng-container matColumnDef="buysell">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Buy/Sell </mat-header-cell>
+            <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.mfor_buysell}} </mat-cell>
+            <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+          </ng-container>
+
+      <ng-container matColumnDef="portfolio name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> portfolio name </mat-header-cell>
+        <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.orpfportfolioname}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+      </ng-container>
+  
+      
+      <ng-container matColumnDef="Fund name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Fund name </mat-header-cell>
+        <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.orormffundname}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef><h4>{{Total}}</h4></mat-footer-cell>
+      </ng-container>
+      
+      
+      <ng-container matColumnDef="Amount">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
+        <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.mfor_amount}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef><h4>{{getTotalCost_suc()}}</h4></mat-footer-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Qty">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
+        <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.mfor_qty}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef><h4>{{getTotalCost_suc()}}</h4></mat-footer-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="errors">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> errors </mat-header-cell>
+        <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.mfor_valierrors}} </mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+    </mat-table>
+    <mat-paginator #paginator2
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20, 30, 50, 80, 100]"
+      [showFirstLastButtons]="true">
+    </mat-paginator>
+ 

@@ -122,6 +122,11 @@ import { OrdplacePfwiselistComponent } from './postlogin/order/orderplace/ordpla
 import { OrdplacePfwisecardComponent } from './postlogin/order/orderplace/ordplace-pfwisecard/ordplace-pfwisecard.component';
 import { MfselllistComponent } from './postlogin/order/mforder/mfselllist/mfselllist.component';
 import { OrderplaceConfoptionsComponent } from './postlogin/order/orderplace/orderplace-confoptions/orderplace-confoptions.component';
+import { OrderpendingComponent } from './postlogin/order/orderpending/orderpending.component';
+import { OrderpendingTypeComponent } from './postlogin/order/orderpending/orderpending-type/orderpending-type.component';
+import { OrderpendingCardComponent } from './postlogin/order/orderpending/orderpending-card/orderpending-card.component';
+import { OrderpendingListComponent } from './postlogin/order/orderpending/orderpending-list/orderpending-list.component';
+import { OrpendingTableComponent } from './postlogin/order/orderpending/orpending-table/orpending-table.component';
 
 @NgModule({
   declarations: [
@@ -180,7 +185,12 @@ import { OrderplaceConfoptionsComponent } from './postlogin/order/orderplace/ord
     OrdplacePfwiselistComponent,
     OrdplacePfwisecardComponent,
     MfselllistComponent,
-    OrderplaceConfoptionsComponent
+    OrderplaceConfoptionsComponent,
+    OrderpendingComponent,
+    OrderpendingTypeComponent,
+    OrderpendingCardComponent,
+    OrderpendingListComponent,
+    OrpendingTableComponent
   ],
   imports: [
       BrowserModule,

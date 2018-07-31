@@ -1,15 +1,16 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { OrderservService } from '../../../../natservices/orderserv.service';
+import { OrderservService } from '../../../natservices/orderserv.service';
+import { UserstateService } from '../../../natservices/userstate.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
 
 @Component({
-  selector: 'app-mforderconfpg',
-  templateUrl: './mforderconfpg.component.html',
-  styleUrls: ['./mforderconfpg.component.scss']
+  selector: 'app-orderpending',
+  templateUrl: './orderpending.component.html',
+  styleUrls: ['./orderpending.component.scss']
 })
-export class MforderconfpgComponent implements OnInit {
+export class OrderpendingComponent implements OnInit {
 
   displayedColumns = ['product', 'Unique Order#', 'buysell', 'portfolio name', 'Fund name', 'Amount', 'Qty','errors'];
 
@@ -25,11 +26,14 @@ export class MforderconfpgComponent implements OnInit {
   paginator3: MatPaginator;
 
   sort: MatSort;
-  
+
   Total = 'Total Amt';
   // paymentpopshown = false;
   totalSizesuc = 0;
   totalSizefai = 0;
+  showtran: string;
+  showprod: string;
+  products: string[];
   email = new FormControl([Validators.required]);
 
   @ViewChild(MatSort) set appBacon4(sort: MatSort) {
@@ -62,7 +66,8 @@ export class MforderconfpgComponent implements OnInit {
 
   constructor(public orderservice: OrderservService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private userserv: UserstateService) {
     this.orderservice.mynoti.subscribe(rrr => {
       if ( rrr === 'success') {
       if (this.orderservice.urltyp === 'dirpayhtml') {
@@ -70,7 +75,7 @@ export class MforderconfpgComponent implements OnInit {
       } else if (this.orderservice.urltyp === 'bsepayurl') {
         this.popu(this.orderservice.paylnk);
       }
-      } else if ( rrr === 'ordersub') {
+      } else if ( rrr === 'ordersub'){
         this.dataSourcesppy.data = this.orderservice.ppy_success_recs;
         this.dataSourcefai.data = this.orderservice.error_recs;
         this.dataSourceval.data = this.orderservice.vali_comp_recs;
@@ -105,16 +110,27 @@ popu(paylnk) {
 
 initpage() {
   this.orderservice.reset();
+  this.products = this.userserv.get_allowed_products();
   this.route.params.subscribe( params => {
     if ( params.id === 'full') {
       this.orderservice.fullload = true;
       this.orderservice.showtables = true;
-      this.get_fulldata();
+      this.showtran = 'all';
+      this.showprod = 'all';
+      // this.get_fulldata();
     } else {
       console.log("how to check");
       console.log(this.orderservice.screenid);
+      if (this.orderservice.screenid === 'ordBSEMFsell') {
+        this.showtran = 'sell';
+        this.showprod = 'BSEMF';
+      } else if  (this.orderservice.screenid === 'ordBSEMFbuy') {
+        this.showtran = 'buy';
+        this.showprod = 'BSEMF';
+      }
       this.orderservice.validateprogress = true;
       this.orderservice.fullload = false;
+
     }
   } );
   console.log(this.orderservice.validateprogress);

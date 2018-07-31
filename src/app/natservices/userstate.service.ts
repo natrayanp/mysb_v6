@@ -9,7 +9,7 @@ export class UserstateService {
   lastlogin: Date;
   userstatus: string;
   tknexpiry: Date;
-
+  products = [];
 
 
   parseJwt () {
@@ -31,6 +31,11 @@ export class UserstateService {
     console.log(this.userstatus);
     // console.log('usertype: '+decodedJwtData.usertype);
     // return JSON.parse();
+}
+
+get_allowed_products () {
+  this.products = ['BSEMF', 'EQ'];
+  return this.products;
 }
 
 }

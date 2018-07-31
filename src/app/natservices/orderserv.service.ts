@@ -249,7 +249,7 @@ placeorder() {
 
                     // This is path where we have not even one success record
                     console.log('validation failed for all records');
-                    this.prepare_data_for_tables(record['body']);
+                    this.update_data_for_tables(record['body']);
                     this.validateprogress = false;
                     this.showtables = true;
                     this.selected_accnum = '';
@@ -294,7 +294,7 @@ submitorder(succrecs) {
                 console.log(record['body']);
                 this.allsubmitrecs = record['body'];
                 console.log(this.allsubmitrecs);
-                this.prepare_data_for_tables(record['body']);
+                this.update_data_for_tables(record['body']);
                 console.log(this.screenid);
                 // In case of sell  after submitting to BSE go to final screen
                 if (this.screenid === 'ordBSEMFsell') {
@@ -381,8 +381,9 @@ get_order_detailss() {
   .subscribe(
     record => {
       console.log(record['body']);
-      this.prepare_data_for_tables(record['body']);
+      const tabledata = this.prepare_data_for_tables(record['body']);
       this.fetchingdata = false;
+      return tabledata;
     },
     error => {
       console.log('error');
@@ -400,50 +401,77 @@ ordercancel(recs) {
 }
 
 
+get_data_for_tables(rec) {
+  const tbdt = this.prepare_data_for_tables(rec);
+  return tbdt;
+}
+
+update_data_for_tables(rec) {
+  const tbdt = this.prepare_data_for_tables(rec);
+  this.error_recs = tbdt.tmp_error_recs;
+  this.ppy_success_recs = tbdt.tmp_ppy_success_recs;
+  this.vali_comp_recs = tbdt.tmp_vali_comp_recs;
+  this.pay_initiated_recs = tbdt.tmp_pay_initiated_recs;
+  this.bse_submitted_recs = tbdt.tmp_bse_submitted_recs;
+
+  this.mynoti.next('ordersub');
+}
+
+
 prepare_data_for_tables(rec) {
+
     console.log(rec);
     rec = rec.one_time;
     console.log(rec);
     // this.orderplacment = false;
     // this.bsevalidationfail = true;
-    this.error_recs = [];
-    console.log(this.error_recs );
+    const tmp_error_recs = [];
     console.log(rec.failure_recs);
     // if (rec.failure_recs !== null && rec.failure_recs !== '') {
     if (rec.failure_recs.length > 0) {
           rec.failure_recs.forEach(element => {
-            this.error_recs.push(element);
+            tmp_error_recs.push(element);
           });
     }
-    console.log(this.error_recs );
+    console.log(tmp_error_recs);
 
     // if (rec.bse_failure_recs !== null && rec.bse_failure_recs !== '') {
       if (rec.bse_failure_recs.length > 0) {
           rec.bse_failure_recs.forEach(element => {
-            this.error_recs.push(element);
+            tmp_error_recs.push(element);
           });
     }
-    console.log(this.error_recs );
+    console.log(tmp_error_recs);
     // this.error_recs = this.error_recs[0];
+
     // PPY records
-    this.ppy_success_recs = rec.paypending_recs;
-    console.log(this.ppy_success_recs);
+    const tmp_ppy_success_recs = rec.paypending_recs;
+    console.log(tmp_ppy_success_recs);
 
     // VAS records
-    this.vali_comp_recs = rec.val_success_recs;
-    console.log(this.vali_comp_recs );
+    const tmp_vali_comp_recs = rec.val_success_recs;
+    console.log(tmp_vali_comp_recs );
 
     /// PPP records
-    this.pay_initiated_recs = rec.pay_initiated_recs;
-    console.log(this.pay_initiated_recs);
+    const tmp_pay_initiated_recs = rec.pay_initiated_recs;
+    console.log(tmp_pay_initiated_recs);
 
     /// SBE (Submitted to BSE succesfully)
-    this.bse_submitted_recs = rec.bse_submitted_recs;
-    console.log(this.pay_initiated_recs);
+    const tmp_bse_submitted_recs = rec.bse_submitted_recs;
+    console.log(tmp_bse_submitted_recs);
 
     // }
     // this.orderplacment = false;
-    this.mynoti.next('ordersub');
+
+    const data_to_return = {
+      'tmp_error_recs' : tmp_error_recs,
+      'tmp_ppy_success_recs': tmp_ppy_success_recs,
+      'tmp_vali_comp_recs' : tmp_vali_comp_recs,
+      'tmp_pay_initiated_recs': tmp_pay_initiated_recs,
+      'tmp_bse_submitted_recs': tmp_bse_submitted_recs
+    };
+
+    return data_to_return;
 }
 
 

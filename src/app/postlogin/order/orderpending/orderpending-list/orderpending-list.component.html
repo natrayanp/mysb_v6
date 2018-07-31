@@ -1,0 +1,167 @@
+
+<!--  ############   VAS RECORDS TABLE  : START   #################-->
+<mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="!dataSourceval.length < 1 || orderservice.fullload" >Orders Pending creation</mat-toolbar>
+   
+<div *ngIf="dataSourceval.length < 1 && orderservice.fullload && !orderservice.fetchingdata">
+    <p>
+        You don't have any orders pending creation
+    </p>
+      <!--div *ngIf = "!orderservice.fullload">
+          Please <a [routerLink]="" (click)="initpage()">Go to Pending Orders page</a> for the status of the submitted orders 
+      </div-->
+</div>
+
+    <mat-spinner *ngIf = "orderservice.fetchingdata"></mat-spinner>
+
+
+
+
+<div class="example-container mat-elevation-z8" *ngIf="dataSourceval.length>0">
+
+    <orpending-table [prod]="prod" [tran] = "tran" [tbldata] = "dataSourceval"></orpending-table>
+  </div>
+
+
+  <br>
+  <br>
+
+
+  <div  *ngIf="dataSourceval.length>0">
+    <div fxLayout = "row" fxLayoutGap = "5px">
+      <!--  Cancel button not required as orders auto canceled by T+1 9:30 AM
+      <button mat-raised-button color="primary" (click) = "cancel_order()">Cancel</button>
+      -->
+      <button mat-raised-button color="primary" (click) = "send_submit()"  class="mat-elevation-z6">Submit Order</button>
+    </div>
+    <!--h6 >*Orders not created will be auto cancelled</h6-->
+</div>
+
+<!--  ############   VAS RECORDS TABLE  : END   #################-->
+
+<br>
+<br>
+<br>
+<br>
+
+<!--  ############   PPY RECORDS TABLE  : START   #################-->
+
+<mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="!dataSourcesppy.length < 1 || orderservice.fullload" >Orders Pending Payment</mat-toolbar>
+
+<div *ngIf="dataSourcesppy.length < 1 && orderservice.fullload && !orderservice.fetchingdata">
+  <p>
+      You don't have any orders pending for payment
+    </p>
+    <!--div *ngIf = "!orderservice.fullload">
+        Please <a [routerLink]="" (click)="initpage()">Go to Pending Orders page</a> for the status of the submitted orders 
+    </div-->
+</div>
+
+<mat-spinner *ngIf = "orderservice.fetchingdata"></mat-spinner>
+
+  <div class="example-container mat-elevation-z8" *ngIf="dataSourcesppy.length>0">
+      <orpending-table [prod]="prod" [tran] = "tran" [tbldata] = "dataSourcesppy"></orpending-table>
+    </div>
+
+
+    <br>
+    <br>
+      <div fxLayout = "column" fxLayout.lt-md = "column" fxLayoutGap = "5px" fxLayourWrap *ngIf="dataSourcesppy.length>0">
+        <!--  Cancel button not required as orders auto canceled by T+1 9:30 AM
+        <button mat-raised-button color="primary" (click) = "cancel_order()">Cancel</button>
+        -->
+        <form #personForm="ngForm">
+        <mat-card >
+
+            <div fxLayout="row" fxLayout.lt-md = "column"  fxLayourWrap>
+
+
+                      <mat-form-field>
+                            <mat-select placeholder="Account to pay from" [(value)] = "orderservice.selected_accnum" name = "natselect" required>
+                              <mat-option *ngFor="let regisacct of orderservice.regisaccts" [value]="regisacct">
+                                {{ regisacct.acnum }}
+                              </mat-option>
+                            </mat-select>
+                            <!--mat-error *ngIf="email.invalid">enter value</mat-error-->
+                            <mat-hint *ngIf="orderservice.selected_accnum != ''" style = "color : green">{{orderservice.selected_accnum?.bank}}, {{orderservice.selected_accnum?.branch}}</mat-hint>
+                        </mat-form-field>
+                     
+                        <span fxFlex = "20px"></span>
+                        <div>
+                            <button mat-raised-button color="primary"  [disabled]="personForm.invalid" (click) = "getpaylnk()"  class="mat-elevation-z6">Pay</button>
+                        </div>
+
+                          <!-- -->
+            </div>
+        </mat-card>   
+
+      </form>
+
+      <h6 >*Orders not payed will be auto cancelled by exchange by T+1 (~9-9:30AM)</h6>
+  </div>
+
+    <!--  ############   PPY RECORDS TABLE  : END   #################-->
+
+<br>
+<br>
+<br>
+
+<!--  ############   PPP RECORDS TABLE  : START   #################-->
+  <div *ngIf="dataSourcesppp.length > 0">
+<mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="!dataSourcesppy.length < 1 || orderservice.fullload" >Payment confirmation pending for Orders</mat-toolbar>
+
+<div *ngIf="dataSourcesppp.length < 1 && orderservice.fullload && !orderservice.fetchingdata">
+  <p>
+      You don't have any orders for which payment confirmation pending
+    </p>
+    <!--div *ngIf = "!orderservice.fullload">
+        Please <a [routerLink]="" (click)="initpage()">Go to Pending Orders page</a> for the status of the submitted orders 
+    </div-->
+</div>
+
+<mat-spinner *ngIf = "orderservice.fetchingdata"></mat-spinner>
+
+  <div class="example-container mat-elevation-z8" *ngIf="dataSourcesppp.length>0">
+      <orpending-table [prod]="prod" [tran] = "tran" [tbldata] = "dataSourcesppp"></orpending-table>
+    </div>
+   
+  </div>
+    <!--  ############   PPP RECORDS TABLE  : END   #################-->
+
+<br>
+<br>
+<br>
+
+
+
+
+    <!--  ############   FAI RECORDS TABLE  : START   #################-->
+
+    <mat-toolbar color="primary" class="mat-elevation-z8" style = "background: silver" *ngIf="!dataSourcefai.length < 1 || orderservice.fullload" >Failed Orders</mat-toolbar>
+
+    <div *ngIf="dataSourcefai.length < 1 && orderservice.fullload && !orderservice.fetchingdata">
+        <p>
+            You don't have any Failed orders
+          </p>
+          <!--div *ngIf = "!orderservice.fullload">
+              Please <a [routerLink]="" (click)="initpage()">Go to Pending Orders page</a> for the status of the submitted orders 
+          </div-->
+    </div>
+    <mat-spinner *ngIf = "orderservice.fetchingdata"></mat-spinner>
+
+<div class="example-container mat-elevation-z8" *ngIf="dataSourcefai.length>0">
+    <orpending-table [prod]="prod" [tran] = "tran" [tbldata] = "dataSourcefai"></orpending-table>
+  </div>
+
+  <!--  ############   FAI RECORDS TABLE  : END   #################-->
+  
+  
+  
+  
+  
+  <!--button mat-raised-button (click)="testscreens()"> popup </button>
+  
+  <div *ngIf = "orderservice.paymentpopshown">
+    Please check order payment status from Order history page.
+  </div-->
+
+  

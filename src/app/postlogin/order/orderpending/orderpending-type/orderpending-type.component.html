@@ -1,0 +1,17 @@
+<mat-tab-group>
+    <mat-tab *ngIf ="showtran === 'buy' || showtran === 'all'" label="Buy">
+        <ng-template matTabContent >
+          <orderpending-list [prod]="prod" [tran]= "'buy'" [showprod]="showprod" [showtran]= "showtran" ></orderpending-list>
+        </ng-template>
+    </mat-tab>
+    <mat-tab *ngIf ="showtran === 'sell' || showtran === 'all'" label="Sell">
+        <ng-template matTabContent >
+            <orderpending-list [prod]="prod" [tran]="'sell'" [showprod]="showprod" [showtran]= "showtran"></orderpending-list>
+          </ng-template>
+    </mat-tab>
+    <mat-tab *ngIf ="(showtran === 'stp' || showtran === 'all') && prod == 'BSEMF'" label="STP">
+        <ng-template matTabContent >
+            <orderpending-list [prod]="prod" [tran]="'stp'" [showprod]="showprod" [showtran]= "showtran"></orderpending-list>
+          </ng-template>
+    </mat-tab>
+  </mat-tab-group>
