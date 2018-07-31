@@ -10,7 +10,13 @@ export class UserstateService {
   userstatus: string;
   tknexpiry: Date;
   products = [];
+  trantypes = [];
 
+  buy_conf = {'name':'buy', 'dispname': 'Buy'};
+  sell_conf = {'name':'sell', 'dispname': 'Sell'};
+  stp_conf = {'name':'stp', 'dispname': 'Systematic Transfer'};
+  mf_conf = {'name':'BSEMF', 'dispname': 'Mutual Fund'};
+  eq_conf = {'name':'EQ', 'dispname': 'Equity'};
 
   parseJwt () {
     var token = localStorage.getItem('natjwt');
@@ -33,9 +39,39 @@ export class UserstateService {
     // return JSON.parse();
 }
 
-get_allowed_products () {
-  this.products = ['BSEMF', 'EQ'];
+get_allowed_products (cust_type) {
+  switch (cust_type) {
+    case 'EQ': {
+      this.products = [this.eq_conf];
+      break;
+    }
+    case 'MF': {
+      this.products = [this.mf_conf];
+      break;
+    }
+    default: {
+      this.products = [this.mf_conf, this.eq_conf];
+
+    }
+  }
   return this.products;
+}
+
+get_all_trantypes (prod) {
+  switch (prod) {
+    case 'BSEMF': {
+      this.trantypes = [this.buy_conf, this.sell_conf, this.stp_conf];
+      break;
+    }
+    case 'EQ': {
+      this.trantypes = [this.buy_conf, this.sell_conf];
+      break;
+    }
+    default: {
+      this.trantypes = [this.buy_conf, this.sell_conf, this.stp_conf];
+    }
+  }
+  return this.trantypes;
 }
 
 }

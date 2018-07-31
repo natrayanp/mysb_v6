@@ -1,17 +1,9 @@
 <mat-tab-group>
-    <mat-tab label="Buy">
-        <ng-template matTabContent >
-          <ordplace-pfwiselist [prod]="prod" [trantype]="'buy'"></ordplace-pfwiselist>
-        </ng-template>
-    </mat-tab>
-    <mat-tab label="Sell">
-        <ng-template matTabContent >
-            <ordplace-pfwiselist [prod]="prod" [trantype]="'sell'"></ordplace-pfwiselist>
-          </ng-template>
-    </mat-tab>
-    <mat-tab label="STP" *ngIf= "prod == 'BSEMF'">
-        <ng-template matTabContent >
-            <ordplace-pfwiselist [prod]="prod" [trantype]="'stp'"></ordplace-pfwiselist>
-          </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+    <div *ngFor="let tran of trantypes">
+        <mat-tab label= {{tran.dispname}}>
+            <ng-template matTabContent >
+            <ordplace-pfwiselist [prod]="prod" [trantype]= "tran.name"></ordplace-pfwiselist>
+            </ng-template>
+        </mat-tab>
+    </div>
+</mat-tab-group>

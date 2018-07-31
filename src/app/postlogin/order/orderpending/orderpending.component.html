@@ -49,17 +49,11 @@
 <div *ngIf="orderservice.showtables" fxLayout = "column">
 
 <mat-tab-group >
-  <div *ngFor="let tab of products">
-    <mat-tab *ngIf="tab == 'BSEMF' && (showprod === 'BSEMF' || showprod === 'all')" label = "Mutual Fund" >
+  <div *ngFor="let prod of products">
+    <mat-tab *ngIf="prod.name == showprod || showprod === 'all'" label = {{prod.dispname}} >
       <ng-template matTabContent >
-        <orderpending-type [prod]="tab" [showtran]="showtran" [showprod] = "showprod" ></orderpending-type>        
+        <orderpending-type [prod]="prod.name" [showtran]="showtran" [showprod] = "showprod" ></orderpending-type>        
       </ng-template>
-    </mat-tab>
-
-    <mat-tab *ngIf="tab == 'EQ' && (showprod === 'EQ' || showprod === 'all')" label = "Stocks" >
-      <ng-template matTabContent>
-          <orderpending-type [prod]="tab" [showtran]="showtran" [showprod] = "showprod"></orderpending-type>  
-      </ng-template>      
     </mat-tab>
   </div>
 </mat-tab-group>

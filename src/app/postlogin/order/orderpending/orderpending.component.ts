@@ -12,21 +12,6 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class OrderpendingComponent implements OnInit {
 
-  displayedColumns = ['product', 'Unique Order#', 'buysell', 'portfolio name', 'Fund name', 'Amount', 'Qty','errors'];
-
-  dataSourcesppy = new MatTableDataSource();
-  dataSourcefai = new MatTableDataSource();
-  dataSourceval = new MatTableDataSource();
-  dataSourcesppp = new MatTableDataSource();
-
-
-  paginator: MatPaginator;
-  paginator1: MatPaginator;
-  paginator2: MatPaginator;
-  paginator3: MatPaginator;
-
-  sort: MatSort;
-
   Total = 'Total Amt';
   // paymentpopshown = false;
   totalSizesuc = 0;
@@ -36,33 +21,6 @@ export class OrderpendingComponent implements OnInit {
   products: string[];
   email = new FormControl([Validators.required]);
 
-  @ViewChild(MatSort) set appBacon4(sort: MatSort) {
-    this.sort = sort;
-    this.dataSourcesppy.sort = this.sort;
-  }
-
-
-  @ViewChild( 'paginator') set appBacon(paginator: MatPaginator) {
-    this.paginator = paginator;
-    this.dataSourcesppy.paginator = this.paginator;
-  }
-
-
-  @ViewChild('paginator1') set appBacon1(paginator1: MatPaginator) {
-    this.paginator1 = paginator1;
-    this.dataSourcefai.paginator = this.paginator1;
-  }
-
-
-  @ViewChild('paginator2') set appBacon2(paginator2: MatPaginator) {
-    this.paginator2 = paginator2;
-    this.dataSourceval.paginator = this.paginator2;
-  }
-
-  @ViewChild('paginator3') set appBacon3(paginator3: MatPaginator) {
-    this.paginator3 = paginator3;
-    this.dataSourcesppp.paginator = this.paginator3;
-  }
 
   constructor(public orderservice: OrderservService,
               private router: Router,
@@ -75,11 +33,8 @@ export class OrderpendingComponent implements OnInit {
       } else if (this.orderservice.urltyp === 'bsepayurl') {
         this.popu(this.orderservice.paylnk);
       }
-      } else if ( rrr === 'ordersub'){
-        this.dataSourcesppy.data = this.orderservice.ppy_success_recs;
-        this.dataSourcefai.data = this.orderservice.error_recs;
-        this.dataSourceval.data = this.orderservice.vali_comp_recs;
-        this.dataSourcesppp.data = this.orderservice.pay_initiated_recs;
+      } else if ( rrr === 'ordersub') {
+          console.log('dont do anything here');
       }
 
     });
@@ -87,13 +42,10 @@ export class OrderpendingComponent implements OnInit {
    }
 
 
-
-
    ngOnInit() {
     this.orderservice.paylnk = '';
     this.initpage();
   // this.dataSource = this.orderservice.error_recs;
-  
   }
 
 
@@ -110,7 +62,7 @@ popu(paylnk) {
 
 initpage() {
   this.orderservice.reset();
-  this.products = this.userserv.get_allowed_products();
+  this.products = this.userserv.get_allowed_products('');
   this.route.params.subscribe( params => {
     if ( params.id === 'full') {
       this.orderservice.fullload = true;
@@ -119,7 +71,7 @@ initpage() {
       this.showprod = 'all';
       // this.get_fulldata();
     } else {
-      console.log("how to check");
+      console.log('how to check');
       console.log(this.orderservice.screenid);
       if (this.orderservice.screenid === 'ordBSEMFsell') {
         this.showtran = 'sell';

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrderservService } from '../../../natservices/orderserv.service';
-
+import { UserstateService } from '../../../natservices/userstate.service';
 
 @Component({
   selector: 'app-orderplace',
@@ -11,7 +11,8 @@ export class OrderplaceComponent implements OnInit, OnDestroy {
 
   products: any[];
   asyncTabs: any[];
-  constructor(public orderservice: OrderservService
+  constructor(public orderservice: OrderservService,
+              private userserv: UserstateService
               ) { }
 
   ngOnInit() {
@@ -26,7 +27,7 @@ export class OrderplaceComponent implements OnInit, OnDestroy {
   }
 
   fetchprodforcust() {
-    this.products = ['BSEMF', 'EQ'];
+    this.products = this.userserv.get_allowed_products('');
   }
 
 }

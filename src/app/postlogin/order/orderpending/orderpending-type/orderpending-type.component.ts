@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { UserstateService } from '../../../../natservices/userstate.service';
 
 @Component({
   selector: 'orderpending-type',
@@ -9,11 +10,12 @@ export class OrderpendingTypeComponent implements OnInit {
   @Input() prod;
   @Input() showtran;
   @Input() showprod;
+  trantypes: string[];
 
-  constructor() { }
+  constructor(private userserv: UserstateService) { }
   
-
   ngOnInit() {
+    this.trantypes = this.userserv.get_all_trantypes(this.prod);
   }
 
 }

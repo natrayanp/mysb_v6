@@ -1,17 +1,11 @@
 <mat-toolbar class = "mat-elevation-z1">Order Placement</mat-toolbar>
 
 <mat-tab-group >
-  <div *ngFor="let tab of products">
-    <mat-tab *ngIf="tab == 'BSEMF' " label = "Mutual Fund" >
+  <div *ngFor="let prod of products">
+    <mat-tab label = {{prod.dispname}} >
       <ng-template matTabContent >
-        <orderplace-type [prod]="tab"></orderplace-type>        
+        <orderplace-type [prod]="prod.name"></orderplace-type>        
       </ng-template>
-    </mat-tab>
-
-    <mat-tab *ngIf="tab == 'EQ' " label = "Stocks" >
-      <ng-template matTabContent>
-          <orderplace-type [prod]="tab"></orderplace-type>  
-      </ng-template>      
     </mat-tab>
   </div>
 </mat-tab-group>

@@ -27,33 +27,24 @@ export class OrderpendingListComponent implements OnInit {
   constructor(public orderservice: OrderservService, private dbserivce: DbservicesService ) { }
 
   ngOnInit() {
-    console.log("inside new new new");
-    console.log(this.showprod);
-    console.log(this.showtran);
-    console.log(this.prod);
-    console.log(this.tran);
-    this.subscri = 'No';
     if (this.prod === 'BSEMF' && this.tran === 'sell') {
       this.order_type = 'BSMFsell';
     } else if (this.prod === 'BSEMF' && this.tran === 'buy') {
       this.order_type = 'One Time';
     }
-  if (this.showprod === 'all' && this.showtran === 'all') {
+  
+    if (this.showprod === 'all' && this.showtran === 'all') {
     console.log('getting full data');
     this.get_fulldata();
   } else {
-    this.subscri = 'Yes';
     console.log('getting part data');
     this.get_current_tran_data();
   }
   }
 
   get_current_tran_data() {
-    console.log("before subscribe");
-    console.log(this.dataSourcesppy);
-    console.log(this.dataSourcefai);
-    console.log(this.dataSourceval);
-    console.log(this.dataSourcesppp);
+    console.log('before subscribe');
+
   this.orderservice.mynoti.subscribe(rrr => {
     if ( rrr === 'success') {
     if (this.orderservice.urltyp === 'dirpayhtml') {
@@ -66,13 +57,7 @@ export class OrderpendingListComponent implements OnInit {
       this.dataSourcefai = this.orderservice.error_recs;
       this.dataSourceval = this.orderservice.vali_comp_recs;
       this.dataSourcesppp = this.orderservice.pay_initiated_recs;
-      console.log("inside subscribe");
-      console.log(this.dataSourcesppy);
-      console.log(this.dataSourcefai[0]);
-      console.log(this.dataSourceval);
-      console.log(this.dataSourcesppp);
     }
-
   });
   }
 

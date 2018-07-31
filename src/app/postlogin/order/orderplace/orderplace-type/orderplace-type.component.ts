@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { UserstateService } from '../../../../natservices/userstate.service';
 
 @Component({
   selector: 'orderplace-type',
@@ -7,10 +8,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class OrderplaceTypeComponent implements OnInit {
   @Input() prod;
+  trantypes: string[];
 
-  constructor() { }
+  constructor(private userserv: UserstateService) { }
 
   ngOnInit() {
+    this.trantypes = this.userserv.get_all_trantypes(this.prod);
   }
 
 }
