@@ -6,7 +6,8 @@
   export interface Msg {
     content: string;
     style: string;
-    type: string
+    type: string;
+    canclose: string;
   }
   
   @Injectable()
@@ -35,20 +36,20 @@
 
 
 
-    update(content: any, style: 'error' | 'info' | 'success',type: 'notification' | 'alert' | 'banner') {
+    update(content: any, style: 'error' | 'info' | 'success',type: 'notification' | 'alert' | 'banner', canclose: 'yes' | 'no') {
       if(type == "notification"){        
-          const msg: Msg = { content, style, type };
+          const msg: Msg = { content, style, type, canclose };
           this.notimsg1.push(msg);
           this._notimsgSource.next(this.notimsg1);
       }else if(type == "alert"){          
-          const msg: Msg = { content, style, type };
+          const msg: Msg = { content, style, type, canclose };
           this.alertmsg1.pop();
           this.alertmsg1.push(msg);
           console.log(JSON.stringify(this.alertmsg1));
           this._alrtmsgSource.next(this.alertmsg1);
           //this.starttimer();
       }else if(type == "banner"){
-          const msg: Msg = { content, style, type };
+          const msg: Msg = { content, style, type, canclose };
           this.bannermsg1.push(msg);
           this._bannermsgSource.next(this.bannermsg1);
       }

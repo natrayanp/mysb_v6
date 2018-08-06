@@ -171,3 +171,41 @@ export class regisuccfatcadetail{
       errormsg:string;
     }
 
+    export class MandateDetails {
+      man_accno: string;
+      man_amount: number;
+      man_bankbranch: string;
+      man_bankname: string;
+      man_bsemandateid: string;
+      man_enddate: Date;
+      man_ifsc: string;
+      man_mandatetype: string;
+      man_startdate: Date;
+      man_status: string;
+      man_acctype: string;
+      constructor() { this.get_empty();}
+      get_empty() {
+        this.man_accno = '';
+        this.man_amount = 0;
+        this.man_bankbranch = '';
+        this.man_bankname = '';
+        this.man_bsemandateid = '';
+        this.man_enddate = this.getdate('end');
+        this.man_ifsc = '';
+        this.man_mandatetype = '';
+        this.man_startdate = this.getdate('start');
+        this.man_status = 'new';
+        this.man_acctype = '';
+      }
+
+      getdate(type): Date {
+        const date1 =  new Date().toJSON().slice(0,10).replace(/-/g,'/');
+        const d = new Date(date1);
+        if (type === 'start') {
+          return d;
+        } else if (type === 'end') {
+          return new Date((d.getFullYear()) + 1, (d.getMonth()), d.getDate());        }
+      }
+    }
+
+}

@@ -69,12 +69,12 @@ export const ROUTES: Routes = [
           ]},
     ]},
   ]},
-    // {path: 'authchk', component: LogincheckComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'forgot', component: ForgotpassComponent},
-    {path: 'signup', component: SignupComponent},
-    {path: 'chart', component: ChartComponent},
-    {path: 'data', component: PfserviceService},
-    { path: '',  component: HomeComponent}
+  {path: 'upstox', component: LogincheckComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'forgot', component: ForgotpassComponent},
+  {path: 'signup', component: SignupComponent},
+  {path: 'chart', component: ChartComponent},
+  {path: 'data', component: PfserviceService},
+  { path: '',  component: HomeComponent}
 
   ];

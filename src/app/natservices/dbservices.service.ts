@@ -217,7 +217,27 @@ dbaction(screen, functionality, data) {
             var apiurl = environment.orderhistUrl + '/' + environment.orderhistfetch;
             return this.http.post(apiurl, JSON.stringify(data), {observe: 'response'});
       }
-
+      case 'mfmandatefetch':
+      {
+            console.log('inside mandate fetch');
+            console.log(JSON.stringify(data));
+            var apiurl = environment.mandateUrl + '/' + environment.mandatefetch;
+            return this.postmethod(apiurl, data, {observe: 'response'});
+      }
+      case 'mfmandateoperate':
+      {
+            console.log('inside mandate add del edit');
+            console.log(JSON.stringify(data));
+            var apiurl = environment.mandateUrl + '/' + environment.mandateops;
+            return this.postmethod(apiurl, data, {observe: 'response'});
+      }
+      case 'test':
+      {
+            console.log('inside mandate add del edit');
+            console.log(JSON.stringify(data));
+            var apiurl = environment.mandateUrl + '/' + environment.test;
+            return this.postmethod(apiurl, data, {observe: 'response'});
+      }
   }
 }
 

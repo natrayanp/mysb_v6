@@ -1,36 +1,54 @@
+<mat-toolbar color="{{colr}}">
+  {{title_txt}}
+  <span fxFlex="10%"></span>
+  <button mat-raised-button (click)="saveIt()" *ngIf ="mandForm.valid && (!readmode)">{{sav_bt_txt}}</button>
+  <span fxFlex="10%"></span>
+  <button mat-raised-button (click)="confirmIt()" *ngIf ="mandForm.valid && (readmode)">Submit</button>
+  <span fxFlex="10%"></span>
+  <button mat-raised-button (click)="backIt()" *ngIf ="mandForm.valid && (readmode)">Back</button>
+  <span fxFlex="10%"></span>
+  <button mat-raised-button (click)="cancelt()" *ngIf ="(!readmode)">Cancel</button>
+</mat-toolbar>
+
+<!--mat-toolbar *ngIf = "oper === 'edit'" color="{oper === 'del'? 'warn' : 'primary'}">{{title_txt}}</mat-toolbar-->
+
+<!--mat-toolbar *ngIf = "oper === 'del'" color="warn">Delete Mandate</mat-toolbar-->
 
 <mat-card>
 
-<div fxLayout="row">
-<form class="example-form">
-  <div fxLayout = "row">
+<div fxLayout="column" fxLayoutGap = "25px">
+<form [formGroup]="mandForm">
+  <div fxLayout = "row"  fxLayoutGap = "10%">
 
-
-<mat-form-field>
-    <mat-select placeholder="MandateType">
-      <mat-option *ngFor="let mandatetype of mandatetypes" [value]="mandatetype.type">
+  <mat-form-field fxFlex >
+    <div *ngIf ="readmode">
+        <input matInput placeholder="MandateType"  formControlName = "man_mandatetype" readonly>
+    </div>
+    <div *ngIf ="!readmode">
+    <mat-select formControlName = "man_mandatetype" placeholder="MandateType" >
+      <mat-option *ngFor="let mandatetype of mandatetypes" [value]="mandatetype.type" >
         {{ mandatetype.name }}
       </mat-option>
     </mat-select>
+    </div>
   </mat-form-field>
 
-
-  <mat-form-field class="example-full-width">
+  <mat-form-field fxFlex>
     <span matPrefix>Rs &nbsp;</span>
-    <input matInput placeholder="Mandate amount">
+    <input matInput placeholder="Mandate amount"  formControlName = "man_amount" [readonly] = "readmode">
   </mat-form-field>
 
 
 
-<mat-form-field>
-  <input matInput [matDatepicker]="picker1" [min]="strtDate" (dateChange)="nat1($event)" placeholder="Angular forms" [formControl]="startdate">
-  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+<mat-form-field fxFlex>
+  <input matInput [matDatepicker]="picker1" [min]="strtDate" (dateChange)="nat1($event)" placeholder="Angular forms" formControlName  ="man_startdate" [readonly] = "readmode">
+  <mat-datepicker-toggle matSuffix [for]="picker1" [disabled] = "readmode"></mat-datepicker-toggle>
   <mat-datepicker #picker1 ></mat-datepicker>
 </mat-form-field>
 
-<mat-form-field>
-  <input matInput [matDatepicker]="picker2" [min]="strdt" [max]="maxDate" placeholder="Angular forms" [formControl]="enddate">
-  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+<mat-form-field fxFlex>
+  <input matInput [matDatepicker]="picker2" [min]="strdt" [max]="maxDate" placeholder="Angular forms" formControlName = "man_enddate" [readonly] = "readmode">
+  <mat-datepicker-toggle matSuffix [for]="picker2" [disabled] = "readmode"></mat-datepicker-toggle>
   <mat-datepicker #picker2  [startAt]="strtDate"></mat-datepicker>
 </mat-form-field>
 
@@ -38,28 +56,33 @@
 
 
 
-<div fxLayout="row">
+<div fxLayout="row" fxLayoutGap = "10%">
 
-    <mat-form-field>
-        <mat-select placeholder="Favorite food" (selectionChange)="nat($event)" name="food" >
-          <mat-option *ngFor="let acct of acctyps"  [value]="acct"> 
+    <mat-form-field fxFlex>
+        <div *ngIf ="readmode">
+            <input matInput placeholder="Accout Number"  formControlName = "man_accno" readonly>
+        </div>
+        <div *ngIf ="!readmode">
+        <mat-select placeholder="Accout Number" (selectionChange)="nat($event)" name="Accout Number" formControlName ="man_accno">
+          <mat-option *ngFor="let acct of acctyps"  [value]="acct.acnum"> 
             {{acct.acnum}}</mat-option>
           </mat-select>
+        </div>
       </mat-form-field>
 
-  <mat-form-field appearance="outline" class="sdsd">
+  <mat-form-field appearance="outline" class="sdsd" fxFlex = "5%">
     <mat-label>AcType</mat-label>
-    <input matInput placeholder="Placeholder" [value]="evenj[0]?.actype" readonly>
+    <input matInput placeholder="Placeholder" formControlName="man_acctype" readonly>
   </mat-form-field>
 
-  <mat-form-field>
-      <input matInput [value]= "evenj[0]?.ifsc" readonly>
+  <mat-form-field fxFlex >
+      <input matInput formControlName="man_ifsc" readonly>
 </mat-form-field>
 
-<mat-form-field>
-    <input matInput [value]= "evenj[0]?.bank"  readonly>
-  
+<mat-form-field fxFlex>
+    <input matInput formControlName="man_bankname" readonly>  
 </mat-form-field>
+
 
 
   
@@ -67,7 +90,11 @@
 
 </form>
 </div>
-
+<!--mat-card-actions>
+<button mat-raised-button (click)="saveIt()">{{sav_bt_txt}}</button>
+<button mat-raised-button (click)="cancelt()">Cancel</button>
+</mat-card-actions-->
 </mat-card>
 
 
+<pre>{{mandForm.value | json}}</pre>

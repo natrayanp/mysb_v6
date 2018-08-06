@@ -6,7 +6,8 @@
           'is-success': m.style == 'success',
           'is-info': m.style == 'info'
         }">
-        <span class="closebtn" (click)="notify.clearalertmsg()">{{notify.alertticks}} &times;</span>  
+        
+        <span class="closebtn" *ngIf = "m.canclose === 'yes'" (click)="notify.clearalertmsg()">{{notify.alertticks}} &times;</span>  
         {{ m.content }}   
       </mat-card>
     </div>

@@ -53,17 +53,15 @@
 
 
 <div *ngIf="orderservice.showtables" fxLayout = "column">
-
-<mat-tab-group >
-  <div *ngFor="let prod of products">
-    <mat-tab *ngIf="prod.name == showprod || showprod === 'all'" label = {{prod.dispname}} >
-      <ng-template matTabContent >
-        <orderpending-type [prod]="prod.name" [showtran]="showtran" [showprod] = "showprod" ></orderpending-type>        
-      </ng-template>
-    </mat-tab>
-  </div>
-</mat-tab-group>
-
+  <mat-tab-group >
+    <div *ngFor="let prod of products">
+      <mat-tab *ngIf="prod.name == showprod || showprod === 'all'" label = {{prod.dispname}} >
+        <ng-template matTabContent >
+          <orderpending-type [prod]="prod.name" [showtran]="showtran" [showprod] = "showprod" ></orderpending-type>        
+        </ng-template>
+      </mat-tab>
+    </div>
+  </mat-tab-group>
 </div>
 
 

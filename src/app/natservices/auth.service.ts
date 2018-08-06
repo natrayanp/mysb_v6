@@ -71,7 +71,18 @@
       const provider = new auth.TwitterAuthProvider();
       return this.oAuthLogin(provider);
     }
+    
+    customTokenLogin(token) {
+      
+      return this.afAuth.auth.signInWithCustomToken(token)
+
+    }
   
+    getall() {
+      return this.afAuth.auth.currentUser.getIdTokenResult();
+    }
+
+
     private oAuthLogin(provider: any) {
       return this.afAuth.auth.signInWithPopup(provider)
         .then((credential) => {

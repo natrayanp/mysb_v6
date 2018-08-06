@@ -9,6 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { DbservicesService } from '../../natservices/dbservices.service';
 import { UserstateService } from '../../natservices/userstate.service';
+import {HttpClient, HttpEvent, HttpInterceptor, HttpHandler,HttpHeaders, HttpRequest} from '@angular/common/http';
+
 
 @Component({
     selector: 'app-login',
@@ -26,6 +28,7 @@ import { UserstateService } from '../../natservices/userstate.service';
         // public dialog: MatDialog,
         private dbserivce: DbservicesService,
         private fb: FormBuilder,
+        private http: HttpClient,
         private userstate: UserstateService ) {
           this.createloginForm();
         }
@@ -83,6 +86,7 @@ import { UserstateService } from '../../natservices/userstate.service';
     this.auth.googleLogin()
     .then((user) => {
                       console.log('inside user');
+                      console.log(user);
                       this.afterSignIn(user);
                   }
         );
@@ -104,6 +108,19 @@ import { UserstateService } from '../../natservices/userstate.service';
                         this.afterSignIn(user);
                     }
             );
+  }
+
+  signInWithUpstox(): void {
+    const apiurl = 'http://127.0.0.1:8080/redirecturl';
+    const data = {'provider': 'upstox', 'operation' : 'loginurl'};
+    this.http.post(apiurl, data, {observe: 'response'})
+    .subscribe (
+      res => {
+        console.log(res);
+        window.location.href = res['body'];
+      }
+  );
+    // window.location.href = 'https://api.upstox.com/index/dialog/authorize?apiKey=9Rt7ZkV5TM8HaFVZN4bi03f86JDWft6E4hu5Krpl&redirect_uri=http://127.0.0.1:4200/upstox&response_type=code';
   }
 
 
@@ -138,6 +155,9 @@ print() {
   private afterSignIn(status): void {
     switch (status) {
         case 'success': {
+            console.log('succcesssssssssssssssssssssssssssssssssssssssss');
+            console.log(this.auth.credential.user);
+            console.log(this.auth.credential);
             this.getUsers(this.auth.credential.user);
             break;
         }

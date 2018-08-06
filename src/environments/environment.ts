@@ -81,5 +81,9 @@ export const environment = {
   mforderdetails: 'mforderdetails',
   mfordpaystaus: 'mfordpaystatus',
   orderhistUrl: 'http://127.0.0.1:8080',
-  orderhistfetch: 'orderhistfetch'
+  orderhistfetch: 'orderhistfetch',
+  mandateUrl: 'http://127.0.0.1:8080',
+  mandatefetch: 'getmandate',
+  mandateops: 'mandateops',
+  test: 'mandatestatus'
 };

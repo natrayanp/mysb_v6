@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashlist.component.html',
   styleUrls: ['./dashlist.component.scss']
 })
-export class DashlistComponent implements OnInit, OnDestroy {
+export class DashlistComponent implements OnInit {
   @Input() mode: string;
   @Input() idpsum;
   @Input() idpprods;
@@ -71,6 +71,7 @@ export class DashlistComponent implements OnInit, OnDestroy {
     this.router.navigate(['/securedpg/dashboard']);
   }
 
+  /*
   ngOnDestroy() {
     this.mySubscription.unsubscribe();
     console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
@@ -78,5 +79,5 @@ export class DashlistComponent implements OnInit, OnDestroy {
     console.log(this.mySubscription.closed);
     console.log('@@@@@@@@@@@@@@@@@@@@@@@@@');
   }
-
+*/
 }

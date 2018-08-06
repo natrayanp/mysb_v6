@@ -1,5 +1,124 @@
-<p>
-  mandateinq works!
-</p>
-<mat-toolbar color="primary">Mandates</mat-toolbar>
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  Mandates
+  <span fxFlex="30px"></span>
+  <button mat-raised-button color="warn" (click)="new_mandate()" *ngIf = "(!mandate_fetch) && (!showdetail) && (!fetch_error)">
+    <strong>Add New Mandate</strong>
+  </button>
+  <span fxFlex="15px"></span>
+  <button mat-raised-button (click)="test()">refresh Mandate latest Status</button>
+</mat-toolbar>
+
+    <mat-spinner [diameter]="80"  *ngIf = "mandate_fetch"></mat-spinner>
+
+    <div>
+      <br>
+      <br>
+      <alerts></alerts>
+  </div>
+
+
+
+<div *ngIf = "(!mandate_fetch) && dataSource.data.length<1 && (!fetch_error)">
+  <br>
+  <br>
+  No Active mandates available...  <button mat-button color="primary" *ngIf = "(!showdetail)" (click)="new_mandate()"><strong>Click here to Add New Mandate</strong></button> 
+</div>
+
+<div *ngIf = "(!mandate_fetch) && (dataSource.data.length > 0)">
+<mat-table #table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ACtions </mat-header-cell>
+        <mat-cell *matCellDef="let row" [style.color]="'green'"> 
+          <button mat-button (click)="del_mandate(row)">Delete</button> 
+          <button mat-button (click)="edit_mandate(row)">Edit</button> 
+        </mat-cell>
+        <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+      </ng-container>
+
+    <ng-container matColumnDef="mandateid">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Mandateid </mat-header-cell>
+      <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.man_bsemandateid}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+    </ng-container>
+    
+      <ng-container matColumnDef="Type">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
+          <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.man_mandatetype}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+        </ng-container>
+      
+        <ng-container matColumnDef="Amount">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
+          <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.man_amount}} </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+
+    <ng-container matColumnDef="Account">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Account# </mat-header-cell>
+      <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.man_accno}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+    </ng-container>
+
+    <ng-container matColumnDef="Approveddate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Approved Date </mat-header-cell>
+        <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.man_startdate}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+      </ng-container>
+    
+
+    <ng-container matColumnDef="Enddate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> End Date </mat-header-cell>
+      <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.man_enddate}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+    </ng-container>
+    
+    
+    <ng-container matColumnDef="Bank">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Bank Name </mat-header-cell>
+      <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.man_bankname}} {{elementv.man_bankbranch}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+    </ng-container>
+
+    <ng-container matColumnDef="Branch">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Branch Name </mat-header-cell>
+      <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.man_bankbranch}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+    </ng-container>
+    
+    <ng-container matColumnDef="Ifsc">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> IFSC </mat-header-cell>
+      <mat-cell *matCellDef="let elementv" [style.color]="'green'"> {{elementv.man_ifsc}} </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+        <mat-cell *matCellDef="let elementv" [style.color]="'green'"> 
+          {{elementv.man_status | uppercase}} 
+          <span fxFlex = "15px"></span>
+          <mat-chip-list>
+            <mat-chip *ngIf="elementv.man_status === 'new'" (click)="edit_mandate(elementv)" selected color="warn"><strong>Submit</strong></mat-chip>
+          </mat-chip-list>
+          <!--button mat-button *ngIf = "elementv.man_status === 'new'" (click)="edit_mandate(row)">Resubmit</button-->
+        </mat-cell>
+      <mat-footer-cell *matFooterCellDef></mat-footer-cell>    
+      </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+  </mat-table>
+  <mat-paginator #paginator
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 20, 30, 50, 80, 100]"
+    [showFirstLastButtons]="true">
+  </mat-paginator>
+</div>
+
+
+<div *ngIf = "showdetail">
+    <br>
+    <br>
+    <mandatereg [oper]="operation" [detaildata] = "rowdata" [accounts] = "accounts" (confirm)="save_del($event)"></mandatereg>
+</div>

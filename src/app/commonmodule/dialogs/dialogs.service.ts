@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { DisplayDialogComponent } from './display-dialog/display-dialog.component';
 import { MatDialogRef, MatDialog } from '@angular/material';
 
 @Injectable()
 export class DialogsService {
+
+    title: string;
+    message: string;
 
     constructor(private dialog: MatDialog) { }
 
@@ -21,4 +25,25 @@ export class DialogsService {
 
         return dialogRef.afterClosed();
     }
+
+    public showalert(title: string, message: string): any {
+
+        let dialogRef: MatDialogRef<DisplayDialogComponent>;
+
+        dialogRef = this.dialog.open(DisplayDialogComponent, {
+          disableClose: true
+        });
+        this.title = title;
+        this.message = message;
+        dialogRef.componentInstance.title = title;
+        dialogRef.componentInstance.message = message;
+
+        return dialogRef;
+    }
+
+    public update_message(title: string, message: string): any {
+        this.title = title;
+        this.message = message;
+    }
+
 }

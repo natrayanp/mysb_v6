@@ -1,12 +1,18 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DOCUMENT } from '@angular/platform-browser';
+import { AuthService } from '../natservices/auth.service';
+import { NotifyService } from '../natservices/notify.service';
+
 // import { FirebaseApp } from 'angularfire2';
 // import { AngularFireAuth } from 'angularfire2/auth';
 // import * as firebase from 'firebase';
 import { OrderservService } from '../natservices/orderserv.service';
 // import { SetjwtService } from '../natservices/setjwtservice.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import { DbservicesService } from '../natservices/dbservices.service';
+import {HttpClient, HttpEvent, HttpInterceptor, HttpHandler,HttpHeaders, HttpRequest} from '@angular/common/http';
+import { getAllDebugNodes } from '@angular/core/src/debug/debug_node';
 
 
 @Component({
@@ -17,12 +23,16 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class LogincheckComponent implements OnInit {
 
   data: any;
-  natkey: any;
+  providercode: any;
   longDesc: any;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private domSanitizer: DomSanitizer,
+              private dbserivce: DbservicesService,
+              private http: HttpClient,
+              public auth: AuthService,
+              private notify: NotifyService,
               // public app: AngularFireAuth, 
               // private setjwtservice: SetjwtService, 
               // @Inject(DOCUMENT) private document: any,
@@ -30,47 +40,62 @@ export class LogincheckComponent implements OnInit {
    }
 
   ngOnInit() {
-   /* this.natkey=this.route.snapshot.queryParamMap.get("natkey");
-    console.log("iam inside auth");
-    if(localStorage.getItem("natjwt") === null){
-        this.getUsers(this.natkey);       
-      }else{
-        window.opener.location="/securedpg/dashboard";  
-        window.close(); 
-      }
-    */
-   //this.goToUrl(this.orderservice.paylnk);
-   //var link = 'http://bsestarmfdemo.bseindia.com/ClientOrderPayment.aspx?INtPvGmyOzdvVLRCAlRSyLep2wKQls+dik8REh8D/5RxmamsVZHD/ZCxz1O9mlWJWW2gsRaoYO5LPbCHI9HSrw==';
-   //this.goToUrl(link);
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-   console.log(this.orderservice.paylnk);
-   this.longDesc = this.domSanitizer.bypassSecurityTrustHtml(this.orderservice.paylnk);
+   this.providercode = this.route.snapshot.queryParamMap.get('code');
+   console.log(this.providercode);
+    console.log('iam inside auth');
+    this.getUsers();
   }
-/*
-  getUsers(natkey) {
-    this.setjwtservice
-    .login(natkey)
+
+  getUsers() {
+    const apiurl = 'http://127.0.0.1:8080/loginpost';
+    const data = {'provider': 'upstox', 'operation' : 'logincode', 'code': this.providercode};
+    this.http.post(apiurl, data, {observe: 'response'})
     .subscribe(
-      (data) => {
-        console.log(data);
-        this.data = data;
-        localStorage.setItem("natjwt",JSON.stringify(this.data['natjwt']));
-        window.opener.location="/securedpg/dashboard";        
-        window.close();         
-      }, 
-      (error) => {
-        console.log('error ' + error);
-      });
-    }
-*/
+      datae => {
+                  console.log(datae);
+                  console.log(datae['body']);
+                  this.signInWithCustomToken(datae['body']['token']);
+            },
+      error => {
 
-    goToUrl(link): void {
-      console.log(link);
-      //window.location.href = link;
-      
-      window.opener.location="/securedpg/dashboard";
+        }
+            );
   }
 
 
+  signInWithCustomToken(token): void {
+    this.auth.customTokenLogin(token)
+    .then(res => {
+      console.log(res);
+      console.log(res.user);
+      console.log(res.user.uid);
+      console.log(res.additionalUserInfo);
+      console.log(res.credential);
+      console.log(res.operationType);
+      console.log('Successfully authenticated with Firebase!');
+      this.afterSignIn();
+    })
+    .catch(err => {
+      const errorCode = err.code;
+      const errorMessage = err.message;
+      console.error(`${errorCode} Could not log into Firebase: ${errorMessage}`);
+    });
+  }
+
+
+
+  private afterSignIn(): void {
+    this.auth.getall()
+    .then((idTokenResult) => {
+      console.log(idTokenResult.claims);
+   })
+   .catch((error) => {
+     console.log(error);
+   });
+    }
+    // Do after login stuff here, such router redirects, toast messages, etc.
+    // this.router.navigate(['/']);
+
+  }
 
 }

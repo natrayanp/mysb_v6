@@ -1,8 +1,9 @@
+<br>
 
 <!--  ############   VAS RECORDS TABLE  : START   #################-->
-<mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="!dataSourceval.length < 1 || orderservice.fullload" >Orders Pending creation</mat-toolbar>
+<mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="(!(dataSourceval.length < 0)) || orderservice.fullload" >Orders Pending creation</mat-toolbar>
    
-<div *ngIf="dataSourceval.length < 1 && orderservice.fullload && !orderservice.fetchingdata">
+<div *ngIf="(dataSourceval.length < 1) && orderservice.fullload && !orderservice.fetchingdata">
     <p>
         You don't have any orders pending creation
     </p>
@@ -45,7 +46,7 @@
 
 <!--  ############   PPY RECORDS TABLE  : START   #################-->
 
-<mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="!dataSourcesppy.length < 1 || orderservice.fullload" >Orders Pending Payment</mat-toolbar>
+<mat-toolbar color="primary" class="mat-elevation-z8" *ngIf="(!(dataSourcesppy.length < 1)) || orderservice.fullload" >Orders Pending Payment</mat-toolbar>
 
 <div *ngIf="dataSourcesppy.length < 1 && orderservice.fullload && !orderservice.fetchingdata">
   <p>
@@ -136,7 +137,7 @@
 
     <!--  ############   FAI RECORDS TABLE  : START   #################-->
 
-    <mat-toolbar color="primary" class="mat-elevation-z8" style = "background: silver" *ngIf="!dataSourcefai.length < 1 || orderservice.fullload" >Failed Orders</mat-toolbar>
+    <mat-toolbar color="primary" class="mat-elevation-z8" style = "background: silver" *ngIf="(!(dataSourcefai.length < 1)) || orderservice.fullload" >Failed Orders</mat-toolbar>
 
     <div *ngIf="dataSourcefai.length < 1 && orderservice.fullload && !orderservice.fetchingdata">
         <p>
